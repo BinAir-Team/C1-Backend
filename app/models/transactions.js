@@ -15,11 +15,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   transactions.init({
-    usersId: DataTypes.INTEGER,
-    ticketsId: DataTypes.INTEGER,
+    usersId: DataTypes.UUID,
+    ticketsId: DataTypes.UUID,
     amounts: DataTypes.INTEGER,
     payment_method: DataTypes.STRING,
-    quantity: DataTypes.STRING,
+    quantity: DataTypes.INTEGER,
     date: DataTypes.DATE,
     status: DataTypes.STRING
   }, {
