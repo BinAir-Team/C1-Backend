@@ -7,10 +7,13 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       usersId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
+      },
+      message: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

@@ -11,10 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.tickets, { foreignKey: 'usersId' })
+      this.belongsTo(models.users, { foreignKey:'tickedId' })
     }
   }
   wishlists.init({
-    usersId: DataTypes.INTEGER
+    usersId: DataTypes.UUID,
+    ticketsId: DataTypes.UUID,
+    quantity: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'wishlists',

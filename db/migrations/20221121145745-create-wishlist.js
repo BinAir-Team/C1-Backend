@@ -7,9 +7,15 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       usersId: {
+        type: Sequelize.UUID
+      },
+      ticketsId: {
+        type: Sequelize.UUID
+      },
+      quantity: {
         type: Sequelize.INTEGER
       },
       createdAt: {
