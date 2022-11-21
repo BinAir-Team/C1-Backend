@@ -7,9 +7,27 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID
       },
       title: {
+        type: Sequelize.STRING
+      },
+      desc: {
+        type: Sequelize.TEXT
+      },
+      period: {
+        type: Sequelize.DATE
+      },
+      travel_period: {
+        type: Sequelize.DATE
+      },
+      discount: {
+        type: Sequelize.INTEGER
+      },
+      message: {
+        type: Sequelize.STRING
+      },
+      promo_image: {
         type: Sequelize.STRING
       },
       createdAt: {
