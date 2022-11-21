@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   roles.init({
-    uuid: DataTypes.UUID,
     roles: DataTypes.STRING,
   }, {
     sequelize,
