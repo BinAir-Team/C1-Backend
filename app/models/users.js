@@ -10,11 +10,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.notifications, { foreignKey: 'uuid' })
+      this.belongsTo(models.transactions, { foreignKey: 'uuid' })
     }
   }
   users.init({
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
+    phone: DataTypes.STRING,
+    address: DataTypes.STRING,
+    role: DataTypes.STRING,
+    profile_image: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'users',
