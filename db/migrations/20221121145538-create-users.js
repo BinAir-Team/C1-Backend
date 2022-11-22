@@ -26,6 +26,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       role: {
+        allowNull: false,
         type: Sequelize.UUID
       },
       profile_image: {
