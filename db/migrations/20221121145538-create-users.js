@@ -10,7 +10,13 @@ module.exports = {
         type: Sequelize.UUID,
         unique: true
       },
-      name: {
+      firstname: {
+        type: Sequelize.STRING
+      },
+      lastname: {
+        type: Sequelize.STRING
+      },
+      gender: {
         type: Sequelize.STRING
       },
       email: {
