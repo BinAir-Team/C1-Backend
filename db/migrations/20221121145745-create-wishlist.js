@@ -18,9 +18,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.UUID
       },
-      quantity: {
-        type: Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

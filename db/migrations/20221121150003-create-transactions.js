@@ -28,7 +28,11 @@ module.exports = {
       },
       quantity: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
+      },
+      traveler: {
+        allowNull: false,
+        type: Sequelize.STRING
       },
       date: {
         allowNull: false,

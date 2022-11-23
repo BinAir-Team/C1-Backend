@@ -28,9 +28,6 @@ module.exports = {
       phone: {
         type: Sequelize.STRING
       },
-      address: {
-        type: Sequelize.STRING
-      },
       role: {
         allowNull: false,
         type: Sequelize.STRING

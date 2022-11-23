@@ -18,8 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     desc: DataTypes.TEXT,
     period: DataTypes.DATE,
     travel_period: DataTypes.DATE,
+    promo_code: DataTypes.STRING,
     discount: DataTypes.INTEGER,
-    message: DataTypes.STRING,
+    terms: DataTypes.TEXT,
     promo_image: DataTypes.STRING
   }, {
     sequelize,

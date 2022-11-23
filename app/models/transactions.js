@@ -18,8 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     usersId: DataTypes.UUID,
     ticketsId: DataTypes.UUID,
     amounts: DataTypes.INTEGER,
+    traveler: DataTypes.STRING,
     payment_method: DataTypes.STRING,
-    quantity: DataTypes.INTEGER,
+    quantity: DataTypes.STRING,
     date: DataTypes.DATE,
     status: DataTypes.STRING
   }, {
