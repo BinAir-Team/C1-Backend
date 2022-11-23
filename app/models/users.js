@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.notifications, { foreignKey: 'usersId' })
       this.hasMany(models.transactions, { foreignKey: 'usersId' })
       this.hasMany(models.wishlists, { foreignKey: 'usersId' })
-      this.belongsTo(models.roles, {foreignKey: 'role',})
     }
   }
   users.init({
@@ -24,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     phone: DataTypes.STRING,
     address: DataTypes.STRING,
-    role: DataTypes.UUID,
+    role: DataTypes.STRING,
     profile_image: DataTypes.STRING
   }, {
     sequelize,

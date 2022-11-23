@@ -33,7 +33,7 @@ module.exports = {
       },
       role: {
         allowNull: false,
-        type: Sequelize.UUID
+        type: Sequelize.STRING
       },
       profile_image: {
         type: Sequelize.STRING
