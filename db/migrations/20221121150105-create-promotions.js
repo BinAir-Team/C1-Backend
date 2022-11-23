@@ -22,11 +22,14 @@ module.exports = {
       travel_period: {
         type: Sequelize.DATE
       },
+      promo_code: {
+        type: Sequelize.STRING
+      },
       discount: {
         type: Sequelize.INTEGER
       },
-      message: {
-        type: Sequelize.STRING
+      terms: {
+        type: Sequelize.TEXT
       },
       promo_image: {
         type: Sequelize.STRING
