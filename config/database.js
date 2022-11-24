@@ -5,6 +5,7 @@ module.exports = {
     "username": DB_USER,
     "password": DB_PASSWORD,
     "database": `${DB_NAME}_development`,
+    "database": DB_NAME,
     "host": DB_HOST,
     "dialect": DB_DIALECT
   },
@@ -12,6 +13,7 @@ module.exports = {
     "username": DB_USER,
     "password": DB_PASSWORD,
     "database": `${DB_NAME}_test`,
+    "database": DB_NAME,
     "host": DB_HOST,
     "dialect": DB_DIALECT
   },
