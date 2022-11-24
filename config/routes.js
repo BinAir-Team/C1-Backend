@@ -12,5 +12,7 @@ const prefix = '/api/v1';
 
 //ticket api
 router.get(prefix + '/tickets', controllers.ticketsControllers.getAllTickets); //get all tickets
+router.post(prefix + '/tickets', controllers.ticketsControllers.createTicket); //create a ticket
+router.put(prefix + '/tickets/:id', controllers.ticketsControllers.updateTicket); //update a ticket
 
 module.exports = router;

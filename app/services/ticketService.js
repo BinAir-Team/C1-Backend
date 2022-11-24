@@ -9,5 +9,35 @@ module.exports = {
         catch(err){
             throw err;
         }
+    },
+
+    async getTicketById(id){
+        try{
+            const ticket = await ticketRepository.getTicketById(id);
+            return ticket;
+        }
+        catch(err){
+            throw err;
+        }
+    },
+
+    async createTicket(ticket){
+        try{
+            const newTicket = await ticketRepository.createTicket(ticket);
+            return newTicket;
+        }
+        catch(err){
+            throw err;
+        }
+    },
+
+    async updateTicket(id, ticket){
+        try{
+            const updatedTicket = await ticketRepository.updateTicket(id, ticket);
+            return updatedTicket;
+        }
+        catch(err){
+            throw err;
+        }
     }
 }
