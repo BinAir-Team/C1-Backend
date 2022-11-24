@@ -2,11 +2,17 @@ const ticketService = require('../services/ticketService');
 
 module.exports = {
     async getAllTickets(req, res){
-        try{
-            const tickets = await ticketService.getAllTickets();
-            res.status(200).send(tickets);
-        } catch (err){
-            res.status(500).send(err);
-        }
+        const tickets = await ticketService.getAllTickets()
+        .then(tickets => {
+            res.status(200).json(
+                {
+                    message: "Success",
+                    data: tickets
+                }
+            );
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
     }
 }

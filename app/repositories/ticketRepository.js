@@ -1,7 +1,7 @@
-const {Ticket} = require("../models");
+const {tickets} = require("../models");
 
 module.exports = {
     getAllTickets(){
-        return Ticket.findAll();
+        return tickets.findAll();
     }
 }
