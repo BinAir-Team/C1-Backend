@@ -18,10 +18,11 @@ module.exports = {
     "dialect": DB_DIALECT
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "username": DB_USER,
+    "password": DB_PASSWORD,
+    "database": DB_NAME,
+    "host": DB_HOST,
+    "port": DB_PORT,
+    "dialect": DB_DIALECT
   }
 }
