@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 // auth routes
 router.post('/register', registerMember);
 router.post('/login', login);
-router.post('/logout', logout);
+router.delete('/logout', logout);
 
 // user routes
 router.get('/user', verifyToken, getUserData);
