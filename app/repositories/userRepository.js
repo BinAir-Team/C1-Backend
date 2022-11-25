@@ -2,6 +2,15 @@ const {users} = require('../models');
 
 // repository user exports
 
+// find all by role member
+exports.findAll = () => {
+    return users.findAll({
+        where: {
+            role: 'member'
+        }
+    });
+}
+
 // findOne
 exports.findOne = (id) => {
     return users.findByPk({
@@ -36,4 +45,13 @@ exports.update = (id, data) => {
 // create member
 exports.create = (data) => {
     return users.create(data);
+}
+
+// delete
+exports.delete = (id) => {
+    return users.destroy({
+        where: {
+            id
+        }
+    })
 }
