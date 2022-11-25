@@ -15,5 +15,9 @@ module.exports = {
 
     updateTicket(id, ticket){
         return tickets.update(ticket, {where: {id: id}});
+    },
+
+    deleteTicket(id){
+        return tickets.destroy({where: {id: id}});
     }
 }

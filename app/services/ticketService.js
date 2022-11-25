@@ -39,5 +39,15 @@ module.exports = {
         catch(err){
             throw err;
         }
+    },
+
+    async deleteTicket(id){
+        try{
+            const deletedTicket = await ticketRepository.deleteTicket(id);
+            return deletedTicket;
+        }
+        catch(err){
+            throw err;
+        }
     }
 }

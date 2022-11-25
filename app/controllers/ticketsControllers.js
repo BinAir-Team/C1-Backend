@@ -70,5 +70,21 @@ module.exports = {
         .catch(err => {
             res.status(500).json(err);
         });
+    },
+
+    async deleteTicket(req, res){
+        const id = req.params.id;
+        const deletedTicket = await ticketService.deleteTicket(id)
+        .then(ticket => {
+            res.status(200).json(
+                {
+                    message: "Success",
+                    data: ticket
+                }
+            );
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
     }
 }

@@ -14,5 +14,6 @@ const prefix = '/api/v1';
 router.get(prefix + '/tickets', controllers.ticketsControllers.getAllTickets); //get all tickets
 router.post(prefix + '/tickets', controllers.ticketsControllers.createTicket); //create a ticket
 router.put(prefix + '/tickets/:id', controllers.ticketsControllers.updateTicket); //update a ticket
+router.delete(prefix + '/tickets/:id', controllers.ticketsControllers.deleteTicket); //delete a ticket
 
 module.exports = router;
