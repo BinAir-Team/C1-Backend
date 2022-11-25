@@ -1,4 +1,5 @@
-const userService = require('../services/userService');
+const {getUserByRefreshToken} = require('../services/authService');
+const { getUserByRoleMember, getUserById, getUserByEmail, updateUser, createUser, deleteUser } = require('../services/userService');
  
 // user controller 
 
@@ -6,7 +7,7 @@ const userService = require('../services/userService');
 exports.postUserData = async (req, res) => {
   const { firstname, lastname, gender, email, password, phone, role, profile_image } = req.body;
   try {
-    const user = await userService.createUser({
+    const user = await createUser({
       firstname,
       lastname,
       gender,
@@ -32,7 +33,7 @@ exports.postUserData = async (req, res) => {
 // GET user data role member
 exports.getUserDataMember = async (req, res) => {
     try {
-        const users = await userService.getUserByRoleMember();
+        const users = await getUserByRoleMember();
         res.status(200).send({
             status: true,
             message: 'Get all user data role member',
@@ -50,7 +51,7 @@ exports.getUserDataMember = async (req, res) => {
 exports.getUserData = async (req, res) => {
   try {
     const id = req.params.id;
-    const user = await userService.getUserById(id);
+    const user = await getUserById(id);
     if (!user) {
       return res.status(404).json({
         message: 'User not found'
@@ -72,7 +73,7 @@ exports.getUserData = async (req, res) => {
 exports.updateUserData = async (req, res) => {
   try {
     const id = req.params.id;
-    const user = await userService.updateUser(id, req.body);
+    const user = await updateUser(id, req.body);
     if (!user) {
       return res.status(404).json({
         message: 'User not found'
@@ -94,7 +95,7 @@ exports.updateUserData = async (req, res) => {
 exports.deleteUserData = async (req, res) => {
   try {
     const id = req.params.id;
-    const user = await userService.deleteUser(id);
+    const user = await deleteUser(id);
     if (!user) {
       return res.status(404).json({
         message: 'User not found'

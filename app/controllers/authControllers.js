@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const {authService} = require('../services/authService');
-const {userService} = require('../services/userService');
+const {getUserByRefreshToken} = require('../services/authService');
+const { getUserByRoleMember, getUserById, getUserByEmail, updateUser, createUser, deleteUser } = require('../services/userService');
+const {v4:uuid} = require('uuid');
 
 // auth controller exports
 
@@ -10,7 +11,7 @@ exports.registerMember = async (req, res) => {
     try {
         const { firstname, lastname, gender, email, password, confirmPassword, phone } = req.body;
         // check if email already exist
-        const user = await userService.getUserByEmail(email);
+        const user = await getUserByEmail(email);
         if (user) {
             return res.status(400).json({
                 message: 'Email already exist'
@@ -27,6 +28,7 @@ exports.registerMember = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
         // create user
         const data = {
+            id : uuid(),
             firstname,
             lastname,
             gender,
@@ -36,7 +38,7 @@ exports.registerMember = async (req, res) => {
             role: 'member',
             profile_image: 'default.png'
         };
-        const newUser = await userService.createUser(data);
+        const newUser = await createUser(data);
         // send response
         res.status(201).json({
             status: 'success',
@@ -66,7 +68,7 @@ exports.login = async (req, res) => {
   const { email:emailBody, password } = req.body;  
   try {
         // check if email exist
-        const user = await userService.getUserByEmail(emailBody);
+        const user = await getUserByEmail(emailBody);
         if (!user) {
             return res.status(400).json({
                 message: 'Email not found'
@@ -79,12 +81,12 @@ exports.login = async (req, res) => {
                 message: 'Password is incorrect'
             });
         }
-        const { id, firstname, lastname, email, role } = user;
+        const { id, email, role } = user;
         // create token
-        const accessToken = jwt.sign({ id, firstname, lastname, email, role }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
-        const refreshToken = jwt.sign({ id, firstname, lastname, email, role }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+        const accessToken = jwt.sign({ id, email, role }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+        const refreshToken = jwt.sign({ id, email, role }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
 
-        const updatedUser = await userService.updateUser(user.id, { refreshToken });
+        const updatedUser = await updateUser(user.id, { refreshToken });
         res.cookie("refreshToken", refreshToken, {
           httpOnly: true,
           maxAge: 60 * 60 * 24 * 1000,
@@ -123,14 +125,14 @@ exports.logout = async (req, res) => {
         message: "No token found",
       });
     }
-    const user = await userService.getUserByRefreshToken(token);
+    const user = await getUserByRefreshToken(token);
     if (!user) {
       return res.status(203).json({
         status: "error",
         message: "User not found",
       });
     }
-    const updatedUser = await userService.updateUser(user.id, { refreshToken: null });
+    const updatedUser = await updateUser(user.id, { refreshToken: null });
     res.clearCookie("refreshToken");
     res.status(200).json({
       status: "success",
