@@ -12,7 +12,7 @@ router.get('/', (req, res) => {
 // auth routes
 router.post('/register', registerMember);
 router.post('/login', login);
-router.post('/logout', verifyToken, logout);
+router.post('/logout', logout);
 
 // refresh token route
 router.post('/refresh-token', verifyRefreshToken, refreshToken);
