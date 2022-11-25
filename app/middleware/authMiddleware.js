@@ -20,16 +20,6 @@ exports.verifyToken = async (req, res, next) => {
     });
 };
 
-//  Verify Refresh Token
-exports.verifyRefreshToken = async (req, res, next) => {
-    const token = req.cookies.refreshToken;
-    if (!token) return res.status(401).json({ message: 'Unauthorized' });
-    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, async (err, user) => {
-        if (err) return res.status(403).json({ message: 'Forbidden' });
-        req.user = user;
-        next();
-    });
-};
 
 // Verify Admin
 exports.verifyAdmin = async (req, res, next) => {
