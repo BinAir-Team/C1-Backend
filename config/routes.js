@@ -16,4 +16,7 @@ router.post(prefix + '/tickets', controllers.ticketsControllers.createTicket); /
 router.put(prefix + '/tickets/:id', controllers.ticketsControllers.updateTicket); //update a ticket
 router.delete(prefix + '/tickets/:id', controllers.ticketsControllers.deleteTicket); //delete a ticket
 
+//wishlist api
+router.get(prefix + '/wishlists', controllers.wishlistsControllers.getAllWishlists); //get all wishlists
+
 module.exports = router;
