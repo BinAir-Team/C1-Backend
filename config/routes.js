@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const controllers = require('../app/controllers');
+const { authController } = require('../controllers');
+
 
 router.get('/', (req, res) => {
     res.send('Hello World!');
@@ -7,7 +8,6 @@ router.get('/', (req, res) => {
 
 const prefix = '/api/v1';
 
-//user api
-// router.get(prefix + '/users', controllers.authControllers.getAllUsers);
+// auth routes
 
 module.exports = router;
