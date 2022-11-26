@@ -5,9 +5,7 @@ const {users} = require('../models');
 // get user by refresh token
 exports.getUserByRefreshToken = (token) => {
     return users.findOne({
-        where: {
-          refreshToken: token
-        }
+        where: {refresh_token: token}
     });
 }
 

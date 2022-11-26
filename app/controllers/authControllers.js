@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const {getUserByRefreshToken} = require('../services/authService');
+const {getUserByToken} = require('../services/authService');
 const { getUserByRoleMember, getUserById, getUserByEmail, updateUser, createUser, deleteUser } = require('../services/userService');
 const {v4:uuid} = require('uuid');
 
@@ -63,82 +63,98 @@ exports.registerMember = async (req, res) => {
     }
 }
 
-// Login 
+// Login
 exports.login = async (req, res) => {
-  const { email:emailBody, password } = req.body;  
-  try {
+    try {
+        const { email:emailbody, password } = req.body;
         // check if email exist
-        const user = await getUserByEmail(emailBody);
+        const user = await getUserByEmail(emailbody);
         if (!user) {
             return res.status(400).json({
-                message: 'Email not found'
+                message: 'Email does not exist'
             });
         }
         // check if password match
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({
-                message: 'Password is incorrect'
-            });
-        }
-        const { id, email, role } = user;
-        // create token
-        const accessToken = jwt.sign({ id, email, role }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
-        const refreshToken = jwt.sign({ id, email, role }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+        async function comparePassword() {
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                return res.status(400).json({
+                    message: 'Password is incorrect'
+                });
+            }}
+        
+        const { id, firstname, lastname, email, role, profile_image } = user;
+              // create token
+              const accessToken = jwt.sign({ id, firstname, lastname, email, role, profile_image }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+              const refreshToken = jwt.sign({ id, firstname, lastname, email, role, profile_image }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+                // update user
+                const updatedUser = await updateUser(user.id, { refresh_token: refreshToken });
+                // send response
+                res.cookie('refreshToken', refreshToken, {
+                    httpOnly: true,
+                    maxAge: 7 * 24 * 60 * 60 * 1000,
+                });
+                res.status(200).json({
+                    status: 'success',
+                    message: 'Login success',
+                    data: {
+                        id: updatedUser.id,
+                        firstname: updatedUser.firstname,
+                        lastname: updatedUser.lastname,
+                        email: updatedUser.email,
+                        role: updatedUser.role,
+                        profileImage: updatedUser.profileImage,
+                        accessToken,
+                    }
+                });
 
-        const updatedUser = await updateUser(user.id, { refreshToken });
-        res.cookie("refreshToken", refreshToken, {
-          httpOnly: true,
-          maxAge: 60 * 60 * 24 * 1000,
+              
+    } catch (error) {
+        res.status(500).json({
+            message: 'Login Failed',
+            error: error.message
         });
-        const data = {
-          id: updatedUser.id,
-          firstname: updatedUser.firstname,
-          lastname: updatedUser.lastname,
-          email: updatedUser.email,
-          role: updatedUser.role,
-          profileImage: updatedUser.profileImage,
-        };
-        res.status(200).json({
-          status: "success",
-          message: "Login success",
-          data: {
-            accessToken,
-            user: data,
-          },
-        });
-  } catch (error) {
-    res.status(500).json({
-      message: 'Login Failed',
-      error: error.message
-    });
-  }
+    }
 }
+
+
 
 // Logout
 exports.logout = async (req, res) => {
-  try {
-    const token = req.cookies.refreshToken;
+    try {
+        const token = req.cookies.refreshToken;
+        console.log({token:token});
     if (!token) {
       return res.status(203).json({
         status: "error",
         message: "No token found",
       });
     }
-    const user = await getUserByRefreshToken(token);
+    const user = await getUserByToken(token);
     if (!user) {
       return res.status(203).json({
         status: "error",
         message: "User not found",
       });
     }
-    const updatedUser = await updateUser(user.id, { refreshToken: null });
+    const updatedUser = await updateUser(user.id, { refresh_token: null });
+    console.log({updatedUser:updatedUser});
+
     res.clearCookie("refreshToken");
     res.status(200).json({
       status: "success",
       message: "Logout success",
       data: {
         user: updatedUser,
+        id: updatedUser.id,
+        firstname: updatedUser.firstname,
+        lastname: updatedUser.lastname,
+        gender: updatedUser.gender,
+        email: updatedUser.email,
+        phone: updatedUser.phone,
+        role: updatedUser.role,
+        profileImage: updatedUser.profileImage,
+        refreshToken: updatedUser.refresh_token,
       },
     });
   } catch (error) {

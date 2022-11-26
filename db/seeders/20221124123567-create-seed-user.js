@@ -15,6 +15,7 @@ module.exports = {
       gender: null,
       email: "admin@gmail.com",
       password: hashedPassword,
+      refresh_token : null,
       phone: null,
       role: "admin",
       profile_image: null,

@@ -1,9 +1,9 @@
-const {authRepository} = require('../repositories/authRepository');
+const {getUserByRefreshToken} = require('../repositories/authRepository');
 
 // service auth exports
 
 // get user by refresh token
-exports.getUserByRefreshToken = (token) => {
-    return authRepository.getUserByRefreshToken(token);
+exports.getUserByToken = async (token) => {
+    return await getUserByRefreshToken(token);
 }
  
