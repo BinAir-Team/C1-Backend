@@ -9,8 +9,9 @@ module.exports = {
             .then(trans => {
                 let newData = []
                 trans.forEach(a=>{
-                    let split = a.traveler.split("/").map(a=>{return a.split(",")})
-                    newData.push({...a.dataValues,traveler: split})
+                    let json1 = JSON.parse(a.dataValues.traveler);
+                    let json2 = JSON.parse(a.dataValues.quantity);
+                    newData.push({...a.dataValues,traveler: json1,quantity: json2});
                 })
                 res.status(200).json({
                     msg: "get all data success",
@@ -41,8 +42,9 @@ module.exports = {
             }else{
                 let newData = []
                 trans.forEach(a=>{
-                    let split = a.traveler.split("/").map(a=>{return a.split(",")})
-                    newData.push({...a.dataValues,traveler: split})
+                    let json1 = JSON.parse(a.dataValues.traveler);
+                    let json2 = JSON.parse(a.dataValues.quantity);
+                    newData.push({...a.dataValues,traveler: json1,quantity: json2});
                 })
                 res.status(200).json({
                     msg: "get data by userId success",
@@ -89,24 +91,31 @@ module.exports = {
     async createTrans(req, res) {
         const {body} = req;
         const status = "PENDING PAYMENT";
-        const {ticketsId} = req.body;
-        const quantity = req.body.quantity.split(",");
+        const {ticketsId, quantity, traveler} = req.body;
         const ticketdata = await ticketService.getTicketById(ticketsId);
-        
-        const amounts = (ticketdata.dataValues.adult_price * quantity[0])+(ticketdata.dataValues.child_price * quantity[1]);
+        let pp = 1;
+        if(ticketdata.dataValues.type == "Pulang Pergi"){
+            pp = 2
+        }
+        const json_trav = JSON.stringify(traveler);
+        const json_quan = JSON.stringify(quantity);
+        const amounts = ((ticketdata.dataValues.adult_price * quantity.adult)+(ticketdata.dataValues.child_price * quantity.child))*pp;
         
         let newData = {
             ...body,
             id: uuid(),
+            quantity: json_quan,
             amounts: amounts,
+            traveler: json_trav,
             status: status,
             date: new Date()
         }
         transService.createTrans(newData)
         .then(trans => {
             let newData = []
-            let split = trans.dataValues.traveler.split("/").map(a=>{return a.split(",")})
-            newData.push({...trans.dataValues,traveler: split})
+            let json1 = JSON.parse(trans.dataValues.traveler);
+            let json2 = JSON.parse(trans.dataValues.quantity);
+            newData.push({...trans.dataValues,traveler: json1,quantity: json2})
             res.status(200).json({
                 msg: "insert data success",
                 status: 200,
@@ -123,15 +132,16 @@ module.exports = {
     },
     updateTrans(req,res) {
         const {id} = req.params;
-        if(req.image_payment == null){
+        if(req.file == null){
             res.status(404).json({
                 msg: "image verification not found",
                 status: 404,
             });
             return
         }
-        transService.updateTrans(id,{status: "PAYMENT SUCCESS",image_payment: req.image_payment.url})
+        transService.updateTrans(id,{status: "PAYMENT SUCCESS"})
         .then(trans => {
+            fs.unlinkSync(req.file.path);
             if(trans.length == 0){
                 res.status(404).json({
                     msg: "transactions not found",
@@ -167,8 +177,9 @@ module.exports = {
                 return
             }else{
                 let newData = []
-                let split = trans.dataValues.traveler.split("/").map(a=>{return a.split(",")})
-                newData.push({...trans.dataValues,traveler: split})
+                let json1 = JSON.parse(trans.dataValues.traveler);
+                let json2 = JSON.parse(trans.dataValues.quantity);
+                newData.push({...trans.dataValues,traveler: json1,quantity: json2})
                 res.status(200).json({
                     msg: "data by id success",
                     status: 200,

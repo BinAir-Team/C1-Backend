@@ -18,12 +18,11 @@ module.exports = (sequelize, DataTypes) => {
     usersId: DataTypes.UUID,
     ticketsId: DataTypes.UUID,
     amounts: DataTypes.INTEGER,
-    traveler: DataTypes.STRING,
+    traveler: DataTypes.TEXT,
     payment_method: DataTypes.STRING,
     quantity: DataTypes.STRING,
     date: DataTypes.DATE,
     status: DataTypes.STRING,
-    image_payment: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'transactions',

@@ -32,7 +32,7 @@ module.exports = {
       },
       traveler: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       date: {
         allowNull: false,
@@ -40,9 +40,6 @@ module.exports = {
       },
       status: {
         allowNull: false,
-        type: Sequelize.STRING
-      },
-      image_payment: {
         type: Sequelize.STRING
       },
       createdAt: {
