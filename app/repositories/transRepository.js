@@ -2,11 +2,23 @@ const { transactions } = require('../models');
 
 module.exports = {
     findAll() {
-        return transactions.findAll();
+        return transactions.findAll({
+            include:[{
+                model: tickets
+            },{
+                model: users
+            }]
+        });
     },
     
     findByPk(id) {
-        return transactions.findByPk(id);
+        return transactions.findByPk(id,{
+            include:[{
+                model: tickets
+            },{
+                model: users
+            }]
+        });
     },
 
     deleteByPk(id) {
@@ -15,7 +27,12 @@ module.exports = {
 
     findByUserId(id) {
         return transactions.findAll({
-            where: {usersId: id}
+            where: {usersId: id},
+            include: [{
+                model: tickets
+            },{
+                model: users
+            }]
         })
     },
 
