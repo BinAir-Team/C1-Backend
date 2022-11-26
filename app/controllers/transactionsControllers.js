@@ -1,6 +1,7 @@
 const transService = require('../services/transServices');
 const ticketService = require('../services/ticketService');
 const {v4: uuid} = require('uuid');
+const fs = require('fs');
 
 module.exports = {
     getAllTrans(req, res) {
@@ -121,18 +122,15 @@ module.exports = {
         });
     },
     updateTrans(req,res) {
-        const {images} = req.body;
         const {id} = req.params;
-        const dummyImageCheck = true;
-        if(dummyImageCheck != true){
+        if(req.image_payment == null){
             res.status(404).json({
                 msg: "image verification not found",
                 status: 404,
-                err
             });
             return
         }
-        transService.updateTrans(id,{status: "PAYMENT SUCCESS"})
+        transService.updateTrans(id,{status: "PAYMENT SUCCESS",image_payment: req.image_payment.url})
         .then(trans => {
             if(trans.length == 0){
                 res.status(404).json({

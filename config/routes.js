@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const controllers = require('../app/controllers');
+const uploadMiddleware = require('../app/middleware/uploadMiddleware');
+const cloudinaryMiddleware = require('../app/middleware/cloudinaryMiddleware');
 
 router.get('/', (req, res) => {
     res.send('Hello World!');
@@ -30,6 +32,6 @@ router.get(prefix + "/trans/:id", controllers.transControllers.getTransByid)
 router.get(prefix + "/trans/user/:id", controllers.transControllers.getTransByUserId)
 router.post(prefix + "/trans", controllers.transControllers.createTrans)
 router.delete(prefix + "/trans/:id", controllers.transControllers.deleteTransById)
-router.put(prefix + "/trans/:id", controllers.transControllers.updateTrans)
+router.put(prefix + "/trans/:id",uploadMiddleware,cloudinaryMiddleware , controllers.transControllers.updateTrans)
 
 module.exports = router;
