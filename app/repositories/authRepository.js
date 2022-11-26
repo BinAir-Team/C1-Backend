@@ -10,3 +10,15 @@ exports.getUserByRefreshToken = (token) => {
     include: ["notifications", "transactions", "wishlists"],
   });
 };
+
+// put user refresh token
+exports.putUserRefreshToken = (token, id) => {
+  return users.update(
+    { refresh_token: token },
+    {
+      where: { id },
+      returning: true,
+      plain: true,
+    }
+  );
+};

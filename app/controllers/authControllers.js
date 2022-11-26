@@ -1,6 +1,9 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { getUserByToken } = require("../services/authService");
+const {
+  getUserByToken,
+  updateUserRefreshToken,
+} = require("../services/authService");
 const {
   getUserByRoleMember,
   getUserById,
@@ -10,6 +13,36 @@ const {
   deleteUser,
 } = require("../services/userService");
 const { v4: uuid } = require("uuid");
+const { users } = require("../models");
+const SALT = 10;
+
+// ecrypt password
+function encryptPassword(password) {
+  return new Promise((resolve, reject) => {
+    bcrypt.hash(password, SALT, (err, encryptedPassword) => {
+      if (!!err) {
+        reject(err);
+        return;
+      }
+
+      resolve(encryptedPassword);
+    });
+  });
+}
+
+// check password
+function checkPassword(encryptedPassword, password) {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(password, encryptedPassword, (err, isPasswordCorrect) => {
+      if (!!err) {
+        reject(err);
+        return;
+      }
+
+      resolve(isPasswordCorrect);
+    });
+  });
+}
 
 // auth controller exports
 
@@ -39,8 +72,7 @@ exports.registerMember = async (req, res) => {
       });
     }
     // hash password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const encryptedPassword = await encryptPassword(password);
     // create user
     const data = {
       id: uuid(),
@@ -48,7 +80,7 @@ exports.registerMember = async (req, res) => {
       lastname,
       gender,
       email,
-      password: hashedPassword,
+      password: encryptedPassword,
       phone,
       role: "member",
       profile_image: "default.png",
@@ -90,15 +122,12 @@ exports.login = async (req, res) => {
       });
     }
     // check if password match
-    async function comparePassword() {
-      const isMatch = await bcrypt.compare(password, user.password);
-      if (!isMatch) {
-        return res.status(400).json({
-          message: "Password is incorrect",
-        });
-      }
+    const isPasswordCorrect = await checkPassword(user.password, password);
+    if (!isPasswordCorrect) {
+      return res.status(401).json({
+        message: "Password is incorrect",
+      });
     }
-
     const {
       id,
       firstname,
@@ -190,6 +219,59 @@ exports.getCurrentUser = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Get current user failed",
+      error: error.message,
+    });
+  }
+};
+
+// put current user
+exports.putCurrentUser = async (req, res) => {
+  // token not found
+  if (!req.cookies.refreshToken) {
+    return res.status(401).json({
+      status: "error",
+      message: "Unauthorized",
+    });
+  }
+  try {
+    // get token
+    const token = req.cookies.refreshToken;
+    const user = await getUserByToken(token);
+    // user not found
+    if (!user) {
+      return res.status(400).json({
+        status: "error",
+        message: "User not found ",
+      });
+    }
+    // get data
+    const { firstname, lastname, gender, phone, profile_image } = req.body;
+    // update user
+    const updatedUser = await updateUser(user.id, {
+      firstname,
+      lastname,
+      gender,
+      phone,
+      profile_image,
+    });
+    // send response
+    res.status(200).json({
+      status: "success",
+      message: "User updated",
+      data: {
+        id: user.id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        gender: user.gender,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+        profileImage: user.profileImage,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Update current user failed",
       error: error.message,
     });
   }

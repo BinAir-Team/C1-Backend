@@ -7,6 +7,7 @@ const {
   registerMember,
   login,
   getCurrentUser,
+  putCurrentUser,
   logout,
 } = require("../app/controllers/authControllers");
 const {
@@ -26,8 +27,10 @@ router.post("/login", login); //done
 router.delete("/logout", logout); //done
 
 // user routes
+// get current user
 router.get("/user", verifyToken, getCurrentUser); //done
-router.put("/user", verifyToken, updateUserData);
+//  update current user
+router.put("/user", verifyToken, putCurrentUser); //done
 
 // admin CRUD user routes
 router.get("/admin/users", verifyToken, verifyAdmin, getUserDataMember);
