@@ -41,9 +41,19 @@ module.exports = {
         }
     },
 
-    async createTrans(username, password, role) {
+    async createTrans(datas) {
         try{
-            const trans = await transRepository.createTransactions(username, password, role);
+            const trans = await transRepository.createTransactions(datas);
+            return trans;
+        }
+        catch(err) {
+            throw err;
+        }
+    },
+    
+    async updateTrans(id,datas) {
+        try{
+            const trans = await transRepository.updateTransactions(id,datas)
             return trans;
         }
         catch(err) {

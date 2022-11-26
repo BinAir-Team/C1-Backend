@@ -17,10 +17,11 @@ router.put(prefix + '/tickets/:id', controllers.ticketsControllers.updateTicket)
 router.delete(prefix + '/tickets/:id', controllers.ticketsControllers.deleteTicket); //delete a ticket
 
 //transactions api
-router.get(prefix + "/trans", controllers.transController.getAllTrans)
-router.get(prefix + "/trans/:id", controllers.transController.getTransByUserId)
-router.post(prefix + "/trans", controllers.transController.createTrans)
-router.delete(prefix + "/trans/:id", controllers.transController.deleteTransById)
-router.put(prefix + "/trans/:id", controllers.transController.getTransByUserId)
+router.get(prefix + "/trans", controllers.transControllers.getAllTrans)
+router.get(prefix + "/trans/:id", controllers.transControllers.getTransByid)
+router.get(prefix + "/trans/user/:id", controllers.transControllers.getTransByUserId)
+router.post(prefix + "/trans", controllers.transControllers.createTrans)
+router.delete(prefix + "/trans/:id", controllers.transControllers.deleteTransById)
+router.put(prefix + "/trans/:id", controllers.transControllers.updateTrans)
 
 module.exports = router;

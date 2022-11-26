@@ -3,57 +3,36 @@ const { transactions } = require('../models');
 module.exports = {
     findAll() {
         return transactions.findAll({
-            include:[{
-                model: tickets
-            },{
-                model: users
-            }]
+            include: {all:true, attributes: {exclude: ['password','createdAt','updatedAt','role','phone','email','available','init_stock','curr_stock']}},
         });
     },
     
     findByPk(id) {
         return transactions.findByPk(id,{
-            include:[{
-                model: tickets
-            },{
-                model: users
-            }]
+            include: {all: true, attributes: {exclude: ['password','createdAt','updatedAt','role','phone','email','available','init_stock','curr_stock']}}
         });
     },
 
     deleteByPk(id) {
-        return transactions.destroy(id);
+        return transactions.destroy({
+            where: {id}
+        });
     },
 
     findByUserId(id) {
         return transactions.findAll({
             where: {usersId: id},
-            include: [{
-                model: tickets
-            },{
-                model: users
-            }]
+            include: {all: true, attributes: {exclude: ['password','createdAt','updatedAt','role','phone','email','available','init_stock','curr_stock']}}
         })
     },
 
-    findOne({where}){
-        return User.findOne({where : where});
+    updateTransactions(id,datas){
+        return transactions.update(datas,{
+            where: {id}
+        })
     },
 
-    updateTransactions(body){
-        return transactions.update(body)
-    },
-
-    createTransactions(usersId, ticketsId, amounts, traveler, payment_method, quantity, date, status) {
-        return User.create({
-            usersId,
-            ticketsId,
-            amounts,
-            traveler,
-            payment_method,
-            quantity,
-            date,
-            status
-        });
+    createTransactions(datas) {
+        return transactions.create(datas);
     }
 }
