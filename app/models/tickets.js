@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   tickets.init({
     from: DataTypes.STRING,
     to: DataTypes.STRING,
-    hours: DataTypes.DOUBLE,
+    hours: DataTypes.STRING,
     date: DataTypes.DATE,
     type: DataTypes.STRING,
     adult_price: DataTypes.INTEGER,

@@ -5,7 +5,7 @@
   "main": "bin/www",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon dotenv/config bin/www",
+    "start": "nodemon dotenv/config bin/www -V",
     "create": "sequelize-cli db:create",
     "migrate": "sequelize-cli db:migrate",
     "seed": "sequelize-cli db:seed:all"
@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "cloudinary": "^1.32.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
