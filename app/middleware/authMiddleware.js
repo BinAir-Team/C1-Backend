@@ -1,6 +1,16 @@
 const jwt = require("jsonwebtoken");
-const { authService } = require("../services/authService");
-const { userService } = require("../services/userService");
+const {
+  getUserByRefreshToken,
+  putUserRefreshToken,
+} = require("../repositories/authRepository");
+const {
+  getUserByRoleMember,
+  getUserById,
+  getUserByEmail,
+  updateUser,
+  createUser,
+  deleteUser,
+} = require("../services/userService");
 
 // auth middleware exports
 
@@ -21,8 +31,12 @@ exports.verifyToken = async (req, res, next) => {
 
 // Verify Admin
 exports.verifyAdmin = async (req, res, next) => {
-  const user = await userService.getUserById(req.user.id);
-  if (user.role !== "admin")
+  const { id } = req.user;
+  // get user by id
+  const user = await getUserById(id);
+  // check if user role is admin
+  if (user.role !== "admin") {
     return res.status(403).json({ message: "Forbidden" });
+  }
   next();
 };

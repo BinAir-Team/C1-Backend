@@ -13,12 +13,10 @@ exports.findAll = () => {
 
 // findOne
 exports.findOne = (id) => {
-  return users.findByPk({
+  return users.findOne({
     where: {
-      id,
+      id: id,
     },
-    attributes: { exclude: ["password"] },
-    include: ["notifications", "transactions", "wishlists"],
   });
 };
 

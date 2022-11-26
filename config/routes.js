@@ -29,13 +29,15 @@ router.delete("/logout", logout); //done
 // user routes
 // get current user
 router.get("/user", verifyToken, getCurrentUser); //done
-//  update current user
+//  update current user with token
 router.put("/user", verifyToken, putCurrentUser); //done
+// update current user with id
+router.put("/user/:id", verifyToken, updateUserData); //done
 
 // admin CRUD user routes
-router.get("/admin/users", verifyToken, verifyAdmin, getUserDataMember);
-router.post("/admin/users", verifyToken, verifyAdmin, postUserData);
-router.put("/admin/user/:id", verifyToken, verifyAdmin, updateUserData);
-router.delete("/admin/user/:id", verifyToken, verifyAdmin, deleteUserData);
+router.get("/admin/users", verifyToken, verifyAdmin, getUserDataMember); //done
+router.post("/admin/users", verifyToken, verifyAdmin, postUserData); //done
+router.put("/admin/user/:id", verifyToken, verifyAdmin, updateUserData); //done
+router.delete("/admin/user/:id", verifyToken, verifyAdmin, deleteUserData); //done
 
 module.exports = router;

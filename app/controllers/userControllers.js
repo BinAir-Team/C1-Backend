@@ -10,20 +10,27 @@ const {
 
 // user controller
 
+const { v4: uuid } = require("uuid");
+const bcrypt = require("bcrypt");
+const SALT = 10;
+// ecrypt password
+function encryptPassword(password) {
+  return new Promise((resolve, reject) => {
+    bcrypt.hash(password, SALT, (err, encryptedPassword) => {
+      if (!!err) {
+        reject(err);
+        return;
+      }
+
+      resolve(encryptedPassword);
+    });
+  });
+}
+
 // POST user data
 exports.postUserData = async (req, res) => {
-  const {
-    firstname,
-    lastname,
-    gender,
-    email,
-    password,
-    phone,
-    role,
-    profile_image,
-  } = req.body;
   try {
-    const user = await createUser({
+    const {
       firstname,
       lastname,
       gender,
@@ -32,11 +39,33 @@ exports.postUserData = async (req, res) => {
       phone,
       role,
       profile_image,
+    } = req.body;
+    // check email
+    const user = await getUserByEmail(email);
+    if (user) {
+      res.status(400).send({
+        message: "Email already exist",
+      });
+      return;
+    }
+    // encrypt password
+    const encryptedPassword = await encryptPassword(password);
+
+    const data = await createUser({
+      id: uuid(),
+      firstname,
+      lastname,
+      gender,
+      email,
+      password: encryptedPassword,
+      phone,
+      role,
+      profile_image,
     });
     res.status(201).json({
       status: "success",
       message: "User created successfully",
-      data: user,
+      data: data,
     });
   } catch (error) {
     res.status(400).json({
@@ -67,20 +96,45 @@ exports.getUserDataMember = async (req, res) => {
 exports.updateUserData = async (req, res) => {
   try {
     const id = req.params.id;
-    const user = await updateUser(id, req.body);
+    const {
+      firstname,
+      lastname,
+      gender,
+      email,
+      password,
+      phone,
+      role,
+      profile_image,
+    } = req.body;
+    const user = await getUserById(id);
     if (!user) {
       return res.status(404).json({
         message: "User not found",
       });
     }
+    // encrypt password
+    const encryptedPassword = await encryptPassword(password);
+    const data = await updateUser(id, {
+      firstname,
+      lastname,
+      gender,
+      email,
+      password: encryptedPassword,
+      phone,
+      role,
+      profile_image,
+    });
+    // get data after update
+    const userAfterUpdate = await getUserById(id);
     res.status(200).json({
       message: "User data updated successfully",
-      user,
+      data: data,
+      user: userAfterUpdate,
     });
   } catch (error) {
-    res.status(500).json({
-      message: "Error updating user data",
-      error,
+    res.status(400).json({
+      status: "failed",
+      message: error.message,
     });
   }
 };

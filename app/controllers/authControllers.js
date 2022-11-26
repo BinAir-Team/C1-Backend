@@ -213,7 +213,7 @@ exports.getCurrentUser = async (req, res) => {
         email: user.email,
         phone: user.phone,
         role: user.role,
-        profileImage: user.profileImage,
+        profileImage: user.profile_image,
       },
     });
   } catch (error) {
@@ -233,17 +233,17 @@ exports.putCurrentUser = async (req, res) => {
       message: "Unauthorized",
     });
   }
+  // get token
+  const token = req.cookies.refreshToken;
+  const user = await getUserByToken(token);
+  // user not found
+  if (!user) {
+    return res.status(400).json({
+      status: "error",
+      message: "User not found ",
+    });
+  }
   try {
-    // get token
-    const token = req.cookies.refreshToken;
-    const user = await getUserByToken(token);
-    // user not found
-    if (!user) {
-      return res.status(400).json({
-        status: "error",
-        message: "User not found ",
-      });
-    }
     // get data
     const { firstname, lastname, gender, phone, profile_image } = req.body;
     // update user
@@ -259,14 +259,12 @@ exports.putCurrentUser = async (req, res) => {
       status: "success",
       message: "User updated",
       data: {
-        id: user.id,
-        firstname: user.firstname,
-        lastname: user.lastname,
-        gender: user.gender,
-        email: user.email,
-        phone: user.phone,
-        role: user.role,
-        profileImage: user.profileImage,
+        id: updatedUser.id,
+        firstname,
+        lastname,
+        gender,
+        phone,
+        profile_image,
       },
     });
   } catch (error) {
