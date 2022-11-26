@@ -1,7 +1,7 @@
 name: Deploy Development to Railway
 
 on:
-  [push]:
+  push:
     branches: [development]
 
 jobs:
