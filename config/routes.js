@@ -16,6 +16,14 @@ router.post(prefix + '/tickets', controllers.ticketsControllers.createTicket); /
 router.put(prefix + '/tickets/:id', controllers.ticketsControllers.updateTicket); //update a ticket
 router.delete(prefix + '/tickets/:id', controllers.ticketsControllers.deleteTicket); //delete a ticket
 
+//wishlist api
+router.get(prefix + '/wishlists', controllers.wishlistsControllers.getAllWishlists); //get all wishlists
+router.get(prefix + '/wishlists/:id', controllers.wishlistsControllers.getWishlistById); //get a wishlist by id
+router.get(prefix + '/wishlists/user/:usersId', controllers.wishlistsControllers.findWhistlistByUser); //get a wishlist by user id
+router.get(prefix + '/wishlists/ticket/:ticketsId', controllers.wishlistsControllers.findWhistlistByTicket); //get a wishlist by ticket id
+router.post(prefix + '/wishlists', controllers.wishlistsControllers.createWishlist); //create a wishlist
+router.delete(prefix + '/wishlists/:id', controllers.wishlistsControllers.deleteWishlist); //delete a 
+
 //transactions api
 router.get(prefix + "/trans", controllers.transControllers.getAllTrans)
 router.get(prefix + "/trans/:id", controllers.transControllers.getTransByid)
