@@ -1,5 +1,7 @@
-const transController = require('./transactionsControllers');
+const ticketsControllers = require("./ticketsControllers");
+const transControllers = require("./transactionsControllers");
 
 module.exports = {
-    transController,
+    ticketsControllers,
+    transControllers
 }

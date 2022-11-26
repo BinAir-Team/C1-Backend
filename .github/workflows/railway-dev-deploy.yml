@@ -1,7 +1,7 @@
 name: Deploy Development to Railway
 
 on:
-  push:
+  [push,workflow_dispatch]:
     branches: [development]
 
 jobs:
