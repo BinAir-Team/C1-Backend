@@ -107,8 +107,6 @@ exports.login = async (req, res) => {
                         accessToken,
                     }
                 });
-
-              
     } catch (error) {
         res.status(500).json({
             message: 'Login Failed',
@@ -117,50 +115,41 @@ exports.login = async (req, res) => {
     }
 }
 
-
-
 // Logout
 exports.logout = async (req, res) => {
     try {
+        // get token
         const token = req.cookies.refreshToken;
-        console.log({token:token});
     if (!token) {
-      return res.status(203).json({
+        return res.status(203).json({
         status: "error",
         message: "No token found",
-      });
+        });
     }
+    // get user by refresh token
     const user = await getUserByToken(token);
     if (!user) {
-      return res.status(203).json({
+        return res.status(203).json({
         status: "error",
         message: "User not found",
-      });
+        });
     }
+    // update user
     const updatedUser = await updateUser(user.id, { refresh_token: null });
-    console.log({updatedUser:updatedUser});
 
+    // send response
     res.clearCookie("refreshToken");
     res.status(200).json({
-      status: "success",
-      message: "Logout success",
-      data: {
+        status: "success",
+        message: "Logout success",
+        data: {
         user: updatedUser,
-        id: updatedUser.id,
-        firstname: updatedUser.firstname,
-        lastname: updatedUser.lastname,
-        gender: updatedUser.gender,
-        email: updatedUser.email,
-        phone: updatedUser.phone,
-        role: updatedUser.role,
-        profileImage: updatedUser.profileImage,
-        refreshToken: updatedUser.refresh_token,
-      },
+        },
     });
-  } catch (error) {
+    } catch (error) {
     res.status(500).json({
-      message: 'Logout Failed',
-      error: error.message
+        message: 'Logout Failed',
+        error: error.message
     });
-  }
+    }
 }
