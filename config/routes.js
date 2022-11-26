@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const controllers = require('../app/controllers');
+const uploadMiddleware = require('../app/middleware/uploadMiddleware');
 
 router.get('/', (req, res) => {
     res.send('Hello World!');
@@ -22,6 +23,14 @@ router.get(prefix + '/wishlists/:id', controllers.wishlistsControllers.getWishli
 router.get(prefix + '/wishlists/user/:usersId', controllers.wishlistsControllers.findWhistlistByUser); //get a wishlist by user id
 router.get(prefix + '/wishlists/ticket/:ticketsId', controllers.wishlistsControllers.findWhistlistByTicket); //get a wishlist by ticket id
 router.post(prefix + '/wishlists', controllers.wishlistsControllers.createWishlist); //create a wishlist
-router.delete(prefix + '/wishlists/:id', controllers.wishlistsControllers.deleteWishlist); //delete a wishlist
+router.delete(prefix + '/wishlists/:id', controllers.wishlistsControllers.deleteWishlist); //delete a 
+
+//transactions api
+router.get(prefix + "/trans", controllers.transControllers.getAllTrans)
+router.get(prefix + "/trans/:id", controllers.transControllers.getTransByid)
+router.get(prefix + "/trans/user/:id", controllers.transControllers.getTransByUserId)
+router.post(prefix + "/trans", controllers.transControllers.createTrans)
+router.delete(prefix + "/trans/:id", controllers.transControllers.deleteTransById)
+router.put(prefix + "/trans/:id",uploadMiddleware, controllers.transControllers.updateTrans)
 
 module.exports = router;
