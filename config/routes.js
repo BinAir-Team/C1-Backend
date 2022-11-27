@@ -20,28 +20,46 @@ const {
 const controllers = require("../app/controllers");
 const uploadMiddleware = require("../app/middleware/uploadMiddleware");
 
+// prefix
+const prefix = "/api/v1";
+
 router.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
 // auth routes
-router.post("/register", registerMember); //done
-router.post("/login", login); //done
-router.delete("/logout", logout); //done
+router.post(prefix + "/register", registerMember); //done
+router.post(prefix + "/login", login); //done
+router.delete(prefix + "/logout", logout); //done
 
 // user routes
 // get current user
-router.get("/user", verifyToken, getCurrentUser); //done
+router.get(prefix + "/user", verifyToken, getCurrentUser); //done
 //  update current user with token
-router.put("/user", verifyToken, putCurrentUser); //done
+router.put(prefix + "/user", verifyToken, putCurrentUser); //done
 // update current user with id
-router.put("/user/:id", verifyToken, updateUserData); //done
+router.put(prefix + "/user/:id", verifyToken, updateUserData); //done
 
 // admin CRUD user routes
-router.get("/admin/users", verifyToken, verifyAdmin, getUserDataMember); //done
-router.post("/admin/users", verifyToken, verifyAdmin, postUserData); //done
-router.put("/admin/user/:id", verifyToken, verifyAdmin, updateUserData); //done
-router.delete("/admin/user/:id", verifyToken, verifyAdmin, deleteUserData); //done
+router.get(
+  prefix + "/admin/users",
+  verifyToken,
+  verifyAdmin,
+  getUserDataMember
+); //done
+router.post(prefix + "/admin/users", verifyToken, verifyAdmin, postUserData); //done
+router.put(
+  prefix + "/admin/user/:id",
+  verifyToken,
+  verifyAdmin,
+  updateUserData
+); //done
+router.delete(
+  prefix + "/admin/user/:id",
+  verifyToken,
+  verifyAdmin,
+  deleteUserData
+); //done
 
 //ticket api
 router.get(prefix + "/tickets", controllers.ticketsControllers.getAllTickets); //get all tickets
