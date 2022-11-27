@@ -1,36 +1,120 @@
-const router = require('express').Router();
-const controllers = require('../app/controllers');
-const uploadMiddleware = require('../app/middleware/uploadMiddleware');
+const router = require("express").Router();
+const {
+  verifyToken,
+  verifyAdmin,
+} = require("../app/middleware/authMiddleware");
+const {
+  registerMember,
+  login,
+  getCurrentUser,
+  putCurrentUser,
+  logout,
+} = require("../app/controllers/authControllers");
+const {
+  postUserData,
+  getUserDataMember,
+  updateUserData,
+  deleteUserData,
+} = require("../app/controllers/userControllers");
 
-router.get('/', (req, res) => {
-    res.send('Hello World!');
+const controllers = require("../app/controllers");
+const uploadMiddleware = require("../app/middleware/uploadMiddleware");
+
+// prefix
+const prefix = "/api/v1";
+
+router.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
-const prefix = '/api/v1';
+// auth routes
+router.post(prefix + "/register", registerMember); //done
+router.post(prefix + "/login", login); //done
+router.delete(prefix + "/logout", logout); //done
 
-//user api
-// router.get(prefix + '/users', controllers.authControllers.getAllUsers);
+// user routes
+// get current user
+router.get(prefix + "/user", verifyToken, getCurrentUser); //done
+//  update current user with token
+router.put(prefix + "/user", verifyToken, putCurrentUser); //done
+// update current user with id
+router.put(prefix + "/user/:id", verifyToken, updateUserData); //done
+
+// admin CRUD user routes
+router.get(
+  prefix + "/admin/users",
+  verifyToken,
+  verifyAdmin,
+  getUserDataMember
+); //done
+router.post(prefix + "/admin/users", verifyToken, verifyAdmin, postUserData); //done
+router.put(
+  prefix + "/admin/user/:id",
+  verifyToken,
+  verifyAdmin,
+  updateUserData
+); //done
+router.delete(
+  prefix + "/admin/user/:id",
+  verifyToken,
+  verifyAdmin,
+  deleteUserData
+); //done
 
 //ticket api
-router.get(prefix + '/tickets', controllers.ticketsControllers.getAllTickets); //get all tickets
-router.post(prefix + '/tickets', controllers.ticketsControllers.createTicket); //create a ticket
-router.put(prefix + '/tickets/:id', controllers.ticketsControllers.updateTicket); //update a ticket
-router.delete(prefix + '/tickets/:id', controllers.ticketsControllers.deleteTicket); //delete a ticket
+router.get(prefix + "/tickets", controllers.ticketsControllers.getAllTickets); //get all tickets
+router.post(prefix + "/tickets", controllers.ticketsControllers.createTicket); //create a ticket
+router.put(
+  prefix + "/tickets/:id",
+  controllers.ticketsControllers.updateTicket
+); //update a ticket
+router.delete(
+  prefix + "/tickets/:id",
+  controllers.ticketsControllers.deleteTicket
+); //delete a ticket
 
 //wishlist api
-router.get(prefix + '/wishlists', controllers.wishlistsControllers.getAllWishlists); //get all wishlists
-router.get(prefix + '/wishlists/:id', controllers.wishlistsControllers.getWishlistById); //get a wishlist by id
-router.get(prefix + '/wishlists/user/:usersId', controllers.wishlistsControllers.findWhistlistByUser); //get a wishlist by user id
-router.get(prefix + '/wishlists/ticket/:ticketsId', controllers.wishlistsControllers.findWhistlistByTicket); //get a wishlist by ticket id
-router.post(prefix + '/wishlists', controllers.wishlistsControllers.createWishlist); //create a wishlist
-router.delete(prefix + '/wishlists/:id', controllers.wishlistsControllers.deleteWishlist); //delete a 
+router.get(
+  prefix + "/wishlists",
+  controllers.wishlistsControllers.getAllWishlists
+); //get all wishlists
+router.get(
+  prefix + "/wishlists/:id",
+  controllers.wishlistsControllers.getWishlistById
+); //get a wishlist by id
+router.get(
+  prefix + "/wishlists/user/:usersId",
+  controllers.wishlistsControllers.findWhistlistByUser
+); //get a wishlist by user id
+router.get(
+  prefix + "/wishlists/ticket/:ticketsId",
+  controllers.wishlistsControllers.findWhistlistByTicket
+); //get a wishlist by ticket id
+router.post(
+  prefix + "/wishlists",
+  controllers.wishlistsControllers.createWishlist
+); //create a wishlist
+router.delete(
+  prefix + "/wishlists/:id",
+  controllers.wishlistsControllers.deleteWishlist
+); //delete a
 
 //transactions api
-router.get(prefix + "/trans", controllers.transControllers.getAllTrans)
-router.get(prefix + "/trans/:id", controllers.transControllers.getTransByid)
-router.get(prefix + "/trans/user/:id", controllers.transControllers.getTransByUserId)
-router.post(prefix + "/trans", controllers.transControllers.createTrans)
-router.delete(prefix + "/trans/:id", controllers.transControllers.deleteTransById)
-router.put(prefix + "/trans/:id",uploadMiddleware, controllers.transControllers.updateTrans)
+router.get(prefix + "/trans", controllers.transControllers.getAllTrans);
+router.get(prefix + "/trans/:id", controllers.transControllers.getTransByid);
+router.get(
+  prefix + "/trans/user/:id",
+  controllers.transControllers.getTransByUserId
+);
+router.post(prefix + "/trans", controllers.transControllers.createTrans);
+router.delete(
+  prefix + "/trans/:id",
+  controllers.transControllers.deleteTransById
+);
+router.put(
+  prefix + "/trans/:id",
+  uploadMiddleware,
+  controllers.transControllers.updateTrans
+);
 
 module.exports = router;
