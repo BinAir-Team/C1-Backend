@@ -18,7 +18,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      hours: {
+      airport_from: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      airport_to: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      departure_time: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      arrival_time: {
         allowNull: false,
         type: Sequelize.STRING
       },

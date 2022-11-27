@@ -32,7 +32,7 @@ module.exports = {
       },
       traveler: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       date: {
         allowNull: false,
