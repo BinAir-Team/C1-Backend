@@ -9,7 +9,7 @@ const morgan = require("morgan");
 /** Install JSON request parser */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
-app.use(cors({ credentials:true, origin:'http://localhost:8000' }));
+app.use(cors({ credentials:true, origin:['http://localhost:8000' ,'https://binair-backend-production.up.railway.app']}));
 app.use(morgan("dev"));
 app.use(cookieParser());
 
