@@ -151,8 +151,8 @@ router.delete(
 );
 router.put(
   prefix + "/trans/:id",
-  uploadMiddleware,
   verifyToken,
+  uploadMiddleware,
   controllers.transControllers.updateTrans
 );
 
