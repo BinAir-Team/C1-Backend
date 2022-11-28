@@ -19,9 +19,9 @@ router.delete(prefix + '/tickets/:id', controllers.ticketsControllers.deleteTick
 
 //wishlist api
 router.get(prefix + '/wishlists', controllers.wishlistsControllers.getAllWishlists); //get all wishlists
-router.get(prefix + '/wishlists/:id', controllers.wishlistsControllers.getWishlistById); //get a wishlist by id
-router.get(prefix + '/wishlists/user/:usersId', controllers.wishlistsControllers.findWhistlistByUser); //get a wishlist by user id
-router.get(prefix + '/wishlists/ticket/:ticketsId', controllers.wishlistsControllers.findWhistlistByTicket); //get a wishlist by ticket id
+router.get(prefix + '/wishlists/id/:id', controllers.wishlistsControllers.getWishlistById); //get a wishlist by id
+router.get(prefix + '/wishlists/user', controllers.wishlistsControllers.findWhistlistByUser); //get a wishlist by user id
+router.get(prefix + '/wishlists/ticket', controllers.wishlistsControllers.findWhistlistByTicket); //get a wishlist by ticket id
 router.post(prefix + '/wishlists', controllers.wishlistsControllers.createWishlist); //create a wishlist
 router.delete(prefix + '/wishlists/:id', controllers.wishlistsControllers.deleteWishlist); //delete a 
 
