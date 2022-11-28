@@ -17,6 +17,21 @@ module.exports = {
         });
     },
 
+    async getTicketById(req, res){
+        const ticket = await ticketService.getTicketById(req.params.id)
+        .then(ticket => {
+            res.status(200).json(
+                {
+                    message: "Success",
+                    data: ticket
+                }
+            );
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+    },
+
     async createTicket(req, res){
         const id = uuid();
         const from = req.body.from;

@@ -16,7 +16,21 @@ const {
   updateUserData,
   deleteUserData,
 } = require("../app/controllers/userControllers");
-
+const {
+    getAllWishlists,
+    getWishlistById,
+    findWhistlistByUser,
+    findWhistlistByTicket,
+    createWishlist,
+    deleteWishlist
+} = require("../app/controllers/wishlistsControllers");
+const {
+    getAllTickets,
+    getTicketById,
+    createTicket,
+    updateTicket,
+    deleteTicket
+} = require("../app/controllers/ticketsControllers");
 const controllers = require("../app/controllers");
 const uploadMiddleware = require("../app/middleware/uploadMiddleware");
 
@@ -62,42 +76,63 @@ router.delete(
 ); //done
 
 //ticket api
-router.get(prefix + "/tickets", controllers.ticketsControllers.getAllTickets); //get all tickets
-router.post(prefix + "/tickets", controllers.ticketsControllers.createTicket); //create a ticket
+router.get(prefix + "/tickets", 
+    getAllTickets
+); //get all tickets
+router.get(prefix + "/tickets/:id",
+    getTicketById
+); //get ticket by id
+router.post(prefix + "/tickets", 
+    verifyToken,
+    verifyAdmin,
+    createTicket
+); //create a ticket
 router.put(
-  prefix + "/tickets/:id",
-  controllers.ticketsControllers.updateTicket
+    prefix + "/tickets/:id",
+    verifyToken,
+    verifyAdmin,
+    updateTicket
 ); //update a ticket
 router.delete(
-  prefix + "/tickets/:id",
-  controllers.ticketsControllers.deleteTicket
+    prefix + "/tickets/:id",
+    verifyToken,
+    verifyAdmin,
+    deleteTicket
 ); //delete a ticket
 
 //wishlist api
 router.get(
-  prefix + "/wishlists",
-  controllers.wishlistsControllers.getAllWishlists
+    prefix + "/wishlists",
+    verifyToken,
+    verifyAdmin,
+    getAllWishlists
 ); //get all wishlists
 router.get(
-  prefix + "/wishlists/:id",
-  controllers.wishlistsControllers.getWishlistById
+    prefix + "/wishlists/id/:id",
+    verifyToken,
+    getWishlistById
 ); //get a wishlist by id
 router.get(
-  prefix + "/wishlists/user/:usersId",
-  controllers.wishlistsControllers.findWhistlistByUser
+    prefix + "/wishlists/user/",
+    verifyToken,
+    findWhistlistByUser
 ); //get a wishlist by user id
 router.get(
-  prefix + "/wishlists/ticket/:ticketsId",
-  controllers.wishlistsControllers.findWhistlistByTicket
+    prefix + "/wishlists/ticket/",
+    verifyToken,
+    verifyAdmin,
+    findWhistlistByTicket
 ); //get a wishlist by ticket id
 router.post(
-  prefix + "/wishlists",
-  controllers.wishlistsControllers.createWishlist
+    prefix + "/wishlists",
+    verifyToken,
+    createWishlist
 ); //create a wishlist
 router.delete(
-  prefix + "/wishlists/:id",
-  controllers.wishlistsControllers.deleteWishlist
-); //delete a
+    prefix + "/wishlists/:id",
+    verifyToken,
+    deleteWishlist
+); //delete a wishlist
 
 //transactions api
 router.get(prefix + "/trans", controllers.transControllers.getAllTrans);

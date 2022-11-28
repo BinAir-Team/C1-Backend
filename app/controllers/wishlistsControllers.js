@@ -14,6 +14,7 @@ module.exports = {
 
     async getWishlistById(req, res){
         try{
+            console.log("params id" ,req.params.id);
             const wishlist = await wishlistService.getWishlistById(req.params.id);
             res.status(200).send(wishlist);
         }
@@ -24,7 +25,8 @@ module.exports = {
 
     async findWhistlistByUser(req, res){
         try{
-            const wishlist = await wishlistService.findWhistlistByUser(req.params.usersId);
+            console.log("query user id" ,req.query.usersId);
+            const wishlist = await wishlistService.findWhistlistByUser(req.query.usersId);
             res.status(200).send(wishlist);
         }
         catch(err){
@@ -34,7 +36,8 @@ module.exports = {
 
     async findWhistlistByTicket(req, res){
         try{
-            const wishlist = await wishlistService.findWhistlistByTicket(req.params.ticketsId);
+            console.log("query ticket id" ,req.query.ticketsId);
+            const wishlist = await wishlistService.findWhistlistByTicket(req.query.ticketsId);
             res.status(200).send(wishlist);
         }
         catch(err){
