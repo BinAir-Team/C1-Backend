@@ -93,9 +93,11 @@ module.exports = {
         const status = "PENDING PAYMENT";
         const {ticketsId, quantity, traveler} = req.body;
         const ticketdata = await ticketService.getTicketById(ticketsId);
-        let pp = 1;
+        let pp = 0;
         if(ticketdata.dataValues.type == "Pulang Pergi"){
-            pp = 2
+            pp = 2;
+        }else{
+            pp = 1;
         }
         const json_trav = JSON.stringify(traveler);
         const json_quan = JSON.stringify(quantity);
