@@ -128,6 +128,7 @@ exports.login = async (req, res) => {
         message: "Password is incorrect",
       });
     }
+    console.log("Email and Password is correct");
     const {
       id,
       firstname,
