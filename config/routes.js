@@ -48,13 +48,13 @@ router.get("/", (req, res) => {
 });
 
 // auth routes
-router.post(prefix + "/register", registerMember); //done
-router.post(prefix + "/login", login); //done
-router.delete(prefix + "/logout", logout); //done
+router.post(prefix + "/register", registerMember);
+router.post(prefix + "/login", login);
+router.delete(prefix + "/logout", logout);
 
 // user routes
 // get current user data (token required)
-router.get(prefix + "/user", verifyToken, getCurrentUserData); //done
+router.get(prefix + "/user", verifyToken, getCurrentUserData);
 //  update current user data (token required)
 router.put(
   prefix + "/user",
@@ -62,7 +62,7 @@ router.put(
   imageUpload.single("profile_image"),
   uploadWithCloudinary,
   putCurrentUserData
-); //done
+);
 
 // admin CRUD user routes
 router.get(
@@ -70,20 +70,22 @@ router.get(
   verifyToken,
   verifyAdmin,
   getUserDataMember
-); //done
-router.post(prefix + "/admin/users", verifyToken, verifyAdmin, postUserData); //done
+);
+router.post(prefix + "/admin/users", verifyToken, verifyAdmin, postUserData);
 router.put(
   prefix + "/admin/user/:id",
   verifyToken,
   verifyAdmin,
+  imageUpload.single("profile_image"),
+  uploadWithCloudinary,
   updateUserData
-); //done
+);
 router.delete(
   prefix + "/admin/user/:id",
   verifyToken,
   verifyAdmin,
   deleteUserData
-); //done
+);
 
 //ticket api
 router.get(prefix + "/tickets", getAllTickets); //get all tickets
