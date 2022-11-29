@@ -30,16 +30,7 @@ function encryptPassword(password) {
 // POST user data
 exports.postUserData = async (req, res) => {
   try {
-    const {
-      firstname,
-      lastname,
-      gender,
-      email,
-      password,
-      phone,
-      role,
-      profile_image,
-    } = req.body;
+    const { firstname, lastname, gender, email, password, phone } = req.body;
     // check email
     const user = await getUserByEmail(email);
     if (user) {
@@ -57,10 +48,11 @@ exports.postUserData = async (req, res) => {
       lastname,
       gender,
       email,
+      role: "member",
       password: encryptedPassword,
       phone,
-      role,
-      profile_image,
+      profile_image:
+        "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png",
     });
     res.status(201).json({
       status: "success",
@@ -82,7 +74,7 @@ exports.getUserDataMember = async (req, res) => {
     res.status(200).send({
       status: true,
       message: "Get all user data role member",
-      data: users,
+      data: user,
     });
   } catch (error) {
     res.status(500).send({

@@ -32,7 +32,13 @@ const {
   deleteTicket,
 } = require("../app/controllers/ticketsControllers");
 const controllers = require("../app/controllers");
+
+// middleware
 const uploadMiddleware = require("../app/middleware/uploadMiddleware");
+const imageUpload = require("../app/middleware/imageUploadMiddleware");
+const {
+  uploadWithCloudinary,
+} = require("../app/middleware/cloudinaryMiddleware");
 
 // prefix
 const prefix = "/api/v1";
@@ -42,15 +48,21 @@ router.get("/", (req, res) => {
 });
 
 // auth routes
-router.post(prefix + "/register", registerMember); //done
-router.post(prefix + "/login", login); //done
-router.delete(prefix + "/logout", logout); //done
+router.post(prefix + "/register", registerMember);
+router.post(prefix + "/login", login);
+router.delete(prefix + "/logout", logout);
 
 // user routes
-// get current user data
-router.get(prefix + "/user", verifyToken, getCurrentUserData); //done
-//  update current user with token
-router.put(prefix + "/user", verifyToken, putCurrentUserData); //done
+// get current user data (token required)
+router.get(prefix + "/user", verifyToken, getCurrentUserData);
+//  update current user data (token required)
+router.put(
+  prefix + "/user",
+  verifyToken,
+  imageUpload.single("profile_image"),
+  uploadWithCloudinary,
+  putCurrentUserData
+);
 
 // admin CRUD user routes
 router.get(
@@ -58,20 +70,22 @@ router.get(
   verifyToken,
   verifyAdmin,
   getUserDataMember
-); //done
-router.post(prefix + "/admin/users", verifyToken, verifyAdmin, postUserData); //done
+);
+router.post(prefix + "/admin/users", verifyToken, verifyAdmin, postUserData);
 router.put(
   prefix + "/admin/user/:id",
   verifyToken,
   verifyAdmin,
+  imageUpload.single("profile_image"),
+  uploadWithCloudinary,
   updateUserData
-); //done
+);
 router.delete(
   prefix + "/admin/user/:id",
   verifyToken,
   verifyAdmin,
   deleteUserData
-); //done
+);
 
 //ticket api
 router.get(prefix + "/tickets", getAllTickets); //get all tickets
@@ -94,6 +108,17 @@ router.post(prefix + "/wishlists", verifyToken, createWishlist); //create a wish
 router.delete(prefix + "/wishlists/:id", verifyToken, deleteWishlist); //delete a wishlist
 
 //transactions api
+router.get(
+  prefix + "/trans",
+  verifyToken,
+  verifyAdmin,
+  controllers.transControllers.getAllTrans
+);
+router.get(
+  prefix + "/trans/:id",
+  verifyToken,
+  controllers.transControllers.getTransByid
+);
 router.get(
   prefix + "/trans",
   verifyToken,
