@@ -135,19 +135,23 @@ router.delete(
 ); //delete a wishlist
 
 //transactions api
-router.get(prefix + "/trans", controllers.transControllers.getAllTrans);
-router.get(prefix + "/trans/:id", controllers.transControllers.getTransByid);
+router.get(prefix + "/trans",verifyToken, verifyAdmin, controllers.transControllers.getAllTrans);
+router.get(prefix + "/trans/:id",verifyToken, controllers.transControllers.getTransByid);
 router.get(
   prefix + "/trans/user/:id",
+  verifyToken,
   controllers.transControllers.getTransByUserId
 );
-router.post(prefix + "/trans", controllers.transControllers.createTrans);
+router.post(prefix + "/trans",verifyToken, controllers.transControllers.createTrans);
 router.delete(
   prefix + "/trans/:id",
+  verifyToken,
+  verifyAdmin,
   controllers.transControllers.deleteTransById
 );
 router.put(
   prefix + "/trans/:id",
+  verifyToken,
   uploadMiddleware,
   controllers.transControllers.updateTrans
 );
