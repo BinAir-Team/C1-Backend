@@ -32,7 +32,13 @@ const {
   deleteTicket,
 } = require("../app/controllers/ticketsControllers");
 const controllers = require("../app/controllers");
+
+// middleware
 const uploadMiddleware = require("../app/middleware/uploadMiddleware");
+const imageUpload = require("../app/middleware/imageUploadMiddleware");
+const {
+  uploadWithCloudinary,
+} = require("../app/middleware/cloudinaryMiddleware");
 
 // prefix
 const prefix = "/api/v1";
@@ -47,10 +53,16 @@ router.post(prefix + "/login", login); //done
 router.delete(prefix + "/logout", logout); //done
 
 // user routes
-// get current user data
+// get current user data (token required)
 router.get(prefix + "/user", verifyToken, getCurrentUserData); //done
-//  update current user with token
-router.put(prefix + "/user", verifyToken, putCurrentUserData); //done
+//  update current user data (token required)
+router.put(
+  prefix + "/user",
+  verifyToken,
+  imageUpload.single("profile_image"),
+  uploadWithCloudinary,
+  putCurrentUserData
+); //done
 
 // admin CRUD user routes
 router.get(
