@@ -28,7 +28,7 @@ module.exports = {
             });
     },
     getTransByUserId(req, res) {
-        const {id} = req.params
+        const {id} = req.user
 
         transService.findByUser(id)
         .then(trans => {
@@ -90,6 +90,7 @@ module.exports = {
     },
     async createTrans(req, res) {
         const {body} = req;
+        const {id} = req.user;
         const status = "PENDING PAYMENT";
         const {ticketsId, quantity, traveler} = req.body;
         const ticketdata = await ticketService.getTicketById(ticketsId);
@@ -105,6 +106,7 @@ module.exports = {
         
         let newData = {
             ...body,
+            usersId: id,
             id: uuid(),
             quantity: json_quan,
             amounts: amounts,
