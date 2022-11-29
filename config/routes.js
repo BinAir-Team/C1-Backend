@@ -106,7 +106,7 @@ router.get(
   controllers.transControllers.getTransByid
 );
 router.get(
-  prefix + "/trans/user/:id",
+  prefix + "/trans/user",
   verifyToken,
   controllers.transControllers.getTransByUserId
 );
