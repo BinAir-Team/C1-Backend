@@ -78,7 +78,7 @@ exports.postUserData = async (req, res) => {
 // GET user data role member
 exports.getUserDataMember = async (req, res) => {
   try {
-    const users = await getUserByRoleMember();
+    const user = await getUserByRoleMember();
     res.status(200).send({
       status: true,
       message: "Get all user data role member",

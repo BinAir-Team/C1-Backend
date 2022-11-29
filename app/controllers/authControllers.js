@@ -83,7 +83,8 @@ exports.registerMember = async (req, res) => {
       password: encryptedPassword,
       phone,
       role: "member",
-      profile_image: "default.png",
+      profile_image:
+        "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png",
     };
     const newUser = await createUser(data);
     // send response
@@ -128,7 +129,6 @@ exports.login = async (req, res) => {
         message: "Password is incorrect",
       });
     }
-    console.log("Email and Password is correct");
     const {
       id,
       firstname,
@@ -182,19 +182,11 @@ exports.login = async (req, res) => {
   }
 };
 
-// get current user
-exports.getCurrentUser = async (req, res) => {
-  // token not found
-  if (!req.cookies.refreshToken) {
-    return res.status(401).json({
-      status: "error",
-      message: "Unauthorized",
-    });
-  }
+// get Current User By id
+exports.getCurrentUserData = async (req, res) => {
   try {
-    // get token
-    const token = req.cookies.refreshToken;
-    const user = await getUserByToken(token);
+    // found user req user id
+    const user = await getUserById(req.user.id);
     // user not found
     if (!user) {
       return res.status(400).json({
@@ -226,7 +218,7 @@ exports.getCurrentUser = async (req, res) => {
 };
 
 // put current user
-exports.putCurrentUser = async (req, res) => {
+exports.putCurrentUserData = async (req, res) => {
   // token not found
   if (!req.cookies.refreshToken) {
     return res.status(401).json({
@@ -234,9 +226,7 @@ exports.putCurrentUser = async (req, res) => {
       message: "Unauthorized",
     });
   }
-  // get token
-  const token = req.cookies.refreshToken;
-  const user = await getUserByToken(token);
+  const user = await getUserById(req.user.id);
   // user not found
   if (!user) {
     return res.status(400).json({
