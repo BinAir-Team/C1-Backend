@@ -14,7 +14,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.UUID
       },
-      tiketsId: {
+      ticketsId: {
         allowNull: false,
         type: Sequelize.UUID
       },
@@ -32,7 +32,7 @@ module.exports = {
       },
       traveler: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       date: {
         allowNull: false,
