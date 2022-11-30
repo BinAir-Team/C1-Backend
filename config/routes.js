@@ -97,7 +97,7 @@ router.delete(prefix + "/tickets/:id", verifyToken, verifyAdmin, deleteTicket); 
 //wishlist api
 router.get(prefix + "/wishlists", verifyToken, verifyAdmin, getAllWishlists); //get all wishlists
 router.get(prefix + "/wishlists/id/:id", verifyToken, getWishlistById); //get a wishlist by id
-router.get(prefix + "/wishlists/user/", verifyToken, findWhistlistByUser); //get a wishlist by user id
+router.get(prefix + "/wishlists/user", verifyToken, findWhistlistByUser); //get a wishlist by user id
 router.get(
   prefix + "/wishlists/ticket/",
   verifyToken,
