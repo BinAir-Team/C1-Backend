@@ -89,7 +89,7 @@ router.delete(
 
 //ticket api
 router.get(prefix + "/tickets", getAllTickets); //get all tickets
-router.get(prefix + "/tickets/:id", getTicketById); //get ticket by id
+router.get(prefix + "/tickets/id/:id", getTicketById); //get ticket by id
 router.post(prefix + "/tickets", verifyToken, verifyAdmin, createTicket); //create a ticket
 router.put(prefix + "/tickets/:id", verifyToken, verifyAdmin, updateTicket); //update a ticket
 router.delete(prefix + "/tickets/:id", verifyToken, verifyAdmin, deleteTicket); //delete a ticket
