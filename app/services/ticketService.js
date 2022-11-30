@@ -1,9 +1,10 @@
 const ticketRepository = require('../repositories/ticketRepository');
 
 module.exports = {
-    async getAllTickets(){
+    async getAllTickets(from, to, dept, arr){
         try{
-            const tickets = await ticketRepository.getAllTickets();
+            const tickets = await ticketRepository.getAllTickets(from, to, dept, arr);
+            // console.log(tickets);
             return tickets;
         }
         catch(err){

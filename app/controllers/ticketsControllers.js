@@ -3,7 +3,14 @@ const {v4:uuid} = require('uuid');
 
 module.exports = {
     async getAllTickets(req, res){
-        const tickets = await ticketService.getAllTickets()
+        const queryFrom = req.query.from;
+        const queryTo = req.query.to;
+        const from = queryFrom ? queryFrom.split('-')[0] || '' : '';
+        const to = queryTo ? queryTo.split('-')[0] || '' : '';
+        const dept = queryFrom ? queryFrom.split('-')[1] || '' : '';
+        const arr = queryTo ? queryTo.split('-')[1] || '' : '';
+        console.log(from, to, dept, arr);
+        const tickets = await ticketService.getAllTickets(from, to, dept, arr)
         .then(tickets => {
             res.status(200).json(
                 {
