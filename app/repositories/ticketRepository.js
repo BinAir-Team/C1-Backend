@@ -7,16 +7,16 @@ module.exports = {
             where:{
                 [Op.and]:{
                     from: {
-                        [Op.like]: `%${from}%`
+                        [Op.iLike]: `%${from}%`
                     },
                     to: {
-                        [Op.like]: `%${to}%`
+                        [Op.iLike]: `%${to}%`
                     },
                     airport_from: {
-                        [Op.like]: `%${dept}%`
+                        [Op.iLike]: `%${dept}%`
                     },
                     airport_to: {
-                        [Op.like]: `%${arr}%`
+                        [Op.iLike]: `%${arr}%`
                     }
                 }
             }
