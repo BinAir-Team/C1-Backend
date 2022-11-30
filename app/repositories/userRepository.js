@@ -17,6 +17,7 @@ exports.findOne = (id) => {
     where: {
       id: id,
     },
+    include: ["notifications", "transactions", "wishlists"],
   });
 };
 
