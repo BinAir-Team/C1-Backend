@@ -1,5 +1,7 @@
 const promoService = require("../services/promoService");
 
+const { v4: uuid } = require("uuid");
+
 module.exports = {
   // Get all promotions
   getAllPromos: async (req, res) => {
@@ -38,21 +40,12 @@ module.exports = {
   // Create a new promotion
   createPromo: async (req, res) => {
     try {
-      const {
-        title,
-        desc,
-        period,
-        travel_period,
-        promo_code,
-        discount,
-        terms,
-        promo_image,
-      } = req.body;
+      const { title, desc, promo_code, discount, terms, promo_image } =
+        req.body;
       const newPromo = await promoService.createPromo({
+        id: uuid(),
         title,
         desc,
-        period,
-        travel_period,
         promo_code,
         discount,
         terms,
@@ -75,30 +68,21 @@ module.exports = {
   updatePromo: async (req, res) => {
     try {
       const id = req.params.id;
-      const {
-        title,
-        desc,
-        period,
-        travel_period,
-        promo_code,
-        discount,
-        terms,
-        promo_image,
-      } = req.body;
+      const { title, desc, promo_code, discount, terms, promo_image } =
+        req.body;
       const promo = await promoService.updatePromo(id, {
         title,
         desc,
-        period,
-        travel_period,
         promo_code,
         discount,
         terms,
         promo_image,
       });
+      const updatedPromo = await promoService.getPromoById(id);
       res.status(200).json({
         status: "success",
         message: "Success",
-        data: promo,
+        data: updatedPromo,
       });
     } catch (err) {
       res.status(500).json({

@@ -1,8 +1,6 @@
 const router = require("express").Router();
-const {
-  verifyToken,
-  verifyAdmin,
-} = require("../app/middleware/authMiddleware");
+
+// import auth controller
 const {
   registerMember,
   login,
@@ -10,12 +8,25 @@ const {
   putCurrentUserData,
   logout,
 } = require("../app/controllers/authControllers");
+// import promo controller
+
+const {
+  getAllPromos,
+  getPromoById,
+  createPromo,
+  updatePromo,
+  deletePromo,
+} = require("../app/controllers/promoControllers");
+
+// import user controller
 const {
   postUserData,
   getUserDataMember,
   updateUserData,
   deleteUserData,
 } = require("../app/controllers/userControllers");
+
+// import wishlist controller
 const {
   getAllWishlists,
   getWishlistById,
@@ -24,6 +35,8 @@ const {
   createWishlist,
   deleteWishlist,
 } = require("../app/controllers/wishlistsControllers");
+
+// import ticket controller
 const {
   getAllTickets,
   getTicketById,
@@ -31,7 +44,15 @@ const {
   updateTicket,
   deleteTicket,
 } = require("../app/controllers/ticketsControllers");
+
+// import order controller
 const controllers = require("../app/controllers");
+
+// import auth middleware
+const {
+  verifyToken,
+  verifyAdmin,
+} = require("../app/middleware/authMiddleware");
 
 // middleware
 const uploadMiddleware = require("../app/middleware/uploadMiddleware");
@@ -85,6 +106,35 @@ router.delete(
   verifyToken,
   verifyAdmin,
   deleteUserData
+);
+
+// promo routes for user
+router.get(prefix + "/promos", getAllPromos);
+router.get(prefix + "/promo/:id", getPromoById);
+
+// admin CRUD promo routes
+router.get(prefix + "/admin/promos", verifyToken, verifyAdmin, getAllPromos);
+router.post(
+  prefix + "/admin/promos",
+  verifyToken,
+  verifyAdmin,
+  imageUpload.single("promo_image"),
+  uploadWithCloudinary,
+  createPromo
+);
+router.put(
+  prefix + "/admin/promo/:id",
+  verifyToken,
+  verifyAdmin,
+  imageUpload.single("promo_image"),
+  uploadWithCloudinary,
+  updatePromo
+);
+router.delete(
+  prefix + "/admin/promo/:id",
+  verifyToken,
+  verifyAdmin,
+  deletePromo
 );
 
 //ticket api
