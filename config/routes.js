@@ -153,4 +153,15 @@ router.put(
   controllers.transControllers.updateTrans
 );
 
+//search API
+router.get(
+  prefix + "/search/city/:key",
+  controllers.searchControllers.getCity
+);
+router.get(
+  prefix + "/search/airport/:key",
+  controllers.searchControllers.getAirport
+);
+
+
 module.exports = router;
