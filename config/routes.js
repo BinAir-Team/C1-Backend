@@ -85,6 +85,10 @@ router.put(
   putCurrentUserData
 );
 
+// promo routes for user
+router.get(prefix + "/promos", verifyToken, getAllPromos);
+router.get(prefix + "/promo/:id", verifyToken, getPromoById);
+
 // admin CRUD user routes
 router.get(
   prefix + "/admin/users",
@@ -107,10 +111,6 @@ router.delete(
   verifyAdmin,
   deleteUserData
 );
-
-// promo routes for user
-router.get(prefix + "/promos", getAllPromos);
-router.get(prefix + "/promo/:id", getPromoById);
 
 // admin CRUD promo routes
 router.get(prefix + "/admin/promos", verifyToken, verifyAdmin, getAllPromos);
