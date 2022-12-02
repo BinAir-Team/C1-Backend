@@ -204,10 +204,6 @@ router.put(
 );
 
 //search API
-router.get(prefix + "/search/city/:key", controllers.searchControllers.getCity);
-router.get(
-  prefix + "/search/airport/:key",
-  controllers.searchControllers.getAirport
-);
+router.get(prefix + "/search", controllers.searchControllers.getSearch);
 
 module.exports = router;
