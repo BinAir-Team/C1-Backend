@@ -1,28 +1,13 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const router = require("../config/routes");
-
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const morgan = require("morgan");
+const router = require('../config/routes');
 
 /** Install JSON request parser */
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(
-  cors({
-    credentials: true,
-    origin: [
-      "http://localhost:8000",
-      "https://binair-backend-production.up.railway.app",
-    ],
-  })
-);
-app.use(morgan("dev"));
-app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }))
 
 /** Install express-session */
-app.set("trust proxy", 1); // trust first proxy
+app.set('trust proxy', 1) // trust first proxy
 
 app.use(router);
 

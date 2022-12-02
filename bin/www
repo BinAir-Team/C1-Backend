@@ -1,6 +1,3 @@
-#!/usr/bin/env node
-
-require('dotenv').config();
 const app = require("../app/index")
 const port = process.env.PORT || 8000;
 
