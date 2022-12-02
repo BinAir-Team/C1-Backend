@@ -20,6 +20,9 @@ const uploadWithCloudinary = async (req, res, next) => {
       req.body.profile_image = uploadResult.secure_url
         ? uploadResult.secure_url
         : null;
+      req.body.promo_image = uploadResult.secure_url
+        ? uploadResult.secure_url
+        : null;
       next();
     }
   } catch (error) {

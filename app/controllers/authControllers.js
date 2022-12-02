@@ -62,13 +62,17 @@ exports.registerMember = async (req, res) => {
     const user = await getUserByEmail(email);
     if (user) {
       return res.status(400).json({
+        status: "error",
         message: "Email already exist",
+        data: {},
       });
     }
     // check if password and confirm password match
     if (password !== confirmPassword) {
       return res.status(400).json({
+        status: "error",
         message: "Password and confirm password does not match",
+        data: {},
       });
     }
     // hash password
@@ -105,8 +109,10 @@ exports.registerMember = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
+      status: "error",
       message: "Register Failed",
       error: error.message,
+      data: {},
     });
   }
 };
@@ -119,14 +125,18 @@ exports.login = async (req, res) => {
     const user = await getUserByEmail(emailbody);
     if (!user) {
       return res.status(400).json({
+        status: "error",
         message: "Email does not exist",
+        data: {},
       });
     }
     // check if password match
     const isPasswordCorrect = await checkPassword(user.password, password);
     if (!isPasswordCorrect) {
       return res.status(401).json({
+        status: "error",
         message: "Password is incorrect",
+        data: {},
       });
     }
     const {
@@ -176,8 +186,10 @@ exports.login = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
+      status: "error",
       message: "Login Failed",
       error: error.message,
+      data: {},
     });
   }
 };
@@ -192,6 +204,7 @@ exports.getCurrentUserData = async (req, res) => {
       return res.status(400).json({
         status: "error",
         message: "User not found ",
+        data: {},
       });
     }
     // send response
@@ -211,8 +224,10 @@ exports.getCurrentUserData = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
+      status: "error",
       message: "Get current user failed",
       error: error.message,
+      data: {},
     });
   }
 };
@@ -224,6 +239,7 @@ exports.putCurrentUserData = async (req, res) => {
     return res.status(401).json({
       status: "error",
       message: "Unauthorized",
+      data: {},
     });
   }
   const user = await getUserById(req.user.id);
@@ -232,6 +248,7 @@ exports.putCurrentUserData = async (req, res) => {
     return res.status(400).json({
       status: "error",
       message: "User not found ",
+      data: {},
     });
   }
   try {
@@ -260,8 +277,10 @@ exports.putCurrentUserData = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
+      status: "error",
       message: "Update current user failed",
       error: error.message,
+      data: {},
     });
   }
 };
@@ -275,6 +294,7 @@ exports.logout = async (req, res) => {
       return res.status(203).json({
         status: "error",
         message: "No token found",
+        data: {},
       });
     }
     // get user by refresh token
@@ -283,6 +303,7 @@ exports.logout = async (req, res) => {
       return res.status(203).json({
         status: "error",
         message: "User not found",
+        data: {},
       });
     }
     // update user
@@ -299,8 +320,10 @@ exports.logout = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
+      status: "error",
       message: "Logout Failed",
       error: error.message,
+      data: {},
     });
   }
 };
