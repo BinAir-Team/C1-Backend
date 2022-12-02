@@ -1,7 +1,7 @@
 const searchRepository = require('../repositories/searchRepository');
 
 module.exports = {
-    async findSearch(key) {
+    async findSearch() {
         try{
             const search = await searchRepository.findSearch();
             return search;

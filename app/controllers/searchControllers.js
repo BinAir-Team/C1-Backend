@@ -5,14 +5,14 @@ module.exports = {
             searchService.findSearch()
             .then(search => {
                 res.status(200).json({
-                    msg: "get data success",
+                    msg: "find data success",
                     status: 200,
                     data: search
                 });
             })
             .catch(err => {
                 res.status(500).json({
-                    msg: "error get data",
+                    msg: "error find data",
                     status: 500,
                     err
                 });
