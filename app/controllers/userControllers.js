@@ -35,7 +35,9 @@ exports.postUserData = async (req, res) => {
     const user = await getUserByEmail(email);
     if (user) {
       res.status(400).send({
+        status: "error",
         message: "Email already exist",
+        data: {},
       });
       return;
     }
@@ -63,6 +65,7 @@ exports.postUserData = async (req, res) => {
     res.status(400).json({
       status: "failed",
       message: error.message,
+      data: {},
     });
   }
 };
@@ -72,14 +75,15 @@ exports.getUserDataMember = async (req, res) => {
   try {
     const user = await getUserByRoleMember();
     res.status(200).send({
-      status: true,
+      status: "true",
       message: "Get all user data role member",
       data: user,
     });
   } catch (error) {
     res.status(500).send({
-      status: false,
+      status: "false",
       message: error.message,
+      data: {},
     });
   }
 };
@@ -101,7 +105,9 @@ exports.updateUserData = async (req, res) => {
     const user = await getUserById(id);
     if (!user) {
       return res.status(404).json({
+        status: "error",
         message: "User not found",
+        data: {},
       });
     }
     // encrypt password
@@ -119,6 +125,7 @@ exports.updateUserData = async (req, res) => {
     // get data after update
     const userAfterUpdate = await getUserById(id);
     res.status(200).json({
+      status: "success",
       message: "User data updated successfully",
       data: data,
       user: userAfterUpdate,
@@ -127,6 +134,8 @@ exports.updateUserData = async (req, res) => {
     res.status(400).json({
       status: "failed",
       message: error.message,
+      data: {},
+      user: {},
     });
   }
 };
@@ -138,15 +147,19 @@ exports.deleteUserData = async (req, res) => {
     const user = await deleteUser(id);
     if (!user) {
       return res.status(404).json({
+        status: "error",
         message: "User not found",
+        data: {},
       });
     }
     res.status(200).json({
+      status: "success",
       message: "User data deleted successfully",
       user,
     });
   } catch (error) {
     res.status(500).json({
+      status: "error",
       message: "Error deleting user data",
       error,
     });
