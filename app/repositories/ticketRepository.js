@@ -1,8 +1,26 @@
 const {tickets} = require("../models");
+const {Sequelize, Op} = require("sequelize");
 
 module.exports = {
-    getAllTickets(){
-        return tickets.findAll();
+    getAllTickets(from, to, dept, arr){
+        return tickets.findAll({
+            where:{
+                [Op.and]:{
+                    from: {
+                        [Op.iLike]: `%${from}%`
+                    },
+                    to: {
+                        [Op.iLike]: `%${to}%`
+                    },
+                    airport_from: {
+                        [Op.iLike]: `%${dept}%`
+                    },
+                    airport_to: {
+                        [Op.iLike]: `%${arr}%`
+                    }
+                }
+            }
+        });
     },
 
     getTicketById(id){

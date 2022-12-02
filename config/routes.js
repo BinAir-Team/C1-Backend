@@ -1,8 +1,6 @@
 const router = require("express").Router();
-const {
-  verifyToken,
-  verifyAdmin,
-} = require("../app/middleware/authMiddleware");
+
+// import auth controller
 const {
   registerMember,
   login,
@@ -10,12 +8,25 @@ const {
   putCurrentUserData,
   logout,
 } = require("../app/controllers/authControllers");
+// import promo controller
+
+const {
+  getAllPromos,
+  getPromoById,
+  createPromo,
+  updatePromo,
+  deletePromo,
+} = require("../app/controllers/promoControllers");
+
+// import user controller
 const {
   postUserData,
   getUserDataMember,
   updateUserData,
   deleteUserData,
 } = require("../app/controllers/userControllers");
+
+// import wishlist controller
 const {
   getAllWishlists,
   getWishlistById,
@@ -24,6 +35,8 @@ const {
   createWishlist,
   deleteWishlist,
 } = require("../app/controllers/wishlistsControllers");
+
+// import ticket controller
 const {
   getAllTickets,
   getTicketById,
@@ -31,7 +44,15 @@ const {
   updateTicket,
   deleteTicket,
 } = require("../app/controllers/ticketsControllers");
+
+// import order controller
 const controllers = require("../app/controllers");
+
+// import auth middleware
+const {
+  verifyToken,
+  verifyAdmin,
+} = require("../app/middleware/authMiddleware");
 
 // middleware
 const uploadMiddleware = require("../app/middleware/uploadMiddleware");
@@ -64,6 +85,10 @@ router.put(
   putCurrentUserData
 );
 
+// promo routes for user
+router.get(prefix + "/promos", verifyToken, getAllPromos);
+router.get(prefix + "/promo/:id", verifyToken, getPromoById);
+
 // admin CRUD user routes
 router.get(
   prefix + "/admin/users",
@@ -87,9 +112,34 @@ router.delete(
   deleteUserData
 );
 
+// admin CRUD promo routes
+router.get(prefix + "/admin/promos", verifyToken, verifyAdmin, getAllPromos);
+router.post(
+  prefix + "/admin/promos",
+  verifyToken,
+  verifyAdmin,
+  imageUpload.single("promo_image"),
+  uploadWithCloudinary,
+  createPromo
+);
+router.put(
+  prefix + "/admin/promo/:id",
+  verifyToken,
+  verifyAdmin,
+  imageUpload.single("promo_image"),
+  uploadWithCloudinary,
+  updatePromo
+);
+router.delete(
+  prefix + "/admin/promo/:id",
+  verifyToken,
+  verifyAdmin,
+  deletePromo
+);
+
 //ticket api
 router.get(prefix + "/tickets", getAllTickets); //get all tickets
-router.get(prefix + "/tickets/:id", getTicketById); //get ticket by id
+router.get(prefix + "/tickets/id/:id", getTicketById); //get ticket by id
 router.post(prefix + "/tickets", verifyToken, verifyAdmin, createTicket); //create a ticket
 router.put(prefix + "/tickets/:id", verifyToken, verifyAdmin, updateTicket); //update a ticket
 router.delete(prefix + "/tickets/:id", verifyToken, verifyAdmin, deleteTicket); //delete a ticket
@@ -97,7 +147,7 @@ router.delete(prefix + "/tickets/:id", verifyToken, verifyAdmin, deleteTicket); 
 //wishlist api
 router.get(prefix + "/wishlists", verifyToken, verifyAdmin, getAllWishlists); //get all wishlists
 router.get(prefix + "/wishlists/id/:id", verifyToken, getWishlistById); //get a wishlist by id
-router.get(prefix + "/wishlists/user/", verifyToken, findWhistlistByUser); //get a wishlist by user id
+router.get(prefix + "/wishlists/user", verifyToken, findWhistlistByUser); //get a wishlist by user id
 router.get(
   prefix + "/wishlists/ticket/",
   verifyToken,
@@ -151,6 +201,13 @@ router.put(
   verifyToken,
   uploadMiddleware,
   controllers.transControllers.updateTrans
+);
+
+//search API
+router.get(prefix + "/search/city/:key", controllers.searchControllers.getCity);
+router.get(
+  prefix + "/search/airport/:key",
+  controllers.searchControllers.getAirport
 );
 
 module.exports = router;

@@ -25,8 +25,7 @@ module.exports = {
 
     async findWhistlistByUser(req, res){
         try{
-            console.log("query user id" ,req.query.usersId);
-            const wishlist = await wishlistService.findWhistlistByUser(req.query.usersId);
+            const wishlist = await wishlistService.findWhistlistByUser(req.user.id);
             res.status(200).send(wishlist);
         }
         catch(err){
