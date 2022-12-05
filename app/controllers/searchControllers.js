@@ -20,7 +20,7 @@ module.exports = {
             });
     },
     addSearch(req, res) {
-        if(req.code == null || req.city == null || req.airport == null){
+        if(req.body.code == null || req.body.city == null || req.body.airport == null){
             res.status(404).json({
                 msg: "missing input data",
                 status: 404,
