@@ -27,7 +27,7 @@ module.exports = {
             })
             return
         }
-        searchService.addSearch({...req.body,id: uuid})
+        searchService.addSearch({...req.body,id: uuid()})
         .then(search => {
             res.status(200).json({
                 msg: "add data success",
