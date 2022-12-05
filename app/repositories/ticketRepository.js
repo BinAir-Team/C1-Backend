@@ -2,25 +2,54 @@ const {tickets} = require("../models");
 const {Sequelize, Op} = require("sequelize");
 
 module.exports = {
-    getAllTickets(from, to, dept, arr){
-        return tickets.findAll({
-            where:{
-                [Op.and]:{
-                    from: {
-                        [Op.iLike]: `%${from}%`
-                    },
-                    to: {
-                        [Op.iLike]: `%${to}%`
-                    },
-                    airport_from: {
-                        [Op.iLike]: `%${dept}%`
-                    },
-                    airport_to: {
-                        [Op.iLike]: `%${arr}%`
+    getAllTickets(from, to, dept, arr, date, type){
+        const thisDate = new Date(date);
+        if(date){
+            return tickets.findAll({
+                where:{
+                    [Op.and]:{
+                        from: {
+                            [Op.iLike]: `%${from}%`
+                        },
+                        to: {
+                            [Op.iLike]: `%${to}%`
+                        },
+                        airport_from: {
+                            [Op.iLike]: `%${dept}%`
+                        },
+                        airport_to: {
+                            [Op.iLike]: `%${arr}%`
+                        },
+                        date: date,
+                        type: {
+                            [Op.iLike]: `%${type}%`
+                        }
                     }
                 }
-            }
-        });
+            });
+        } else{
+            return tickets.findAll({
+                where:{
+                    [Op.and]:{
+                        from: {
+                            [Op.iLike]: `%${from}%`
+                        },
+                        to: {
+                            [Op.iLike]: `%${to}%`
+                        },
+                        airport_from: {
+                            [Op.iLike]: `%${dept}%`
+                        },
+                        airport_to: {
+                            [Op.iLike]: `%${arr}%`
+                        },
+                        type: {
+                            [Op.iLike]: `%${type}%`
+                        }
+                    }
+                }
+            });
+        }
     },
 
     getTicketById(id){

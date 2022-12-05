@@ -85,10 +85,6 @@ router.put(
   putCurrentUserData
 );
 
-// promo routes for user
-router.get(prefix + "/promos", verifyToken, getAllPromos);
-router.get(prefix + "/promo/:id", verifyToken, getPromoById);
-
 // admin CRUD user routes
 router.get(
   prefix + "/admin/users",
@@ -111,6 +107,10 @@ router.delete(
   verifyAdmin,
   deleteUserData
 );
+
+// promo routes for user
+router.get(prefix + "/promos", getAllPromos);
+router.get(prefix + "/promo/:id", getPromoById);
 
 // admin CRUD promo routes
 router.get(prefix + "/admin/promos", verifyToken, verifyAdmin, getAllPromos);
@@ -165,25 +165,14 @@ router.get(
   controllers.transControllers.getAllTrans
 );
 router.get(
-  prefix + "/trans/:id",
-  verifyToken,
-  controllers.transControllers.getTransByid
-);
-router.get(
-  prefix + "/trans",
-  verifyToken,
-  verifyAdmin,
-  controllers.transControllers.getAllTrans
-);
-router.get(
-  prefix + "/trans/:id",
-  verifyToken,
-  controllers.transControllers.getTransByid
-);
-router.get(
   prefix + "/trans/user",
   verifyToken,
   controllers.transControllers.getTransByUserId
+);
+router.get(
+  prefix + "/trans/:id",
+  verifyToken,
+  controllers.transControllers.getTransByid
 );
 router.post(
   prefix + "/trans",
@@ -204,10 +193,7 @@ router.put(
 );
 
 //search API
-router.get(prefix + "/search/city/:key", controllers.searchControllers.getCity);
-router.get(
-  prefix + "/search/airport/:key",
-  controllers.searchControllers.getAirport
-);
+router.get(prefix + "/search", controllers.searchControllers.getSearch);
+router.post(prefix + "/search", controllers.searchControllers.addSearch);
 
 module.exports = router;
