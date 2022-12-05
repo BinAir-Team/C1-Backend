@@ -7,4 +7,7 @@ module.exports = {
             attributes: {exclude: ['id','createdAt','updatedAt']}
         });
     },
+    addSearch(data) {
+        return datasearches.create(data)
+    }
 }
