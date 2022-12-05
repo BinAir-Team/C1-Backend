@@ -94,7 +94,7 @@ exports.registerMember = async (req, res) => {
     // send response
     res.status(201).json({
       status: "success",
-      message: "User created successfully",
+      message: "Register member success",
       data: {
         id: newUser.id,
         firstname: newUser.firstname,

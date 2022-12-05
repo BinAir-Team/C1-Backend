@@ -194,5 +194,6 @@ router.put(
 
 //search API
 router.get(prefix + "/search", controllers.searchControllers.getSearch);
+router.post(prefix + "/search", controllers.searchControllers.addSearch);
 
 module.exports = router;
