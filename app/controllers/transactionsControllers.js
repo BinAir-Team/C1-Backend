@@ -95,7 +95,7 @@ module.exports = {
         const {ticketsId, quantity, traveler} = req.body;
         const ticketdata = await ticketService.getTicketById(ticketsId);
         let pp = 0;
-        if(ticketdata.dataValues.type == "Pulang Pergi"){
+        if(ticketdata.dataValues.type == "roundtrip"){
             pp = 2;
         }else{
             pp = 1;
