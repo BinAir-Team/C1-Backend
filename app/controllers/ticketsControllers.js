@@ -3,12 +3,36 @@ const {v4:uuid} = require('uuid');
 
 module.exports = {
     async getAllTickets(req, res){
-        const tickets = await ticketService.getAllTickets()
+        const queryFrom = req.query.from;
+        const queryTo = req.query.to;
+        const from = queryFrom ? queryFrom.split('-')[0] || '' : '';
+        const to = queryTo ? queryTo.split('-')[0] || '' : '';
+        const dept = queryFrom ? queryFrom.split('-')[1] || '' : '';
+        const arr = queryTo ? queryTo.split('-')[1] || '' : '';
+        const date = req.query.date;
+        const type = req.query.type ? req.query.type : '';
+        console.log(from, to, dept, arr);
+        const tickets = await ticketService.getAllTickets(from, to, dept, arr, date, type)
         .then(tickets => {
             res.status(200).json(
                 {
                     message: "Success",
                     data: tickets
+                }
+            );
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+    },
+
+    async getTicketById(req, res){
+        const ticket = await ticketService.getTicketById(req.params.id)
+        .then(ticket => {
+            res.status(200).json(
+                {
+                    message: "Success",
+                    data: ticket
                 }
             );
         })
