@@ -94,6 +94,14 @@ module.exports = {
         const status = "PENDING PAYMENT";
         const {ticketsId, quantity, traveler} = req.body;
         const ticketdata = await ticketService.getTicketById(ticketsId);
+        if(!ticketdata){
+            res.status(404).json({
+                msg: "ticket not found / invalid",
+                status: 404,
+                err
+            });
+            return
+        }
         let pp = 0;
         if(ticketdata.dataValues.type == "roundtrip"){
             pp = 2;
