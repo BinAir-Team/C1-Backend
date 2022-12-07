@@ -12,12 +12,24 @@ module.exports = {
         const willFly = req.query.willFly ? req.query.willFly : 'false';
         const tickets = await ticketService.getAllTickets(from, to, airport_from, airport_to, date, type, willFly)
         .then(tickets => {
-            res.status(200).json(
-                {
-                    message: "Success",
-                    data: tickets
-                }
-            );
+            if(tickets.length == 0){
+                res.status(404).json(
+                    {
+                        status: "error",
+                        message: "ticket not found",
+                        data: {}
+                    }
+                );
+            }
+            else{
+                res.status(200).json(
+                    {
+                        status: "success",
+                        message: "ticket found",
+                        data: tickets
+                    }
+                );
+            }
         })
         .catch(err => {
             res.status(500).json(err);
@@ -27,15 +39,31 @@ module.exports = {
     async getTicketById(req, res){
         const ticket = await ticketService.getTicketById(req.params.id)
         .then(ticket => {
-            res.status(200).json(
-                {
-                    message: "Success",
-                    data: ticket
-                }
-            );
+            if(!ticket){
+                res.status(404).json(
+                    {
+                        status: "error",
+                        message: "ticket not found",
+                        data: {}
+                    }
+                );
+            }
+            else{
+                res.status(200).json(
+                    {
+                        status: "success",
+                        message: "ticket found",
+                        data: ticket
+                    }
+                );
+            }
         })
         .catch(err => {
-            res.status(500).json(err);
+            res.status(500).json({
+                status: "error",
+                message: "err",
+                data : {}
+            });
         });
     },
 
@@ -54,6 +82,16 @@ module.exports = {
         const available = req.body.available;
         const init_stock = req.body.init_stock;
         const curr_stock = req.body.curr_stock;
+        const find = await ticketService.getTicketById(id);
+        if(!find){
+            return res.status(404).json(
+                {
+                    status: "error",
+                    message: "id ticket not found",
+                    data: {}
+                }
+            );
+        }
         const newTicket = await ticketService.createTicket({
             id: id,
             from: from,
@@ -73,46 +111,83 @@ module.exports = {
         .then(ticket => {
             res.status(200).json(
                 {
-                    message: "Success",
+                    status: "success",
+                    message: "ticket created",
                     data: ticket
                 }
             );
         })
         .catch(err => {
-            res.status(500).json(err);
+            res.status(500).json({
+                status: "error",
+                message: err,
+                data : {}
+            });
         });
     },
 
     async updateTicket(req, res){
         const id = req.params.id;
         const ticket = req.body;
+        const find = await ticketService.getTicketById(req.params.id)
+        if(!find){
+            return res.status(404).json(
+                {
+                    status: "error",
+                    message: "id ticket not found",
+                    data: {}
+                }
+            );
+        }
         const updatedTicket = await ticketService.updateTicket(id, ticket)
         .then(ticket => {
             res.status(200).json(
                 {
-                    message: "Success",
+                    status: "success",
+                    message: "Ticket updated",
                     data: ticket
                 }
             );
         })
         .catch(err => {
-            res.status(500).json(err);
+            res.status(500).json({
+                status: "error",
+                message: err,
+                data : {}
+            });
         });
     },
 
     async deleteTicket(req, res){
         const id = req.params.id;
+        const find = await ticketService.getTicketById(id);
+        if(!find){
+            return res.status(404).json(
+                {
+                    status: "error",
+                    message: "id ticket not found",
+                    data: {}
+                }
+            );
+        }
         const deletedTicket = await ticketService.deleteTicket(id)
         .then(ticket => {
             res.status(200).json(
                 {
-                    message: "Success",
+                    status: "success",
+                    message: "ticket deleted",
                     data: ticket
                 }
             );
         })
         .catch(err => {
-            res.status(500).json(err);
+            res.status(500).json(
+                {
+                    status: "error",
+                    message: err,
+                    data: {}
+                }
+            );
         });
     }
 }
