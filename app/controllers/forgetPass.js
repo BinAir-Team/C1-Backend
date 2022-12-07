@@ -35,26 +35,36 @@ exports.forgetPass = async (req, res) => {
       return;
     }
     const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
       service: "gmail",
       auth: {
         user: "binair242@gmail.com",
-        pass: "XA9c7zsnHkNatb10",
+        pass: "dkqyukncpyycveqy",
       },
     });
     const mailOptions = {
       from: "binair242@gmail.com",
       to: email,
       subject: "Reset Password",
-      html: `<h1>Reset Password</h1>
-      <p>Click this <a href="http://localhost:8000/reset/${user.id}">link</a> to reset your password</p>`,
+      html: `<h1>Reset Password</h1> 
+      <p>Click this link to reset your password</p>
+      <a href="http://localhost:8000/api/v1/reset/${user.id}">Reset Password</a>`,
     };
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Email sent: " + info.response);
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err);
+        res.status(500).send({
+          status: "error",
+          message: "Internal server error",
+          data: {},
+        });
+        return;
       }
+      console.log("Email sent: " + info.response);
     });
+
     res.status(200).send({
       status: "success",
       message: "Email sent",
