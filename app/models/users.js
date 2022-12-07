@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     gender: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
+    refresh_token: DataTypes.TEXT,
     phone: DataTypes.STRING,
     role: DataTypes.STRING,
     profile_image: DataTypes.STRING
