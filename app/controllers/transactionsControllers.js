@@ -4,6 +4,7 @@ const notifService = require('../services/notifService');
 
 const {v4: uuid} = require('uuid');
 const fs = require('fs');
+const moment = require('moment');
 
 module.exports = {
     getAllTrans(req, res) {
@@ -124,7 +125,7 @@ module.exports = {
             status: status,
             date: new Date()
         }
-        await notifService.createNotif({id: uuid(),usersId: id,message: `Transaksi nomor ${transdata.length+1}, dengan tujuan ${ticketdata.dataValues.from}-${ticketdata.dataValues.to} sukses diproses`,isRead: false})
+        await notifService.createNotif({id: uuid(),usersId: id,message: `Transaksi nomor ${transdata.length+1}, dengan tujuan ${ticketdata.dataValues.from}-${ticketdata.dataValues.to} sukses diproses pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})
         transService.createTrans(newData)
         .then(trans => {
             let newData = []
@@ -154,7 +155,7 @@ module.exports = {
             });
             return
         }
-        await notifService.createNotif({id: uuid(),usersId: req.user.id,message:`Pembayaran Anda sudah diverifikasi, silahkan cek status transaksi anda`,isRead: false})
+        await notifService.createNotif({id: uuid(),usersId: req.user.id,message:`Pembayaran Anda sudah diverifikasi pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}, silahkan cek status transaksi anda`,isRead: false})
         transService.updateTrans(id,{status: "PAYMENT SUCCESS"})
         .then(trans => {
             fs.unlinkSync(req.file.path);

@@ -1,5 +1,7 @@
 const ticketService = require('../services/ticketService');
+const notifService  = require('../services/notifService');
 const {v4:uuid} = require('uuid');
+const moment = require('moment');
 
 module.exports = {
     async getAllTickets(req, res){
@@ -54,6 +56,7 @@ module.exports = {
         const available = req.body.available;
         const init_stock = req.body.init_stock;
         const curr_stock = req.body.curr_stock;
+        await notifService.createNotif({id: uuid(),usersId: req.user.id,message: `Sukses Menambah tiket rute ${from}-${to} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
         const newTicket = await ticketService.createTicket({
             id: id,
             from: from,
@@ -86,6 +89,7 @@ module.exports = {
     async updateTicket(req, res){
         const id = req.params.id;
         const ticket = req.body;
+        await notifService.createNotif({id: uuid(),usersId: req.user.id,message: `Sukses update tiket dengan id:${id} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
         const updatedTicket = await ticketService.updateTicket(id, ticket)
         .then(ticket => {
             res.status(200).json(
@@ -102,6 +106,15 @@ module.exports = {
 
     async deleteTicket(req, res){
         const id = req.params.id;
+        const tickets = await ticketService.getTicketById(id);
+        if(!tickets){
+            res.status(404).json({
+                msg: "ticket not found / invalid",
+                status: 404,
+            });
+            return
+        }
+        await notifService.createNotif({id: uuid(),usersId: req.user.id,message: `Sukses menghapus tiket rute ${tickets.dataValues.from}-${tickets.dataValues.to} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
         const deletedTicket = await ticketService.deleteTicket(id)
         .then(ticket => {
             res.status(200).json(
