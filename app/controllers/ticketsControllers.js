@@ -3,16 +3,14 @@ const {v4:uuid} = require('uuid');
 
 module.exports = {
     async getAllTickets(req, res){
-        const queryFrom = req.query.from;
-        const queryTo = req.query.to;
-        const from = queryFrom ? queryFrom.split('-')[0] || '' : '';
-        const to = queryTo ? queryTo.split('-')[0] || '' : '';
-        const dept = queryFrom ? queryFrom.split('-')[1] || '' : '';
-        const arr = queryTo ? queryTo.split('-')[1] || '' : '';
+        const from = req.query.from ? req.query.from : '';
+        const airport_from = req.query.airport_from ? req.query.airport_from : '';
+        const to = req.query.to ? req.query.to : '';
+        const airport_to = req.query.airport_to ? req.query.airport_to : '';
         const date = req.query.date;
         const type = req.query.type ? req.query.type : '';
-        console.log(from, to, dept, arr);
-        const tickets = await ticketService.getAllTickets(from, to, dept, arr, date, type)
+        const willFly = req.query.willFly ? req.query.willFly : 'false';
+        const tickets = await ticketService.getAllTickets(from, to, airport_from, airport_to, date, type, willFly)
         .then(tickets => {
             res.status(200).json(
                 {
