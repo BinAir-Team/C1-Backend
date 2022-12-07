@@ -32,5 +32,9 @@ module.exports = {
 
     deleteNotif(id){
         return notifications.destroy({where: {id: id}});
+    },
+
+    updateNotif(id,data){
+        return notifications.update(id,data);
     }
 };

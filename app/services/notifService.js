@@ -50,4 +50,13 @@ module.exports = {
             throw err;
         }
     },
+    async updateNotif(id,datas) {
+        try{
+            const notif = await notifRepository.updateNotif(id,datas);
+            return notif;
+        }
+        catch(err) {
+            throw err;
+        }
+    },
 }

@@ -1,5 +1,7 @@
 const transService = require('../services/transServices');
 const ticketService = require('../services/ticketService');
+const notifService = require('../services/notifService');
+
 const {v4: uuid} = require('uuid');
 const fs = require('fs');
 
@@ -94,8 +96,16 @@ module.exports = {
         const status = "PENDING PAYMENT";
         const {ticketsId, quantity, traveler} = req.body;
         const ticketdata = await ticketService.getTicketById(ticketsId);
+        if(!ticketdata){
+            res.status(404).json({
+                msg: "ticket not found / invalid",
+                status: 404,
+            });
+            return
+        }
+        const transdata = await transService.findByUser(id);
         let pp = 0;
-        if(ticketdata.dataValues.type == "Pulang Pergi"){
+        if(ticketdata.dataValues.type == "roundtrip"){
             pp = 2;
         }else{
             pp = 1;
@@ -114,6 +124,7 @@ module.exports = {
             status: status,
             date: new Date()
         }
+        await notifService.createNotif({id: uuid(),usersId: id,message: `Transaksi nomor ${transdata.length+1}, dengan tujuan ${ticketdata.dataValues.from}-${ticketdata.dataValues.to} sukses diproses`,isRead: false})
         transService.createTrans(newData)
         .then(trans => {
             let newData = []
@@ -134,7 +145,7 @@ module.exports = {
             });
         });
     },
-    updateTrans(req,res) {
+    async updateTrans(req,res) {
         const {id} = req.params;
         if(req.file == null){
             res.status(404).json({
@@ -143,6 +154,7 @@ module.exports = {
             });
             return
         }
+        await notifService.createNotif({id: uuid(),usersId: req.user.id,message:`Pembayaran Anda sudah diverifikasi, silahkan cek status transaksi anda`,isRead: false})
         transService.updateTrans(id,{status: "PAYMENT SUCCESS"})
         .then(trans => {
             fs.unlinkSync(req.file.path);
