@@ -7,7 +7,8 @@ const {
   createUser,
   deleteUser,
 } = require("../services/userService");
-
+const notifService = require('../services/notifService');
+const moment = require('moment');
 // user controller
 
 const { v4: uuid } = require("uuid");
@@ -43,7 +44,8 @@ exports.postUserData = async (req, res) => {
     }
     // encrypt password
     const encryptedPassword = await encryptPassword(password);
-
+    //create notif
+    await notifService.createNotif({id: uuid(),usersId: req.user.id,message: `User dengan email ${email} ditambahkan oleh ${req.user.email} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})      
     const data = await createUser({
       id: uuid(),
       firstname,
@@ -122,6 +124,8 @@ exports.updateUserData = async (req, res) => {
       role,
       profile_image,
     });
+    //create notif
+    await notifService.createNotif({id: uuid(),usersId: req.user.id,message: `User dengan id: ${id} diupdate oleh ${req.user.email} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})      
     // get data after update
     const userAfterUpdate = await getUserById(id);
     res.status(200).json({
@@ -144,6 +148,7 @@ exports.updateUserData = async (req, res) => {
 exports.deleteUserData = async (req, res) => {
   try {
     const id = req.params.id;
+    await notifService.createNotif({id: uuid(),usersId: req.user.id,message: `User dengan id: ${id} dihapus oleh ${req.user.email} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})      
     const user = await deleteUser(id);
     if (!user) {
       return res.status(404).json({

@@ -64,8 +64,17 @@ module.exports = {
             });
         });
     },
-    deleteTransById(req, res) {
+    async deleteTransById(req, res) {
         const {id} = req.params
+        const trans = await transService.findByPk(id);
+        if(!trans){
+            res.status(404).json({
+                msg: "data not found or id wrong",
+                status: 404
+            })
+            return
+        }
+        await notifService.createNotif({id: uuid(),usersId: req.user.id,message: `Transaksi dengan id: ${id} dihapus oleh ${req.user.email} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})      
         transService.deleteByPk(id)
         .then(trans => {
             if(trans == 0){
