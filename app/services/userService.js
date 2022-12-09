@@ -7,6 +7,11 @@ exports.getUserByRoleMember = () => {
   return userRepository.findAll();
 };
 
+// getUserByToken
+exports.getUserByToken = (refresh_token) => {
+  return userRepository.findByRefreshToken(refresh_token);
+};
+
 // getUserById
 exports.getUserById = (id) => {
   return userRepository.findOne(id);
