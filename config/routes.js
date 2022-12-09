@@ -26,7 +26,10 @@ const {
   deleteUserData,
 } = require("../app/controllers/userControllers");
 
-const { forgetPass, resetPass } = require("../app/controllers/forgetPass");
+const {
+  forgetPass,
+  resetPass,
+} = require("../app/controllers/forgetPassController");
 
 // import wishlist controller
 const {
