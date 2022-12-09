@@ -1,17 +1,12 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
+const { getUserByToken } = require("../services/authService");
 const {
-  getUserByToken,
-  updateUserRefreshToken,
-} = require("../services/authService");
-const {
-  getUserByRoleMember,
   getUserById,
   getUserByEmail,
   updateUser,
   createUser,
-  deleteUser,
 } = require("../services/userService");
 const { v4: uuid } = require("uuid");
 const { users } = require("../models");
@@ -158,21 +153,7 @@ exports.login = async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "1h" }
     );
-    const refreshToken = jwt.sign(
-      { id, firstname, lastname, gender, email, phone, role, profile_image },
-      process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: "7d" }
-    );
     await notifControllers.createNotif(id,{id: uuid(),usersId: id,message: `Sukses Login pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
-    // update user
-    const updatedUser = await updateUser(user.id, {
-      refresh_token: refreshToken,
-    });
-    // send response
-    res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
     res.status(200).json({
       status: "success",
       message: "Login success",
@@ -238,14 +219,6 @@ exports.getCurrentUserData = async (req, res) => {
 
 // put current user
 exports.putCurrentUserData = async (req, res) => {
-  // token not found
-  if (!req.cookies.refreshToken) {
-    return res.status(401).json({
-      status: "error",
-      message: "Unauthorized",
-      data: {},
-    });
-  }
   const user = await getUserById(req.user.id);
   // user not found
   if (!user) {
@@ -259,7 +232,11 @@ exports.putCurrentUserData = async (req, res) => {
   await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses Update Profile Pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
   try {
     // get data
-    const { firstname, lastname, gender, phone, profile_image } = req.body;
+    const { firstname, lastname, gender, phone, profile_image, password } =
+      req.body;
+
+    //  hash password
+    const encryptedPassword = await encryptPassword(password);
     // update user
     const updatedUser = await updateUser(user.id, {
       firstname,
@@ -267,6 +244,7 @@ exports.putCurrentUserData = async (req, res) => {
       gender,
       phone,
       profile_image,
+      password: encryptedPassword,
     });
     // send response
     res.status(200).json({
@@ -279,55 +257,13 @@ exports.putCurrentUserData = async (req, res) => {
         gender,
         phone,
         profile_image,
+        password: encryptedPassword,
       },
     });
   } catch (error) {
     res.status(500).json({
       status: "error",
       message: "Update current user failed",
-      error: error.message,
-      data: {},
-    });
-  }
-};
-
-// Logout
-exports.logout = async (req, res) => {
-  try {
-    // get token
-    const token = req.cookies.refreshToken;
-    if (!token) {
-      return res.status(203).json({
-        status: "error",
-        message: "No token found",
-        data: {},
-      });
-    }
-    // get user by refresh token
-    const user = await getUserByToken(token);
-    if (!user) {
-      return res.status(203).json({
-        status: "error",
-        message: "User not found",
-        data: {},
-      });
-    }
-    // update user
-    const updatedUser = await updateUser(user.id, { refresh_token: null });
-
-    // send response
-    res.clearCookie("refreshToken");
-    res.status(200).json({
-      status: "success",
-      message: "Logout success",
-      data: {
-        user: updatedUser,
-      },
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "error",
-      message: "Logout Failed",
       error: error.message,
       data: {},
     });
