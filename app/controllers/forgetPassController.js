@@ -39,13 +39,10 @@ exports.forgetPass = async (req, res) => {
       return;
     }
 
-    // create refresah token for reset password link in email (1 day) and save to db
-    const token = jwt.sign({ id: user.id }, process.env.REFRESH_TOKEN_SECRET, {
-      expiresIn: "1d",
+    // create update token
+    const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "1h",
     });
-
-    // updated user refresh_token
-    const updatedUser = await updateUser(user.id, { refresh_token: token });
 
     // create transporter
     const transporter = nodemailer.createTransport({
@@ -114,11 +111,16 @@ exports.forgetPass = async (req, res) => {
 
 // reset password
 exports.resetPass = async (req, res) => {
-  const { token } = req.params;
   const { password, confirmPassword } = req.body;
   try {
-    // check token
-    const user = await getUserByToken(token);
+    // get token from url
+    const token = req.params.token;
+
+    // verify token
+    const decodedUser = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    // get user by id
+    const user = await getUserById(decodedUser.id);
 
     // check user
     if (!user) {
