@@ -44,7 +44,7 @@ module.exports = {
             to: email,
             subject: "Email Verification",
             html: `<h1>Click the link below to verify your email</h1>
-            <a href="http://localhost:8000/api/v1/verify-email/${email}">Verify Email</a>
+            <a href="https://binair-backend-production.up.railway.app/api/v1/verify-email/${email}">Verify Email</a>
             `,
         };
 
