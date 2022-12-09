@@ -89,7 +89,7 @@ let bandara = [
     id: uuid(),
     code: "CGK",
     city: "Tangerang",
-    airport: "Soekarno-Hatta International Airport",
+    airport: "Soekarno Hatta International Airport",
     createdAt: new Date(),
     updatedAt: new Date()
   },{
