@@ -71,7 +71,6 @@ router.get("/", (req, res) => {
 // auth routes
 router.post(prefix + "/register", registerMember);
 router.post(prefix + "/login", login);
-router.delete(prefix + "/logout", logout);
 
 // user routes
 // get current user data (token required)
