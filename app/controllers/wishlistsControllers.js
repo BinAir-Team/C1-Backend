@@ -5,42 +5,99 @@ module.exports = {
     async getAllWishlists(req, res){
         try{
             const wishlists = await wishlistService.getAllWishlists();
-            res.status(200).send(wishlists);
+            res.status(200).send({
+                status: "success",
+                message: "wishlist found",
+                data: wishlists
+            });
         }
         catch(err){
-            res.status(500).send(err);
+            res.status(500).send({
+                status: "error",
+                message: err,
+                data: {}
+            });
         }
     },
 
     async getWishlistById(req, res){
         try{
-            console.log("params id" ,req.params.id);
             const wishlist = await wishlistService.getWishlistById(req.params.id);
-            res.status(200).send(wishlist);
+            if(wishlist){
+                res.status(200).send({
+                    status: "success",
+                    message: "wishlist found",
+                    data: wishlist
+                });
+            }
+            else{
+                res.status(404).send({
+                    status: "error",
+                    message: "wishlist not found",
+                    data: {}
+                });
+            }
         }
         catch(err){
-            res.status(500).send(err);
+            res.status(500).send({
+                status: "error",
+                message: "whistlist not found",
+                data: {}
+            });
         }
     },
 
     async findWhistlistByUser(req, res){
         try{
             const wishlist = await wishlistService.findWhistlistByUser(req.user.id);
-            res.status(200).send(wishlist);
+            if(wishlist.length > 0){
+                res.status(200).send({
+                    status: "success",
+                    message: "wishlist found",
+                    data: wishlist
+                });
+            }
+            else{
+                res.status(404).send({
+                    status: "error",
+                    message: "wishlist not found",
+                    data: {}
+                });
+            }
         }
         catch(err){
-            res.status(500).send(err);
+            res.status(500).send({
+                status: "error",
+                message: err,
+                data: {}
+            });
         }
     },
 
     async findWhistlistByTicket(req, res){
         try{
-            console.log("query ticket id" ,req.query.ticketsId);
             const wishlist = await wishlistService.findWhistlistByTicket(req.query.ticketsId);
-            res.status(200).send(wishlist);
+            if(wishlist){
+                res.status(200).send({
+                    status: "success",
+                    message: "wishlist found",
+                    data: wishlist
+                });
+            }
+            else{
+                res.status(404).send({
+                    status: "error",
+                    message: "wishlist not found",
+                    data: {}
+                });
+            }
         }
         catch(err){
-            res.status(500).send(err);
+            res.status(500).send({
+                status: "error",
+                message: err,
+                data: {}
+            });
         }
     },
 
@@ -50,10 +107,20 @@ module.exports = {
             const usersId = req.body.usersId;
             const ticketsId = req.body.ticketsId;
             const createdWishlist = await wishlistService.createWishlist({id, usersId, ticketsId});
-            res.status(200).send(createdWishlist);
+            res.status(200).send(
+                {
+                    status: "success",
+                    message: "wishlist created",
+                    data: createdWishlist
+                }
+            );
         }
         catch(err){
-            res.status(500).send(err);
+            res.status(500).send({
+                status: "error",
+                message: err,
+                data: {}
+            });
         }
     },
 
@@ -62,15 +129,27 @@ module.exports = {
             const deletedWishlist = await wishlistService.deleteWishlist(req.params.id)
             .then((deletedWishlist) => {
                 if(deletedWishlist === 1){
-                    res.status(200).send({message: 'Wishlist deleted successfully'});
+                    res.status(200).send({
+                        status: "success",
+                        message: "wishlist deleted",
+                        data: {}
+                    });
                 }
                 else{
-                    res.status(404).send({message: 'Wishlist not found'});
+                    res.status(404).send({
+                        status: "error",
+                        message: "wishlist not found",
+                        data: {}
+                    });
                 }
             });
         }
         catch(err){
-            res.status(500).send(err);
+            res.status(500).send({
+                status: "error",
+                message: err,
+                data: {}
+            });
         }
     }
 };

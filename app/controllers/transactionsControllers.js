@@ -98,7 +98,6 @@ module.exports = {
             res.status(404).json({
                 msg: "ticket not found / invalid",
                 status: 404,
-                err
             });
             return
         }
