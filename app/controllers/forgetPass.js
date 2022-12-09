@@ -1,11 +1,13 @@
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 const SALT = 10;
+const jwt = require("jsonwebtoken");
 
 const {
   getUserById,
   getUserByEmail,
   updateUser,
+  getUserByToken,
 } = require("../services/userService");
 
 function encryptPassword(password) {
@@ -25,7 +27,9 @@ function encryptPassword(password) {
 exports.forgetPass = async (req, res) => {
   try {
     const { email } = req.body;
+    // check email
     const user = await getUserByEmail(email);
+    // if user not found
     if (!user) {
       res.status(400).send({
         status: "error",
@@ -34,6 +38,16 @@ exports.forgetPass = async (req, res) => {
       });
       return;
     }
+
+    // create token
+    const token = jwt.sign({ id: user.id }, process.env.REFRESH_TOKEN_SECRET, {
+      expiresIn: "1d",
+    });
+
+    // updated user refresh token
+    const updatedUser = await updateUser(user.id, { refresh_token: token });
+
+    // create transporter
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
@@ -44,30 +58,26 @@ exports.forgetPass = async (req, res) => {
         pass: "dkqyukncpyycveqy",
       },
     });
+
+    // create mail options
     const mailOptions = {
       from: "binair242@gmail.com",
       to: email,
       subject: "Reset Password",
-      html: `<h1>Reset Password</h1> 
-      <p>Click this link to reset your password</p>
-      <a href="http://localhost:8000/api/v1/reset/${user.id}">Reset Password</a>`,
+      html: ` <center> 
+              <h1>Reset Password</h1>
+              <p>Click this link to reset your password</p>
+              <button type="button" s><a href="http://localhost:8000/api/v1/reset-password/${token}">Reset Password</a></button>
+              <center>
+            `,
     };
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send({
-          status: "error",
-          message: "Internal server error",
-          data: {},
-        });
-        return;
-      }
-      console.log("Email sent: " + info.response);
-    });
+
+    // send email
+    await transporter.sendMail(mailOptions);
 
     res.status(200).send({
       status: "success",
-      message: "Email sent",
+      message: "Check your email to reset password",
       data: {},
     });
   } catch (error) {
@@ -79,11 +89,15 @@ exports.forgetPass = async (req, res) => {
   }
 };
 
+// reset password
 exports.resetPass = async (req, res) => {
+  const { token } = req.params;
+  const { password, confirmPassword } = req.body;
   try {
-    const { id } = req.params;
-    const { password, confirmPassword } = req.body;
-    const user = await getUserById(id);
+    // check token
+    const user = await getUserByToken(token);
+
+    // check user
     if (!user) {
       res.status(400).send({
         status: "error",
@@ -92,6 +106,8 @@ exports.resetPass = async (req, res) => {
       });
       return;
     }
+
+    // check password
     if (password !== confirmPassword) {
       res.status(400).send({
         status: "error",
@@ -100,14 +116,19 @@ exports.resetPass = async (req, res) => {
       });
       return;
     }
+
+    // encrypt password
     const encryptedPassword = await encryptPassword(password);
-    const data = {
+
+    // update user password
+    const updatedUser = await updateUser(user.id, {
       password: encryptedPassword,
-    };
-    const result = await updateUser(id, data);
+    });
+
+    // send response
     res.status(200).send({
       status: "success",
-      message: "Password has been changed",
+      message: "Password reset successfully",
       data: {},
     });
   } catch (error) {

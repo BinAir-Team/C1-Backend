@@ -76,8 +76,8 @@ router.post(prefix + "/login", login);
 router.delete(prefix + "/logout", logout);
 
 // forget password
-router.post(prefix + "/forget", forgetPass);
-router.post(prefix + "/reset/:id", resetPass);
+router.post(prefix + "/forget-password", forgetPass);
+router.post(prefix + "/reset-password/:token", resetPass);
 
 // user routes
 // get current user data (token required)
