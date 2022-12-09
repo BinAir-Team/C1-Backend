@@ -76,7 +76,10 @@ router.get("/", (req, res) => {
 // auth routes
 router.post(prefix + "/register", registerMember);
 router.post(prefix + "/login", login);
-router.delete(prefix + "/logout", logout);
+
+// forget password
+router.post(prefix + "/forget-password", forgetPass);
+router.post(prefix + "/reset-password/:token", resetPass);
 
 // forget password
 router.post(prefix + "/forget-password", forgetPass);
