@@ -1,6 +1,6 @@
 const transService = require('../services/transServices');
 const ticketService = require('../services/ticketService');
-const notifService = require('../services/notifService');
+const notifControllers = require('./notificationsControllers');
 
 const {v4: uuid} = require('uuid');
 const fs = require('fs');
@@ -134,7 +134,7 @@ module.exports = {
             status: status,
             date: new Date()
         }
-        await notifService.createNotif({id: uuid(),usersId: id,message: `Transaksi nomor ${transdata.length+1}, dengan tujuan ${ticketdata.dataValues.from}-${ticketdata.dataValues.to} sukses diproses pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})
+        await notifControllers.createNotif(id,{id: uuid(),usersId: id,message: `Transaksi nomor ${transdata.length+1}, dengan tujuan ${ticketdata.dataValues.from}-${ticketdata.dataValues.to} sukses diproses pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})
         transService.createTrans(newData)
         .then(trans => {
             let newData = []
@@ -164,7 +164,7 @@ module.exports = {
             });
             return
         }
-        await notifService.createNotif({id: uuid(),usersId: req.user.id,message:`Pembayaran Anda sudah diverifikasi pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}, silahkan cek status transaksi anda`,isRead: false})
+        await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message:`Pembayaran Anda sudah diverifikasi pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}, silahkan cek status transaksi anda`,isRead: false})
         transService.updateTrans(id,{status: "PAYMENT SUCCESS"})
         .then(trans => {
             fs.unlinkSync(req.file.path);

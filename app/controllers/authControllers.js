@@ -16,7 +16,7 @@ const {
 const { v4: uuid } = require("uuid");
 const { users } = require("../models");
 const SALT = 10;
-const notifService = require("../services/notifService");
+const notifControllers = require('./notificationsControllers');
 
 // ecrypt password
 function encryptPassword(password) {
@@ -163,7 +163,7 @@ exports.login = async (req, res) => {
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "7d" }
     );
-    await notifService.createNotif({id: uuid(),usersId: id,message: `Sukses Login pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
+    await notifControllers.createNotif(id,{id: uuid(),usersId: id,message: `Sukses Login pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
     // update user
     const updatedUser = await updateUser(user.id, {
       refresh_token: refreshToken,
@@ -256,7 +256,7 @@ exports.putCurrentUserData = async (req, res) => {
     });
   }
   //set notif
-  await notifService.createNotif({id: uuid(),usersId: req.user.id,message: `Sukses Update Profile Pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
+  await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses Update Profile Pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
   try {
     // get data
     const { firstname, lastname, gender, phone, profile_image } = req.body;

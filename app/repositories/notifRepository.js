@@ -4,7 +4,7 @@ module.exports = {
     getAllNotif(){
         return notifications.findAll({
             include: {
-                all: true, attributes: {exclude: ['createdAt','updatedAt','email','password','profile_image','phone','refresh_token']}
+                all: true, attributes: {exclude: ['createdAt','updatedAt','email','password','profile_image','phone','refresh_token','gender','lastname','role']}
             },
         });
     },
@@ -12,7 +12,7 @@ module.exports = {
     getNotifByUserId(id){
         return notifications.findAll({
             include: {
-                all: true , attributes: {exclude: ['createdAt','updatedAt','email','password','profile_image','phone','refresh_token']}
+                all: true , attributes: {exclude: ['createdAt','updatedAt','email','password','profile_image','phone','refresh_token','gender','lastname','role']}
             },
             where: {usersId: id}
         });
@@ -21,7 +21,7 @@ module.exports = {
     getNotifById(id){
         return notifications.findByPk(id,{
             include: {
-                all: true , attributes: {exclude: ['createdAt','updatedAt','email','password','profile_image','phone','refresh_token']}
+                all: true , attributes: {exclude: ['createdAt','updatedAt','email','password','profile_image','phone','refresh_token','gender','lastname','role']}
             },
         });
     },
@@ -34,7 +34,9 @@ module.exports = {
         return notifications.destroy({where: {id: id}});
     },
 
-    updateNotif(id,data){
-        return notifications.update(id,data);
+    updateNotif(id,datas){
+        return notifications.update(datas,{
+            where: {id}
+        });
     }
 };

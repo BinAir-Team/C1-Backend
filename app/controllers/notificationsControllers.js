@@ -15,10 +15,18 @@ module.exports = {
 
         notifService.findByUser(id)
         .then(notif => {
-            return notif;
+            res.status(200).json({
+                msg: "success get notifications",
+                status: 200,
+                data: notif
+            });
         })
         .catch(err => {
-            return err;
+            res.status(500).json({
+                msg: "error get notifications",
+                status: 500,
+                err
+            });
         });
     },
     deleteNotifById(req, res) {
@@ -53,10 +61,28 @@ module.exports = {
         }
         notifService.updateNotif(id,{isRead: true})
         .then(notif => {
-            return notif;
+            res.status(200).json({
+                msg: "notif updated",
+                status: 200,
+                data: notif
+            });
         })
         .catch(err => {
-            return err;
+            res.status(500).json({
+                msg: "notif fails updated",
+                status: 500,
+                err
+            });
         });
+    },
+    async createNotif(id,datas) {
+        try{
+            const insert = await notifService.createNotif(datas);
+            const find = await notifService.findByUser(id);
+            global.io.sockets.in(id).emit('notify-update', find);
+            return insert
+        } catch(err){
+            return err
+        }
     }
 }

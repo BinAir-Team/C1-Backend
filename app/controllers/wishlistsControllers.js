@@ -1,5 +1,5 @@
 const wishlistService = require('../services/wishlistServices');
-const notifService = require('../services/notifService');
+const notifControllers = require('./notificationsControllers');
 const {v4: uuidv4} = require('uuid');
 
 module.exports = {
@@ -107,7 +107,7 @@ module.exports = {
             const id = uuidv4();
             const usersId = req.body.usersId;
             const ticketsId = req.body.ticketsId;
-            await notifService.createNotif({id: uuid(),usersId: usersId,message: `Sukses menambahkan wishlist tiket`,isRead: false})
+            await notifControllers.createNotif(usersId,{id: uuidv4(),usersId,message: `Sukses menambahkan wishlist tiket`,isRead: false})
             const createdWishlist = await wishlistService.createWishlist({id, usersId, ticketsId});
             res.status(200).send(
                 {
@@ -128,7 +128,7 @@ module.exports = {
 
     async deleteWishlist(req, res){
         try{
-            await notifService.createNotif({id: uuid(),usersId: req.user.id,message: `Sukses menghapus wishlist tiket`,isRead: false})
+            await notifControllers.createNotif(req.user.id,{id: uuidv4(),usersId: req.user.id,message: `Sukses menghapus wishlist tiket`,isRead: false})
             const deletedWishlist = await wishlistService.deleteWishlist(req.params.id)
             .then((deletedWishlist) => {
                 if(deletedWishlist === 1){
