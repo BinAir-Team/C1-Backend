@@ -26,6 +26,11 @@ const {
   deleteUserData,
 } = require("../app/controllers/userControllers");
 
+const {
+  forgetPass,
+  resetPass,
+} = require("../app/controllers/forgetPassController");
+
 // import wishlist controller
 const {
   getAllWishlists,
@@ -71,6 +76,10 @@ router.get("/", (req, res) => {
 // auth routes
 router.post(prefix + "/register", registerMember);
 router.post(prefix + "/login", login);
+
+// forget password
+router.post(prefix + "/forget-password", forgetPass);
+router.post(prefix + "/reset-password/:token", resetPass);
 
 // user routes
 // get current user data (token required)

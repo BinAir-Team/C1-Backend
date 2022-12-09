@@ -3,6 +3,45 @@ const { v4: uuid } = require("uuid");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
+<<<<<<< HEAD
+  async up (queryInterface, Sequelize) {
+    await queryInterface.bulkInsert('tickets', [{
+      id: uuid(),
+      from: "Surabaya",
+      to: "Jakarta",
+      airport_from: "Juanda International Airport",
+      airport_to: "Soekarno Hatta International Airport",
+      departure_time: "08:00",
+      arrival_time: "10:00",
+      date: "11-24-2022",
+      type: "Pulang Pergi",
+      adult_price: 100000,
+      child_price: 50000,
+      available: true,
+      init_stock: 100,
+      curr_stock: 100,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },{
+      id: uuid(),
+      from: "Jakarta",
+      to: "Makassar",
+      airport_from: "Halim Perdanakusuma International Airport",
+      airport_to: "Sultan Hasanuddin International Airport",
+      departure_time: "20:00",
+      arrival_time: "21:00",
+      date: "11-24-2022",
+      type: "Pulang Pergi",
+      adult_price: 200000,
+      child_price: 100000,
+      available: true,
+      init_stock: 100,
+      curr_stock: 100,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+  ], {});
+=======
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert(
       "tickets",
@@ -15,7 +54,7 @@ module.exports = {
           airport_to: "Soekarno Hatta International Airport",
           departure_time: "08:00",
           arrival_time: "10:00",
-          date: "24-11-2022",
+          date: "11-24-2022",
           type: "roundtrip",
           adult_price: 100000,
           child_price: 50000,
@@ -33,7 +72,7 @@ module.exports = {
           airport_to: "Sultan Hasanuddin International Airport",
           departure_time: "20:00",
           arrival_time: "21:00",
-          date: "24-11-2022",
+          date: "11-24-2022",
           type: "roundtrip",
           adult_price: 200000,
           child_price: 100000,
@@ -51,7 +90,7 @@ module.exports = {
           airport_to: "Sultan Hasanuddin International Airport",
           departure_time: "07:00",
           arrival_time: "09:00",
-          date: "24-11-2022",
+          date: "11-24-2022",
           type: "roundtrip",
           adult_price: 200000,
           child_price: 100000,
@@ -69,7 +108,7 @@ module.exports = {
           airport_to: "Sultan Hasanuddin International Airport",
           departure_time: "10:00",
           arrival_time: "12:00",
-          date: "05-12-2022",
+          date: "12-05-2022",
           type: "roundtrip",
           adult_price: 200000,
           child_price: 100000,
@@ -87,7 +126,7 @@ module.exports = {
           airport_to: "Sultan Hasanuddin International Airport",
           departure_time: "20:00",
           arrival_time: "21:00",
-          date: "7-12-2022",
+          date: "12-07-2022",
           type: "roundtrip",
           adult_price: 200000,
           child_price: 100000,
@@ -105,7 +144,7 @@ module.exports = {
           airport_to: "Sultan Hasanuddin International Airport",
           departure_time: "20:00",
           arrival_time: "21:00",
-          date: "10-12-2022",
+          date: "12-10-2022",
           type: "roundtrip",
           adult_price: 200000,
           child_price: 100000,
@@ -159,7 +198,7 @@ module.exports = {
           airport_to: "Soekarno Hatta International Airport",
           departure_time: "20:00",
           arrival_time: "21:00",
-          date: "10-12-2022",
+          date: "12-10-2022",
           type: "oneway",
           adult_price: 300000,
           child_price: 250000,
@@ -177,7 +216,7 @@ module.exports = {
           airport_to: "Juanda International Airport",
           departure_time: "10:00",
           arrival_time: "13:00",
-          date: "10-12-2022",
+          date: "12-10-2022",
           type: "oneway",
           adult_price: 500000,
           child_price: 450000,
@@ -285,7 +324,7 @@ module.exports = {
           airport_to: "Juanda International Airport",
           departure_time: "12:00",
           arrival_time: "13:00",
-          date: "13-12-2022",
+          date: "12-13-2022",
           type: "oneway",
           adult_price: 200000,
           child_price: 150000,
@@ -303,7 +342,7 @@ module.exports = {
           airport_to: "Sultan Hasanuddin International Airport",
           departure_time: "20:00",
           arrival_time: "21:30",
-          date: "13-12-2022",
+          date: "12-13-2022",
           type: "oneway",
           adult_price: 200000,
           child_price: 150000,
@@ -321,7 +360,7 @@ module.exports = {
           airport_to: "Sultan Hasanuddin International Airport",
           departure_time: "16:00",
           arrival_time: "17:30",
-          date: "13-12-2022",
+          date: "12-13-2022",
           type: "oneway",
           adult_price: 200000,
           child_price: 150000,
@@ -339,7 +378,7 @@ module.exports = {
           airport_to: "Juanda International Airport",
           departure_time: "16:00",
           arrival_time: "18:00",
-          date: "13-12-2022",
+          date: "12-13-2022",
           type: "oneway",
           adult_price: 200000,
           child_price: 150000,
@@ -357,7 +396,7 @@ module.exports = {
           airport_to: "Kuala Namu International Airport",
           departure_time: "16:00",
           arrival_time: "18:00",
-          date: "13-12-2022",
+          date: "12-13-2022",
           type: "oneway",
           adult_price: 200000,
           child_price: 150000,
@@ -370,6 +409,7 @@ module.exports = {
       ],
       {}
     );
+>>>>>>> 9ee34e4616b53cbd78d4c21655af7a04b9507025
   },
 
   async down(queryInterface, Sequelize) {
