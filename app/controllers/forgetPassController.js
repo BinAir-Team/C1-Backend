@@ -39,12 +39,12 @@ exports.forgetPass = async (req, res) => {
       return;
     }
 
-    // create token
+    // create refresah token for reset password link in email (1 day) and save to db
     const token = jwt.sign({ id: user.id }, process.env.REFRESH_TOKEN_SECRET, {
       expiresIn: "1d",
     });
 
-    // updated user refresh token
+    // updated user refresh_token
     const updatedUser = await updateUser(user.id, { refresh_token: token });
 
     // create transporter
@@ -64,11 +64,34 @@ exports.forgetPass = async (req, res) => {
       from: "binair242@gmail.com",
       to: email,
       subject: "Reset Password",
-      html: ` <center> 
-              <h1>Reset Password</h1>
-              <p>Click this link to reset your password</p>
-              <button type="button" s><a href="http://localhost:8000/api/v1/reset-password/${token}">Reset Password</a></button>
-              <center>
+      html: `   <center> 
+      <h1>Reset Password</h1>
+      <p>Click this link to reset your password</p>
+      <button 
+        style=
+        "
+          border: none;
+          transition-duration: 0.4s;
+          cursor: pointer;
+          background-color: #76b5c3;
+          border-radius: 12px;
+        "
+        type="button"
+      > 
+        <a 
+        style=
+        "
+        text-decoration: none;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;color: white;
+        padding: 16px 32px;
+        transition-duration: 0.4s;" 
+        href='http://localhost:8000/api/v1/reset-password/${token}' target="_blank" rel="reset">Reset Password</a>
+      </button>
+    <center>
             `,
     };
 
@@ -101,7 +124,7 @@ exports.resetPass = async (req, res) => {
     if (!user) {
       res.status(400).send({
         status: "error",
-        message: "User not found",
+        message: "Token reset password not found",
         data: {},
       });
       return;
