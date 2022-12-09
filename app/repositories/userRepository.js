@@ -11,6 +11,15 @@ exports.findAll = () => {
   });
 };
 
+//  find  by refresh_token
+exports.findByRefreshToken = (refresh_token) => {
+  return users.findOne({
+    where: {
+      refresh_token,
+    },
+  });
+};
+
 // findOne
 exports.findOne = (id) => {
   return users.findOne({
