@@ -31,6 +31,11 @@ const {
   resetPass,
 } = require("../app/controllers/forgetPassController");
 
+const {
+  sendEmailVerification,
+  verifyEmail,
+} = require("../app/controllers/emailVerification");
+
 // import wishlist controller
 const {
   getAllWishlists,
@@ -81,6 +86,10 @@ router.delete(prefix + "/logout", logout);
 // forget password
 router.post(prefix + "/forget-password", forgetPass);
 router.post(prefix + "/reset-password/:token", resetPass);
+
+// email verification
+router.post(prefix + "/send-email/", sendEmailVerification);
+router.get(prefix + "/verify-email/:email", verifyEmail);
 
 // user routes
 // get current user data (token required)
