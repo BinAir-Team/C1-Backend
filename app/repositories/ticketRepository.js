@@ -3,7 +3,6 @@ const {Sequelize, Op} = require("sequelize");
 
 module.exports = {
     getAllTickets(from, to, dept, arr, date, type){
-        const thisDate = new Date(date);
         if(date){
             return tickets.findAll({
                 where:{
@@ -42,6 +41,64 @@ module.exports = {
                         },
                         airport_to: {
                             [Op.iLike]: `%${arr}%`
+                        },
+                        type: {
+                            [Op.iLike]: `%${type}%`
+                        }
+                    }
+                }
+            });
+        }
+    },
+
+    getFutureTicket(from, to, dept, arr, date, type){
+        const nowDate = new Date();
+        if(date){
+            return tickets.findAll({
+                where:{
+                    [Op.and]:{
+                        from: {
+                            [Op.iLike]: `%${from}%`
+                        },
+                        to: {
+                            [Op.iLike]: `%${to}%`
+                        },
+                        airport_from: {
+                            [Op.iLike]: `%${dept}%`
+                        },
+                        airport_to: {
+                            [Op.iLike]: `%${arr}%`
+                        },
+                        date: {
+                            [Op.and]: {
+                                [Op.gte]: nowDate,
+                                [Op.eq]: date
+                            }
+                        },
+                        type: {
+                            [Op.iLike]: `%${type}%`
+                        }
+                    }
+                }
+            });
+        } else{
+            return tickets.findAll({
+                where:{
+                    [Op.and]:{
+                        from: {
+                            [Op.iLike]: `%${from}%`
+                        },
+                        to: {
+                            [Op.iLike]: `%${to}%`
+                        },
+                        airport_from: {
+                            [Op.iLike]: `%${dept}%`
+                        },
+                        airport_to: {
+                            [Op.iLike]: `%${arr}%`
+                        },
+                        date:{
+                            [Op.gte]: nowDate
                         },
                         type: {
                             [Op.iLike]: `%${type}%`
