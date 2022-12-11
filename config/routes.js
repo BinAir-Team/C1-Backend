@@ -1,4 +1,9 @@
 const router = require("express").Router();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+let options = {
+    explorer: true
+  };
 
 // import auth controller
 const {
@@ -173,6 +178,10 @@ router.get(
 ); //get a wishlist by ticket id
 router.post(prefix + "/wishlists", verifyToken, createWishlist); //create a wishlist
 router.delete(prefix + "/wishlists/:id", verifyToken, deleteWishlist); //delete a wishlist
+
+//swagger openapi routes
+router.use(prefix + "/openapi", swaggerUi.serve);
+router.get(prefix + "/openapi", swaggerUi.setup(swaggerDocument, options));
 
 //transactions api
 router.get(
