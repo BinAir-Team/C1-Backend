@@ -36,13 +36,6 @@
         ],
         "parameters": [
           {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "default": "Bearer {token}",
-            "type": "string"
-          },
-          {
             "name": "firstname",
             "in": "formData",
             "required": true,
@@ -175,13 +168,6 @@
         ],
         "parameters": [
           {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "default": "Bearer {token}",
-            "type": "string"
-          },
-          {
             "name": "email",
             "in": "formData",
             "required": true,
@@ -274,7 +260,13 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -359,6 +351,13 @@
         ],
         "parameters": [
           {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
             "name": "firstname",
             "in": "formData",
             "required": true,
@@ -390,7 +389,7 @@
             "name": "profile_image",
             "in": "formData",
             "required": true,
-            "type": "string",
+            "type": "file",
             "description": ""
           },
           {
@@ -477,7 +476,13 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -581,6 +586,13 @@
           "application/x-www-form-urlencoded"
         ],
         "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
           {
             "name": "firstname",
             "in": "formData",
@@ -711,10 +723,18 @@
         ],
         "parameters": [
           {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
             "name": "id-p",
             "in": "path",
             "required": true,
-            "type": "uuid",
+            "type": "string",
+            "format": "uuid",
             "description": ""
           },
           {
@@ -771,7 +791,7 @@
             "name": "profile_image",
             "in": "formData",
             "required": true,
-            "type": "string",
+            "type": "file",
             "description": ""
           }
         ],
@@ -866,67 +886,18 @@
         ],
         "parameters": [
           {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
             "name": "id-d",
             "in": "path",
             "required": true,
-            "type": "uuid",
-            "description": ""
-          },
-          {
-            "name": "firstname",
-            "in": "formData",
-            "required": true,
             "type": "string",
-            "description": ""
-          },
-          {
-            "name": "lastname",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "gender",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "email",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "password",
-            "in": "formData",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "description": ""
-          },
-          {
-            "name": "phone",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "role",
-            "in": "formData",
-            "required": true,
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "profile_image",
-            "in": "formData",
-            "required": true,
-            "type": "string",
+            "format": "uuid",
             "description": ""
           }
         ],
@@ -1003,7 +974,7 @@
           {
             "name": "Authorization",
             "in": "header",
-            "required": false,
+            "required": true,
             "default": "Bearer {token}",
             "type": "string"
           },
@@ -1093,13 +1064,6 @@
             "description": ""
           },
           {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "default": "Bearer {token}",
-            "type": "string"
-          },
-          {
             "name": "password",
             "in": "formData",
             "required": true,
@@ -1181,7 +1145,13 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "",
@@ -1202,6 +1172,13 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
           {
             "name": "Body",
             "in": "body",
@@ -1233,7 +1210,13 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "",
@@ -1256,10 +1239,17 @@
           "application/json"
         ],
         "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        },{
           "name": "id-d",
           "in": "path",
           "required": true,
-          "type": "uuid",
+          "type": "string",
+          "format": "uuid",
           "description": ""
         }],
         "responses": {
@@ -1283,12 +1273,19 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        },
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "uuid",
+            "type": "string",
+            "format": "uuid",
             "description": ""
           }
         ],
@@ -1318,17 +1315,25 @@
         ],
         "parameters": [
           {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
             "name": "id-p",
             "in": "path",
             "required": true,
-            "type": "uuid",
+            "type": "string",
+            "format": "uuid",
             "description": ""
           },
           {
             "name": "bukti_bayar",
             "in": "formData",
             "required": true,
-            "type": "string",
+            "type": "file",
             "description": ""
           }
         ],
@@ -1353,13 +1358,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "default": "Bearer {token}",
-            "type": "string"
-          },
           {
             "name": "from",
             "in": "query",
@@ -1429,6 +1427,13 @@
         ],
         "parameters": [
           {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
             "name": "Body",
             "in": "body",
             "required": true,
@@ -1447,7 +1452,7 @@
         "security": []
       }
     },
-    "/tickets/6e359212-78e4-4c0f-8b94-6e5a3469876e": {
+    "/tickets/{id-p}": {
       "put": {
         "summary": "Update Ticket",
         "tags": [
@@ -1459,6 +1464,21 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id-p",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          },
           {
             "name": "Body",
             "in": "body",
@@ -1478,7 +1498,7 @@
         "security": []
       }
     },
-    "/tickets/d4b31bb0-c97c-4d5e-8e0b-ea17ed643b02": {
+    "/tickets/{id-d}": {
       "delete": {
         "summary": "Delete Ticket",
         "tags": [
@@ -1489,7 +1509,23 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id-d",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -1499,7 +1535,7 @@
         "security": []
       }
     },
-    "/tickets/id/ced2a7f6-6096-4e4b-99f3-d890c238f5f2": {
+    "/tickets/id/{id}": {
       "get": {
         "summary": "Get Tiket By id",
         "tags": [
@@ -1510,7 +1546,16 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -1531,7 +1576,13 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "",
@@ -1551,6 +1602,13 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
           {
             "name": "Body",
             "in": "body",
@@ -1583,6 +1641,13 @@
         ],
         "parameters": [
           {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
             "name": "usersId",
             "in": "query",
             "required": true,
@@ -1612,6 +1677,13 @@
         ],
         "parameters": [
           {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
             "name": "ticketsId",
             "in": "query",
             "required": true,
@@ -1628,7 +1700,7 @@
         "security": []
       }
     },
-    "/wishlists/6691d032-8bd5-49eb-93de-d93092da1590": {
+    "/wishlists/{id-d}": {
       "delete": {
         "summary": "Delete Wishlist",
         "tags": [
@@ -1643,9 +1715,17 @@
           {
             "name": "Authorization",
             "in": "header",
-            "required": false,
+            "required": true,
             "default": "Bearer {token}",
             "type": "string"
+          },
+          {
+            "name": "id-d",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
           }
         ],
         "responses": {
@@ -1669,13 +1749,6 @@
           "application/json"
         ],
         "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "default": "Bearer {token}",
-            "type": "string"
-          }
         ],
         "responses": {
           "200": {
@@ -1701,7 +1774,7 @@
           {
             "name": "Authorization",
             "in": "header",
-            "required": false,
+            "required": true,
             "default": "Bearer {token}",
             "type": "string"
           },
@@ -1747,7 +1820,13 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1831,6 +1910,13 @@
         ],
         "parameters": [
           {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
             "name": "title",
             "in": "formData",
             "required": true,
@@ -1870,7 +1956,7 @@
             "name": "promo_image",
             "in": "formData",
             "required": true,
-            "type": "string",
+            "type": "file",
             "description": ""
           }
         ],
@@ -1936,7 +2022,7 @@
         "security": []
       }
     },
-    "/admin/promo/73b30b98-501e-4bdb-a378-df7aeb5397dc": {
+    "/admin/promo/{id}": {
       "put": {
         "description": "Update Promo by admin, can update data with accesToken admin  \ncan upload promo_image",
         "summary": "Update Promo by Admin",
@@ -1952,6 +2038,21 @@
           "application/x-www-form-urlencoded"
         ],
         "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          },
           {
             "name": "title",
             "in": "formData",
@@ -1992,7 +2093,7 @@
             "name": "promo_image",
             "in": "formData",
             "required": true,
-            "type": "string",
+            "type": "file",
             "description": ""
           }
         ],
@@ -2072,7 +2173,21 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "format": "uuid",
+          "description": ""
+        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2136,15 +2251,7 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "default": "Bearer {token}",
-            "type": "string"
-          }
-        ],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK",
@@ -2223,7 +2330,7 @@
         }
       }
     },
-    "/promo/035bc054-138e-4877-aebd-dd936142c124": {
+    "/promo/{id}": {
       "get": {
         "description": "Get Promo by id ( for detail ), no need accesToken",
         "summary": "Get Promo with id ( for detail )",
@@ -2237,11 +2344,12 @@
         ],
         "parameters": [
           {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "default": "Bearer {token}",
-            "type": "string"
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
           }
         ],
         "responses": {
@@ -2316,7 +2424,13 @@
         "produces": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
         "responses": {
           "200": {
             "description": "",
@@ -2326,7 +2440,7 @@
         "security": []
       }
     },
-    "/notify/6be86e24-9925-43f8-83a1-f0257eb87625": {
+    "/notify/{id}": {
       "put": {
         "summary": "Update Notification Status to Read",
         "tags": [
@@ -2339,11 +2453,12 @@
         ],
         "parameters": [
           {
-            "name": "Authorization",
-            "in": "header",
-            "required": false,
-            "default": "Bearer {token}",
-            "type": "string"
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
           }
         ],
         "responses": {
