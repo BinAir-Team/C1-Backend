@@ -84,16 +84,6 @@ module.exports = {
         const available = req.body.available;
         const init_stock = req.body.init_stock;
         const curr_stock = req.body.curr_stock;
-        const find = await ticketService.getTicketById(id);
-        if(!find){
-            return res.status(404).json(
-                {
-                    status: "error",
-                    message: "id ticket not found",
-                    data: {}
-                }
-            );
-        }
         await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses Menambah tiket rute ${from}-${to} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
         const newTicket = await ticketService.createTicket({
             id: id,
