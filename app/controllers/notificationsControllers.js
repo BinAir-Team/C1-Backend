@@ -30,7 +30,7 @@ module.exports = {
         });
     },
     deleteNotifById(req, res) {
-        const {id} = req.notif
+        const {id} = req.params
         notifService.deleteByPk(id)
         .then(notif => {
             return notif;
@@ -40,7 +40,7 @@ module.exports = {
         });
     },
     getNotifByid(req,res) {
-        const {id} = req.notif
+        const {id} = req.params
         notifService.findByPk(id)
         .then(notif => {
             return notif;
@@ -50,7 +50,7 @@ module.exports = {
         });
     },
     async updateNotif(req,res) {
-        const {id} = req.params
+        const {id} = req.body
         const notif = await notifService.findByPk(id);
         if(!notif){
             res.status(404).json({
