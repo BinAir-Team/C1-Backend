@@ -15,6 +15,7 @@ module.exports = {
           lastname: null,
           gender: null,
           email: "admin@gmail.com",
+          verified: true,
           password: hashedPassword,
           phone: null,
           role: "admin",
@@ -28,6 +29,7 @@ module.exports = {
           lastname: null,
           gender: null,
           email: "hayatullah@binaracademy.org",
+          verified: true,
           password: hashedPassword,
           phone: null,
           role: "admin",
@@ -41,6 +43,7 @@ module.exports = {
           lastname: null,
           gender: null,
           email: "omaharani@binaracademy.org",
+          verified: true,
           password: hashedPassword,
           phone: null,
           role: "admin",
@@ -52,7 +55,6 @@ module.exports = {
       {}
     );
   },
-
   async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete("users", null, {});
   },
