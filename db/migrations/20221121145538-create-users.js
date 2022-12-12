@@ -22,9 +22,9 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
       },
-      verified:{
+      verified: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
       },
       password: {
         type: Sequelize.STRING,
