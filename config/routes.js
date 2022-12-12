@@ -1,4 +1,9 @@
 const router = require("express").Router();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+let options = {
+    explorer: true
+  };
 
 // import auth controller
 const {
@@ -174,6 +179,10 @@ router.get(
 router.post(prefix + "/wishlists", verifyToken, createWishlist); //create a wishlist
 router.delete(prefix + "/wishlists/:id", verifyToken, deleteWishlist); //delete a wishlist
 
+//swagger openapi routes
+router.use(prefix + "/openapi", swaggerUi.serve);
+router.get(prefix + "/openapi", swaggerUi.setup(swaggerDocument, options));
+
 //transactions api
 router.get(
   prefix + "/trans",
@@ -212,5 +221,15 @@ router.put(
 //search API
 router.get(prefix + "/search", controllers.searchControllers.getSearch);
 router.post(prefix + "/search", controllers.searchControllers.addSearch);
+
+//tes member notif api
+router.get(prefix + "/notify", verifyToken ,controllers.notifControllers.getNotifByUserId);
+router.put(prefix + "/notify/:id", controllers.notifControllers.updateNotif);
+
+//admin notif
+router.get(prefix + "/notify/admin", verifyToken, verifyAdmin ,controllers.notifControllers.getAllNotif);
+router.get(prefix + "/notify/admin/:id", verifyToken, verifyAdmin ,controllers.notifControllers.getNotifByid);
+router.post(prefix + "/notify/admin", verifyToken, verifyAdmin ,controllers.notifControllers.createAdmin);
+router.delete(prefix + "/notify/admin/:id", verifyToken, verifyAdmin ,controllers.notifControllers.deleteNotifById);
 
 module.exports = router;

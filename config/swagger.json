@@ -1,0 +1,3807 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "BinairApi",
+    "description": "API Authentikasi & User",
+    "contact": {}
+  },
+  "host": "binair-backend-production.up.railway.app",
+  "basePath": "/api/v1",
+  "securityDefinitions": {},
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "description": "Member Register Seperti Biasa, role akan auto member, dan juga profile_picture default avatar",
+        "summary": "Register",
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "Register",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "firstname",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "lastname",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "gender",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "confirmPassword",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "phone",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/Register"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "message": "User created successfully",
+                "data": {
+                  "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
+                  "firstname": "first",
+                  "lastname": "name",
+                  "gender": "male",
+                  "email": "first@gmail.com",
+                  "password": "$2b$10$smXw0rsV6RUV88QPxYhv2.XES0r3ObE/QGR6zYPzXW8Bu.JX4VYP2",
+                  "phone": "0812324123",
+                  "role": "member"
+                }
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "vary": {
+                "type": "string",
+                "default": "Origin"
+              },
+              "access-control-allow-credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "302"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"12e-TXlS9hgjWwaK2B4aGkn83Igo6C0\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Wed, 30 Nov 2022 06:46:00 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "150"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "description": "StartFragment\n\nAdmin / Member dapat melakukan login sesuai email dan password yang sudah di inputkan,  \nmaka akan menerima accessToken yang dapat disimpan di local.storage",
+        "summary": "Login",
+        "tags": [
+          "Authentication"
+        ],
+        "operationId": "Login",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Login"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "message": "Login success",
+                "data": {
+                  "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
+                  "firstname": "capcai",
+                  "lastname": "yuhuu",
+                  "gender": "bencong",
+                  "email": "first@gmail.com",
+                  "phone": "08111111",
+                  "role": "member",
+                  "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669791800/NaN/aiequfty89e5o6owx11e.jpg",
+                  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMwNDlkYmE5LTA0YjgtNDYxYy05NDI0LWFmYWFmZjY0Y2Y2NyIsImZpcnN0bmFtZSI6ImNhcGNhaSIsImxhc3RuYW1lIjoieXVodXUiLCJnZW5kZXIiOiJiZW5jb25nIiwiZW1haWwiOiJmaXJzdEBnbWFpbC5jb20iLCJwaG9uZSI6IjA4MTExMTExIiwicm9sZSI6Im1lbWJlciIsInByb2ZpbGVfaW1hZ2UiOiJodHRwczovL3Jlcy5jbG91ZGluYXJ5LmNvbS9keW5nZ2JjMGEvaW1hZ2UvdXBsb2FkL3YxNjY5NzkxODAwL05hTi9haWVxdWZ0eTg5ZTVvNm93eDExZS5qcGciLCJpYXQiOjE2NzA2MDM5NjUsImV4cCI6MTY3MDY5MDM2NX0.7frjeWIqtM3El0Al5yGf2WG3IZI2RTP5KUDZPbu5DUk"
+                }
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "access-control-allow-origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "837"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"345-H/9syCxMyX0w55BPUzl1nrCB7gM\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Fri, 09 Dec 2022 16:39:26 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "175"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              },
+              "connection": {
+                "type": "string",
+                "default": "close"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "description": "Get Current User Use accesToken yang ada di local storage\n\nharus menggunakan accesToken member yang login",
+        "summary": "Get Current User",
+        "tags": [
+          "User by member"
+        ],
+        "operationId": "GetCurrentUser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetCurrentUser"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "message": "User found",
+                "data": {
+                  "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
+                  "firstname": "first",
+                  "lastname": "name",
+                  "gender": "male",
+                  "email": "first@gmail.com",
+                  "phone": "0812324123",
+                  "role": "member",
+                  "profileImage": "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png"
+                }
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "vary": {
+                "type": "string",
+                "default": "Origin"
+              },
+              "access-control-allow-credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "329"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"149-g0MN5htRbJwqNDGe/fFXynIEuRY\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Wed, 30 Nov 2022 07:01:33 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "33"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              },
+              "connection": {
+                "type": "string",
+                "default": "close"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "description": "Update Current User yang sedang login  \nharus menggunakan accesToken yang sedang login  \nuntuk profile image melakukan upload image",
+        "summary": "Update Current User",
+        "tags": [
+          "User by member"
+        ],
+        "operationId": "UpdateCurrentUser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "firstname",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "lastname",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "gender",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "phone",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "profile_image",
+            "in": "formData",
+            "required": true,
+            "type": "file",
+            "description": ""
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdateCurrentUser"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "message": "User updated",
+                "data": {
+                  "firstname": "capcai",
+                  "lastname": "yuhuu",
+                  "gender": "bencong",
+                  "phone": "08111111",
+                  "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1670604047/NaN/onhgofthkqjccagujiix.jpg",
+                  "password": "$2b$10$xfxIy8.5aQQ5zyv.wr4/quSICsA5FjKSr2KVSoDo.BdtW6z4T.r9a"
+                }
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "access-control-allow-origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "315"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"13b-78nbbGcrY5g5DVQ/17TcOTRNJlk\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Fri, 09 Dec 2022 16:40:47 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "1014"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              },
+              "connection": {
+                "type": "string",
+                "default": "close"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/users": {
+      "get": {
+        "description": "Get All data user Member By Admin  \nharus menggunakan accesToken admin",
+        "summary": "Get User Data Member",
+        "tags": [
+          "CRUD Users By Admin"
+        ],
+        "operationId": "GetUserDataMember",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetUserDataMember"
+            },
+            "examples": {
+              "application/json": {
+                "status": true,
+                "message": "Get all user data role member",
+                "data": [
+                  {
+                    "id": "4d53346b-5c7f-4171-b84e-1fbd19bb7b7e",
+                    "firstname": "adi",
+                    "lastname": "pras",
+                    "gender": "male",
+                    "email": "adi@gmail.com",
+                    "password": "$2b$10$ozy2vIhUL6pUYTXVxhV3ROdvlr/H7SBOYUOehA/rrg3oqVjNFnYJi",
+                    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRkNTMzNDZiLTVjN2YtNDE3MS1iODRlLTFmYmQxOWJiN2I3ZSIsImZpcnN0bmFtZSI6ImFkaSIsImxhc3RuYW1lIjoicHJhcyIsImdlbmRlciI6Im1hbGUiLCJlbWFpbCI6ImFkaUBnbWFpbC5jb20iLCJwaG9uZSI6IjA4MTIzMjQxMjMiLCJyb2xlIjoibWVtYmVyIiwicHJvZmlsZV9pbWFnZSI6ImRlZmF1bHQucG5nIiwiaWF0IjoxNjY5NzkwNzI2LCJleHAiOjE2NzAzOTU1MjZ9.DJ6FiaaA0A1I0l_qEDd_SH4_DvBS8wCm-iU43B5W8jA",
+                    "phone": "0812324123",
+                    "role": "member",
+                    "profile_image": "default.png",
+                    "createdAt": "2022-11-27T08:22:18.492Z",
+                    "updatedAt": "2022-11-30T06:45:26.050Z"
+                  },
+                  {
+                    "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
+                    "firstname": "first",
+                    "lastname": "name",
+                    "gender": "male",
+                    "email": "first@gmail.com",
+                    "password": "$2b$10$smXw0rsV6RUV88QPxYhv2.XES0r3ObE/QGR6zYPzXW8Bu.JX4VYP2",
+                    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMwNDlkYmE5LTA0YjgtNDYxYy05NDI0LWFmYWFmZjY0Y2Y2NyIsImZpcnN0bmFtZSI6ImZpcnN0IiwibGFzdG5hbWUiOiJuYW1lIiwiZ2VuZGVyIjoibWFsZSIsImVtYWlsIjoiZmlyc3RAZ21haWwuY29tIiwicGhvbmUiOiIwODEyMzI0MTIzIiwicm9sZSI6Im1lbWJlciIsInByb2ZpbGVfaW1hZ2UiOiJodHRwczovL3d3dy5raW5kcG5nLmNvbS9waWNjL20vMjEtMjE0NDM5X2ZyZWUtaGlnaC1xdWFsaXR5LXBlcnNvbi1pY29uLWRlZmF1bHQtcHJvZmlsZS1waWN0dXJlLnBuZyIsImlhdCI6MTY2OTc5MDg1MywiZXhwIjoxNjcwMzk1NjUzfQ.J3C8Nse2ep7ZEPJk6A0R7ur6iCaGMvY1yArFHY1itr8",
+                    "phone": "0812324123",
+                    "role": "member",
+                    "profile_image": "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png",
+                    "createdAt": "2022-11-30T06:46:00.907Z",
+                    "updatedAt": "2022-11-30T06:47:33.456Z"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "vary": {
+                "type": "string",
+                "default": "Origin"
+              },
+              "access-control-allow-credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "1753"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"6d9-qhdOHeZZTIGTrUa8C8TJlylHaTY\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Wed, 30 Nov 2022 06:50:34 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "49"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              },
+              "connection": {
+                "type": "string",
+                "default": "close"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "description": "Create Data User member by admin\n\nuntuk profile_image akan otomatis default aavatar, begitu juga role adkan otomatis member",
+        "summary": "POST User Data Member",
+        "tags": [
+          "CRUD Users By Admin"
+        ],
+        "operationId": "POSTUserDataMember",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "firstname",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "lastname",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "gender",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "phone",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/POSTUserDataMember"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "message": "User created successfully",
+                "data": {
+                  "id": "2ed8bd90-c0c5-4fdf-b396-05aea4af104c",
+                  "firstname": "asrof",
+                  "lastname": "asrofww",
+                  "gender": "laki",
+                  "email": "afif@gmail.com",
+                  "role": "member",
+                  "password": "$2b$10$qcRkgqbq7D47DxkdeuSPAO9fPaOnaxYfc2JQoipr8Fdd2oKOGUx9S",
+                  "phone": "08123123",
+                  "profile_image": "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png",
+                  "updatedAt": "2022-11-30T06:56:04.497Z",
+                  "createdAt": "2022-11-30T06:56:04.497Z",
+                  "refresh_token": null
+                }
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "vary": {
+                "type": "string",
+                "default": "Origin"
+              },
+              "access-control-allow-credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "518"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"206-p/k8kVtDBMhQjRrs8SkHXUAbn6k\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Wed, 30 Nov 2022 06:56:04 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "142"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/user/{id-p}": {
+      "put": {
+        "description": "Update Data Member dengan id By Admin  \ndapat melakukan profile_image upload  \ndan juga dapat mengganti role menjadi admin",
+        "summary": "Put User Data Member with Id",
+        "tags": [
+          "CRUD Users By Admin"
+        ],
+        "operationId": "PutUserDataMemberwithId",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id-p",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          },
+          {
+            "name": "firstname",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "lastname",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "gender",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "phone",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "role",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "profile_image",
+            "in": "formData",
+            "required": true,
+            "type": "file",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/PutUserDataMemberwithId"
+            },
+            "examples": {
+              "application/json": {
+                "message": "User data updated successfully",
+                "data": [
+                  1
+                ],
+                "user": {
+                  "id": "2ed8bd90-c0c5-4fdf-b396-05aea4af104c",
+                  "firstname": "anjing",
+                  "lastname": "asrofww",
+                  "gender": "laki",
+                  "email": "afif@gmail.com",
+                  "password": "$2b$10$XD3Yq3yCRlpXbKUqkZbGUOv.LUl/oCUtp8.rgndUXEZfqTn0y10UG",
+                  "refresh_token": null,
+                  "phone": "08123123",
+                  "role": "admin",
+                  "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669791940/NaN/uprskhxaouvyiibsjvja.jpg",
+                  "createdAt": "2022-11-30T06:56:04.497Z",
+                  "updatedAt": "2022-11-30T07:05:41.424Z",
+                  "notifications": [],
+                  "transactions": [],
+                  "wishlists": []
+                }
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "vary": {
+                "type": "string",
+                "default": "Origin"
+              },
+              "access-control-allow-credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "559"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"22f-NNecKCFj0l2kof/b544dtN+SmnI\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Wed, 30 Nov 2022 07:05:41 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "879"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/user/{id-d}": {
+      "delete": {
+        "description": "Delete Data user member by Admin  \nharus menggunakan accesToken admin",
+        "summary": "Delete User Data Member with Id Copy",
+        "tags": [
+          "CRUD Users By Admin"
+        ],
+        "operationId": "DeleteUserDataMemberwithIdCopy",
+        "deprecated": false,
+        "produces": [
+          "application/json; charset=utf-8"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id-d",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeleteUserDataMemberwithIdCopy"
+            },
+            "examples": {
+              "application/json; charset=utf-8": {
+                "message": "User data deleted successfully",
+                "user": 1
+              }
+            },
+            "headers": {
+              "X-Powered-By": {
+                "type": "string",
+                "default": "Express"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string",
+                "default": "http://localhost:8000"
+              },
+              "Vary": {
+                "type": "string",
+                "default": "Origin"
+              },
+              "Access-Control-Allow-Credentials": {
+                "type": "string",
+                "default": "true"
+              },
+              "Content-Length": {
+                "type": "string",
+                "default": "53"
+              },
+              "ETag": {
+                "type": "string",
+                "default": "W/\"35-H2B3K7SXMhpUYd5VYNg6S2IRgWY\""
+              },
+              "Date": {
+                "type": "string",
+                "default": "Sat, 26 Nov 2022 13:53:53 GMT"
+              },
+              "Connection": {
+                "type": "string",
+                "default": "keep-alive"
+              },
+              "Keep-Alive": {
+                "type": "string",
+                "default": "timeout=5"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/forget-password": {
+      "post": {
+        "summary": "Forget Pass",
+        "tags": [
+          "User Forget Password"
+        ],
+        "operationId": "ForgetPass",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ForgetPass"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "message": "Check your email to reset password",
+                "data": {}
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "access-control-allow-origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "77"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"4d-MpuUBtEl4jzCVHpi4gOCTWaIEBg\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Fri, 09 Dec 2022 06:47:47 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "1011"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              },
+              "connection": {
+                "type": "string",
+                "default": "close"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reset-password/{key}": {
+      "post": {
+        "summary": "Reset Pass",
+        "tags": [
+          "User Forget Password"
+        ],
+        "operationId": "ResetPass",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "confirmPassword",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResetPass"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "message": "Password reset successfully",
+                "data": {}
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "access-control-allow-origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "70"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"46-GYdf1daUXkcz7li+vJZS/AtWyEU\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Fri, 09 Dec 2022 07:14:06 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "132"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              },
+              "connection": {
+                "type": "string",
+                "default": "close"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/trans": {
+      "get": {
+        "description": "get all data transaksi by admin binair",
+        "summary": "get all",
+        "tags": [
+          "Transaksi CRUD"
+        ],
+        "operationId": "getall",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "description": "post data transaksi oleh member binair",
+        "summary": "post transaction data",
+        "tags": [
+          "Transaksi CRUD"
+        ],
+        "operationId": "posttransactiondata",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/posttransactiondatarequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/trans/user": {
+      "get": {
+        "description": "get data transaksi berdasarkan user id by member",
+        "summary": "get transaction user",
+        "tags": [
+          "Transaksi CRUD"
+        ],
+        "operationId": "gettransactionuser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/trans/{id-d}": {
+      "delete": {
+        "description": "delete transaksi yang dapat dilakukan oleh admin",
+        "summary": "delete trans",
+        "tags": [
+          "Transaksi CRUD"
+        ],
+        "operationId": "deletetrans",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        },{
+          "name": "id-d",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "format": "uuid",
+          "description": ""
+        }],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/trans/{id}": {
+      "get": {
+        "description": "get transaksi dengan id by member",
+        "summary": "get by transaction id",
+        "tags": [
+          "Transaksi CRUD"
+        ],
+        "operationId": "getbytransactionid",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/trans/{id-p}": {
+      "put": {
+        "description": "verifikasi bukti pembayaran oleh member dengan melampirkan gambar, status transaksi akan berubah",
+        "summary": "update payment user",
+        "tags": [
+          "Transaksi CRUD"
+        ],
+        "operationId": "updatepaymentuser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id-p",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          },
+          {
+            "name": "bukti_bayar",
+            "in": "formData",
+            "required": true,
+            "type": "file",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tickets": {
+      "get": {
+        "summary": "Get All Tickets",
+        "tags": [
+          "Tickets"
+        ],
+        "operationId": "GetAllTickets",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "airport_from",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "airport_to",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "willFly",
+            "in": "query",
+            "required": true,
+            "type": "boolean",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      },
+      "post": {
+        "summary": "Create Ticket",
+        "tags": [
+          "Tickets"
+        ],
+        "operationId": "CreateTicket",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateTicketRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tickets/{id-p}": {
+      "put": {
+        "summary": "Update Ticket",
+        "tags": [
+          "Tickets"
+        ],
+        "operationId": "UpdateTicket",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id-p",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UpdateTicketRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tickets/{id-d}": {
+      "delete": {
+        "summary": "Delete Ticket",
+        "tags": [
+          "Tickets"
+        ],
+        "operationId": "DeleteTicket",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id-d",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/tickets/id/{id}": {
+      "get": {
+        "summary": "Get Tiket By id",
+        "tags": [
+          "Tickets"
+        ],
+        "operationId": "GetTiketByid",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/wishlists": {
+      "get": {
+        "summary": "Get All Wishlist",
+        "tags": [
+          "Wishlists"
+        ],
+        "operationId": "GetAllWishlist",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Create Wishlist",
+        "tags": [
+          "Wishlists"
+        ],
+        "operationId": "CreateWishlist",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CreateWishlistRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/wishlists/user": {
+      "get": {
+        "summary": "Get Wishlist By UserId",
+        "tags": [
+          "Wishlists"
+        ],
+        "operationId": "GetWishlistByUserId",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "usersId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/wishlists/ticket": {
+      "get": {
+        "summary": "Get Wishlist By TicketsId",
+        "tags": [
+          "Wishlists"
+        ],
+        "operationId": "GetWishlistByTicketsId",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "ticketsId",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/wishlists/{id-d}": {
+      "delete": {
+        "summary": "Delete Wishlist",
+        "tags": [
+          "Wishlists"
+        ],
+        "operationId": "DeleteWishlist",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id-d",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/search": {
+      "get": {
+        "description": "StartFragment\n\n- endpoint pencarian data kota yang terdapat bandara",
+        "summary": "Searches",
+        "tags": [
+          "Searches"
+        ],
+        "operationId": "Searches",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      },
+      "post": {
+        "summary": "Add Data Searches",
+        "tags": [
+          "Searches"
+        ],
+        "operationId": "AddDataSearches",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "code",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "city",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "airport",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/admin/promos": {
+      "get": {
+        "description": "Get all promo by Admin  \ncan acces All data promo with accesToken admin",
+        "summary": "Get Promo by Admin",
+        "tags": [
+          "CRUD Promo by Admin"
+        ],
+        "operationId": "GetPromobyAdmin",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetPromobyAdmin"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "message": "Success",
+                "data": [
+                  {
+                    "id": "035bc054-138e-4877-aebd-dd936142c124",
+                    "title": "Stay Happy Weekly Bersama OCBC NISP, Dapatkan Diskon 12%",
+                    "desc": "Harga Hemat Bersama OCBC NISP ",
+                    "promo_code": "WEEKLYHO",
+                    "discount": 12,
+                    "terms": "1. Periode Promo 1 Juli - 31 Desember 2022\n2. Periode Menginap: Kapan pun\n3. Promo ini berlaku setiap hari Selasa selama periode promo.\n4. Penggunaan kupon berbasis first-come, first serve selama kuota masih tersedia.\n5. Dapatkan diskon sebesar 12% hingga Rp.100.000 menggunakan kode promo WEEKLYHO dengan minimal pembelian Rp. 1.200.000 dan berlaku untuk semua hotel.\n6. Promo ini hanya berlaku untuk pembayaran dengan menggunakan metode pembayaran semua Kartu Kredit OCBC NISP.\n7. Promo hanya bisa dipakai dengan menggunakan mata uang IDR/Indonesian Rupiah.\n8. Promo hanya bisa dipakai sekali per akun dan per minggu selama periode promo.\n9. Promo berlaku untuk pemesanan melalui aplikasi Airpaz.\n10. Aplikasi dapat di download dengan klik link ini  https://airpaz.link/android (Android) dan https://airpaz.link/ios (iOS).\n11. Promo tidak dapat dipindahtangankan dan tidak dapat digunakan bersamaan dengan promosi atau diskon, termasuk kupon serta penawaran keanggotaan lainnya.\n12. Promo ini tidak dapat ditransfer atau ditukar dengan uang tunai, batas kredit atau diskon/ produk/ layanan lainnya.\n13. Pemegang kartu yang memenuhi syarat dan menggunakan promo ini terikat oleh syarat dan ketentuan Airpaz dan OCBC NISP.\n14. Airpaz dan OCBC NISP berhak untuk mengakhiri, mengubah atau menambah syarat dan ketentuan ini dari waktu ke waktu dengan pemberitahuan minimal lima (5) hari kalender sebelumnya kepada pengguna akun OCBC NISP sebelum syarat dan ketentuan baru diberlakukan.\n15. Airpaz dan OCBC NISP berhak untuk membatalkan promo ini apabila transaksi tidak memenuhi Syarat dan Ketentuan yang berlaku.\n16. Promo bersifat Non-refundable dan tidak dapat diuangkan.",
+                    "promo_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669979803/NaN/hz8cs1tqb2ajo13zlai4.jpg",
+                    "createdAt": "2022-12-02T11:16:44.261Z",
+                    "updatedAt": "2022-12-02T11:16:44.261Z"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "access-control-allow-origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "2122"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"84a-BHbCUfvPJDchjTj5SRCV99cCjJQ\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Fri, 02 Dec 2022 11:17:49 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "60"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              },
+              "connection": {
+                "type": "string",
+                "default": "close"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "description": "Create Promo by admin, can create data with accesToken admin  \ncan upload promo_image",
+        "summary": "Create Promo by Admin",
+        "tags": [
+          "CRUD Promo by Admin"
+        ],
+        "operationId": "CreatePromobyAdmin",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "desc",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "promo_code",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "discount",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "terms",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "promo_image",
+            "in": "formData",
+            "required": true,
+            "type": "file",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/CreatePromobyAdmin"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "message": "Success",
+                "data": {
+                  "id": "73b30b98-501e-4bdb-a378-df7aeb5397dc",
+                  "title": "Stay Happy Weekly Bersama OCBC NISP, Dapatkan Diskon 12%",
+                  "desc": "Harga Hemat Bersama OCBC NISP ",
+                  "promo_code": "WEEKLYHO",
+                  "discount": 12,
+                  "terms": "1. Periode Promo 1 Juli - 31 Desember 2022\n2. Periode Menginap: Kapan pun\n3. Promo ini berlaku setiap hari Selasa selama periode promo.\n4. Penggunaan kupon berbasis first-come, first serve selama kuota masih tersedia.\n5. Dapatkan diskon sebesar 12% hingga Rp.100.000 menggunakan kode promo WEEKLYHO dengan minimal pembelian Rp. 1.200.000 dan berlaku untuk semua hotel.\n6. Promo ini hanya berlaku untuk pembayaran dengan menggunakan metode pembayaran semua Kartu Kredit OCBC NISP.\n7. Promo hanya bisa dipakai dengan menggunakan mata uang IDR/Indonesian Rupiah.\n8. Promo hanya bisa dipakai sekali per akun dan per minggu selama periode promo.\n9. Promo berlaku untuk pemesanan melalui aplikasi Airpaz.\n10. Aplikasi dapat di download dengan klik link ini  https://airpaz.link/android (Android) dan https://airpaz.link/ios (iOS).\n11. Promo tidak dapat dipindahtangankan dan tidak dapat digunakan bersamaan dengan promosi atau diskon, termasuk kupon serta penawaran keanggotaan lainnya.\n12. Promo ini tidak dapat ditransfer atau ditukar dengan uang tunai, batas kredit atau diskon/ produk/ layanan lainnya.\n13. Pemegang kartu yang memenuhi syarat dan menggunakan promo ini terikat oleh syarat dan ketentuan Airpaz dan OCBC NISP.\n14. Airpaz dan OCBC NISP berhak untuk mengakhiri, mengubah atau menambah syarat dan ketentuan ini dari waktu ke waktu dengan pemberitahuan minimal lima (5) hari kalender sebelumnya kepada pengguna akun OCBC NISP sebelum syarat dan ketentuan baru diberlakukan.\n15. Airpaz dan OCBC NISP berhak untuk membatalkan promo ini apabila transaksi tidak memenuhi Syarat dan Ketentuan yang berlaku.\n16. Promo bersifat Non-refundable dan tidak dapat diuangkan.",
+                  "promo_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669979710/NaN/icg8djydpkqmx2gvxjkh.jpg",
+                  "updatedAt": "2022-12-02T11:15:10.969Z",
+                  "createdAt": "2022-12-02T11:15:10.969Z"
+                }
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "access-control-allow-origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "2120"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"848-pb8NHKEbReDGWg95lqM4Fr/BzN0\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Fri, 02 Dec 2022 11:15:10 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "821"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/promo/{id}": {
+      "put": {
+        "description": "Update Promo by admin, can update data with accesToken admin  \ncan upload promo_image",
+        "summary": "Update Promo by Admin",
+        "tags": [
+          "CRUD Promo by Admin"
+        ],
+        "operationId": "UpdatePromobyAdmin",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "desc",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "promo_code",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "discount",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "terms",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "promo_image",
+            "in": "formData",
+            "required": true,
+            "type": "file",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/UpdatePromobyAdmin"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "message": "Success",
+                "data": {
+                  "id": "73b30b98-501e-4bdb-a378-df7aeb5397dc",
+                  "title": "Stay Happy Weekly Bersama OCBC NISP, Dapatkan Diskon 12%",
+                  "desc": "Harga Hemat Bersama OCBC NISP ",
+                  "promo_code": "WEEKLYHOwww",
+                  "discount": 12,
+                  "terms": "1. Periode Promo 1 Juli - 31 Desember 2022\n2. Periode Menginap: Kapan pun\n3. Promo ini berlaku setiap hari Selasa selama periode promo.\n4. Penggunaan kupon berbasis first-come, first serve selama kuota masih tersedia.\n5. Dapatkan diskon sebesar 12% hingga Rp.100.000 menggunakan kode promo WEEKLYHO dengan minimal pembelian Rp. 1.200.000 dan berlaku untuk semua hotel.\n6. Promo ini hanya berlaku untuk pembayaran dengan menggunakan metode pembayaran semua Kartu Kredit OCBC NISP.\n7. Promo hanya bisa dipakai dengan menggunakan mata uang IDR/Indonesian Rupiah.\n8. Promo hanya bisa dipakai sekali per akun dan per minggu selama periode promo.\n9. Promo berlaku untuk pemesanan melalui aplikasi Airpaz.\n10. Aplikasi dapat di download dengan klik link ini  https://airpaz.link/android (Android) dan https://airpaz.link/ios (iOS).\n11. Promo tidak dapat dipindahtangankan dan tidak dapat digunakan bersamaan dengan promosi atau diskon, termasuk kupon serta penawaran keanggotaan lainnya.\n12. Promo ini tidak dapat ditransfer atau ditukar dengan uang tunai, batas kredit atau diskon/ produk/ layanan lainnya.\n13. Pemegang kartu yang memenuhi syarat dan menggunakan promo ini terikat oleh syarat dan ketentuan Airpaz dan OCBC NISP.\n14. Airpaz dan OCBC NISP berhak untuk mengakhiri, mengubah atau menambah syarat dan ketentuan ini dari waktu ke waktu dengan pemberitahuan minimal lima (5) hari kalender sebelumnya kepada pengguna akun OCBC NISP sebelum syarat dan ketentuan baru diberlakukan.\n15. Airpaz dan OCBC NISP berhak untuk membatalkan promo ini apabila transaksi tidak memenuhi Syarat dan Ketentuan yang berlaku.\n16. Promo bersifat Non-refundable dan tidak dapat diuangkan.",
+                  "promo_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669979710/NaN/icg8djydpkqmx2gvxjkh.jpg",
+                  "createdAt": "2022-12-02T11:15:10.969Z",
+                  "updatedAt": "2022-12-02T11:15:59.108Z"
+                }
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "access-control-allow-origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "2123"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"84b-0qtJvcPTcIICKToIwV3JhyNXN2g\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Fri, 02 Dec 2022 11:15:59 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "65"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              },
+              "connection": {
+                "type": "string",
+                "default": "close"
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "description": "Delete Promo by admin, can delete data with accesToken admin",
+        "summary": "Delete Promo by Admin",
+        "tags": [
+          "CRUD Promo by Admin"
+        ],
+        "operationId": "DeletePromobyAdmin",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "format": "uuid",
+          "description": ""
+        }],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/DeletePromobyAdmin"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "message": "Success"
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "access-control-allow-origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "40"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"28-Y3z25J95wN/TLYyfIDEIlSwILTU\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Fri, 02 Dec 2022 11:16:29 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "42"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/promos": {
+      "get": {
+        "description": "Get promo, no need accesToken",
+        "summary": "Get Promo",
+        "tags": [
+          "Get Promo"
+        ],
+        "operationId": "GetPromo",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetPromo"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "message": "Success",
+                "data": [
+                  {
+                    "id": "035bc054-138e-4877-aebd-dd936142c124",
+                    "title": "Stay Happy Weekly Bersama OCBC NISP, Dapatkan Diskon 12%",
+                    "desc": "Harga Hemat Bersama OCBC NISP ",
+                    "promo_code": "WEEKLYHO",
+                    "discount": 12,
+                    "terms": "1. Periode Promo 1 Juli - 31 Desember 2022\n2. Periode Menginap: Kapan pun\n3. Promo ini berlaku setiap hari Selasa selama periode promo.\n4. Penggunaan kupon berbasis first-come, first serve selama kuota masih tersedia.\n5. Dapatkan diskon sebesar 12% hingga Rp.100.000 menggunakan kode promo WEEKLYHO dengan minimal pembelian Rp. 1.200.000 dan berlaku untuk semua hotel.\n6. Promo ini hanya berlaku untuk pembayaran dengan menggunakan metode pembayaran semua Kartu Kredit OCBC NISP.\n7. Promo hanya bisa dipakai dengan menggunakan mata uang IDR/Indonesian Rupiah.\n8. Promo hanya bisa dipakai sekali per akun dan per minggu selama periode promo.\n9. Promo berlaku untuk pemesanan melalui aplikasi Airpaz.\n10. Aplikasi dapat di download dengan klik link ini  https://airpaz.link/android (Android) dan https://airpaz.link/ios (iOS).\n11. Promo tidak dapat dipindahtangankan dan tidak dapat digunakan bersamaan dengan promosi atau diskon, termasuk kupon serta penawaran keanggotaan lainnya.\n12. Promo ini tidak dapat ditransfer atau ditukar dengan uang tunai, batas kredit atau diskon/ produk/ layanan lainnya.\n13. Pemegang kartu yang memenuhi syarat dan menggunakan promo ini terikat oleh syarat dan ketentuan Airpaz dan OCBC NISP.\n14. Airpaz dan OCBC NISP berhak untuk mengakhiri, mengubah atau menambah syarat dan ketentuan ini dari waktu ke waktu dengan pemberitahuan minimal lima (5) hari kalender sebelumnya kepada pengguna akun OCBC NISP sebelum syarat dan ketentuan baru diberlakukan.\n15. Airpaz dan OCBC NISP berhak untuk membatalkan promo ini apabila transaksi tidak memenuhi Syarat dan Ketentuan yang berlaku.\n16. Promo bersifat Non-refundable dan tidak dapat diuangkan.",
+                    "promo_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669979803/NaN/hz8cs1tqb2ajo13zlai4.jpg",
+                    "createdAt": "2022-12-02T11:16:44.261Z",
+                    "updatedAt": "2022-12-02T11:16:44.261Z"
+                  },
+                  {
+                    "id": "b4e9d2b0-8e54-47c4-9a95-6e603158b1ae",
+                    "title": "Victorious Tuesday Bersama OCBC NISP, Dapatkan Diskon 12%",
+                    "desc": "Harga Spesial Bersama OCBC NISP",
+                    "promo_code": "WEEKLYFL",
+                    "discount": 12,
+                    "terms": "1.\tPeriode Promo: 1 Juli - 31 Desember 2022\n2.\tPeriode Perjalanan: Kapan pun\n3.\tPromo ini berlaku setiap hari Selasa selama periode promo.\n4.\tPenggunaan kupon berbasis first-come, first serve selama kuota masih tersedia.\n5.\tDapatkan diskon sebesar 12 % hingga IDR 165.000 menggunakan kode promo WEEKLYFL untuk dengan minimal pembelian IDR 1.200.000 dan berlaku untuk semua maskapai.\n6.\tPromo berlaku untuk penerbangan domestik dan internasional.\n7.\tPromo berlaku untuk sekali jalan dan/ atau pulang-pergi.\n8.\tPromo ini hanya berlaku untuk pembayaran dengan menggunakan metode pembayaran semua Kartu Kredit OCBC NISP.\n9.\tPromo hanya dapat digunakan dengan mata uang IDR/Indonesia Rupiah.\n10.\tPromo hanya bisa dipakai sekali per akun setiap satu kali seminggu selama periode promo.\n11.\tPromo berlaku untuk pemesanan melalui aplikasi Airpaz.\n12.\tAplikasi dapat di download dengan klik link ini https://airpaz.link/android (Android) dan https://airpaz.link/ios (iOS).\n13.\tPromo tidak dapat dipindahtangankan dan tidak dapat digunakan bersamaan dengan promosi atau diskon, termasuk kupon serta penawaran keanggotaan lainnya.\n14.\tPromo ini tidak dapat ditransfer atau ditukar dengan uang tunai, batas kredit atau diskon/ produk/ layanan lainnya.\n15.\tPemegang kartu yang memenuhi syarat dan menggunakan promo ini terikat oleh syarat dan ketentuan Airpaz dan OCBC NISP.\n16.\tAirpaz dan OCBC NISP berhak untuk mengakhiri, mengubah atau menambah syarat dan ketentuan ini dari waktu ke waktu dengan pemberitahuan minimal lima (5) hari kalender sebelumnya kepada pengguna OCBC NISP sebelum syarat dan ketentuan baru diberlakukan.\n17.\tAirpaz dan OCBC NISP berhak untuk membatalkan promo ini apabila transaksi tidak memenuhi Syarat dan Ketentuan yang berlaku.\n18.\tPromo bersifat Non-refundable dan tidak dapat diuangkan.\n\n",
+                    "promo_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669981019/NaN/ksvlc8gr4uia8dewki9g.jpg",
+                    "createdAt": "2022-12-02T11:36:59.818Z",
+                    "updatedAt": "2022-12-02T11:36:59.818Z"
+                  }
+                ]
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "access-control-allow-origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "4355"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"1103-NZtgBdmAdE1FKrxKnhGvCvQoKWY\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Fri, 02 Dec 2022 11:37:17 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "8"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              },
+              "connection": {
+                "type": "string",
+                "default": "close"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/promo/{id}": {
+      "get": {
+        "description": "Get Promo by id ( for detail ), no need accesToken",
+        "summary": "Get Promo with id ( for detail )",
+        "tags": [
+          "Get Promo"
+        ],
+        "operationId": "GetPromowithid(fordetail)",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetPromowithid%28fordetail%29"
+            },
+            "examples": {
+              "application/json": {
+                "status": "success",
+                "message": "Success",
+                "data": {
+                  "id": "035bc054-138e-4877-aebd-dd936142c124",
+                  "title": "Stay Happy Weekly Bersama OCBC NISP, Dapatkan Diskon 12%",
+                  "desc": "Harga Hemat Bersama OCBC NISP ",
+                  "promo_code": "WEEKLYHO",
+                  "discount": 12,
+                  "terms": "1. Periode Promo 1 Juli - 31 Desember 2022\n2. Periode Menginap: Kapan pun\n3. Promo ini berlaku setiap hari Selasa selama periode promo.\n4. Penggunaan kupon berbasis first-come, first serve selama kuota masih tersedia.\n5. Dapatkan diskon sebesar 12% hingga Rp.100.000 menggunakan kode promo WEEKLYHO dengan minimal pembelian Rp. 1.200.000 dan berlaku untuk semua hotel.\n6. Promo ini hanya berlaku untuk pembayaran dengan menggunakan metode pembayaran semua Kartu Kredit OCBC NISP.\n7. Promo hanya bisa dipakai dengan menggunakan mata uang IDR/Indonesian Rupiah.\n8. Promo hanya bisa dipakai sekali per akun dan per minggu selama periode promo.\n9. Promo berlaku untuk pemesanan melalui aplikasi Airpaz.\n10. Aplikasi dapat di download dengan klik link ini  https://airpaz.link/android (Android) dan https://airpaz.link/ios (iOS).\n11. Promo tidak dapat dipindahtangankan dan tidak dapat digunakan bersamaan dengan promosi atau diskon, termasuk kupon serta penawaran keanggotaan lainnya.\n12. Promo ini tidak dapat ditransfer atau ditukar dengan uang tunai, batas kredit atau diskon/ produk/ layanan lainnya.\n13. Pemegang kartu yang memenuhi syarat dan menggunakan promo ini terikat oleh syarat dan ketentuan Airpaz dan OCBC NISP.\n14. Airpaz dan OCBC NISP berhak untuk mengakhiri, mengubah atau menambah syarat dan ketentuan ini dari waktu ke waktu dengan pemberitahuan minimal lima (5) hari kalender sebelumnya kepada pengguna akun OCBC NISP sebelum syarat dan ketentuan baru diberlakukan.\n15. Airpaz dan OCBC NISP berhak untuk membatalkan promo ini apabila transaksi tidak memenuhi Syarat dan Ketentuan yang berlaku.\n16. Promo bersifat Non-refundable dan tidak dapat diuangkan.",
+                  "promo_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669979803/NaN/hz8cs1tqb2ajo13zlai4.jpg",
+                  "createdAt": "2022-12-02T11:16:44.261Z",
+                  "updatedAt": "2022-12-02T11:16:44.261Z"
+                }
+              }
+            },
+            "headers": {
+              "x-powered-by": {
+                "type": "string",
+                "default": "Express"
+              },
+              "access-control-allow-origin": {
+                "type": "string",
+                "default": "*"
+              },
+              "content-type": {
+                "type": "string",
+                "default": "application/json; charset=utf-8"
+              },
+              "content-length": {
+                "type": "string",
+                "default": "2120"
+              },
+              "etag": {
+                "type": "string",
+                "default": "W/\"848-jGre/RlKOPgLtAtRFjZCejoeMkc\""
+              },
+              "date": {
+                "type": "string",
+                "default": "Fri, 02 Dec 2022 11:37:47 GMT"
+              },
+              "x-envoy-upstream-service-time": {
+                "type": "string",
+                "default": "30"
+              },
+              "server": {
+                "type": "string",
+                "default": "railway"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notify": {
+      "get": {
+        "summary": "Get Notif By User Id",
+        "tags": [
+          "Notifications"
+        ],
+        "operationId": "GetNotifByUserId",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/notify/{id}": {
+      "put": {
+        "summary": "Update Notification Status to Read",
+        "tags": [
+          "Notifications"
+        ],
+        "operationId": "UpdateNotificationStatustoRead",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Register": {
+      "title": "Register",
+      "example": {
+        "status": "success",
+        "message": "User created successfully",
+        "data": {
+          "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
+          "firstname": "first",
+          "lastname": "name",
+          "gender": "male",
+          "email": "first@gmail.com",
+          "password": "$2b$10$smXw0rsV6RUV88QPxYhv2.XES0r3ObE/QGR6zYPzXW8Bu.JX4VYP2",
+          "phone": "0812324123",
+          "role": "member"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/Data"
+        }
+      },
+      "required": [
+        "status",
+        "message",
+        "data"
+      ]
+    },
+    "Data": {
+      "title": "Data",
+      "example": {
+        "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
+        "firstname": "first",
+        "lastname": "name",
+        "gender": "male",
+        "email": "first@gmail.com",
+        "password": "$2b$10$smXw0rsV6RUV88QPxYhv2.XES0r3ObE/QGR6zYPzXW8Bu.JX4VYP2",
+        "phone": "0812324123",
+        "role": "member"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "firstname",
+        "lastname",
+        "gender",
+        "email",
+        "password",
+        "phone",
+        "role"
+      ]
+    },
+    "Login": {
+      "title": "Login",
+      "example": {
+        "status": "success",
+        "message": "Login success",
+        "data": {
+          "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
+          "firstname": "capcai",
+          "lastname": "yuhuu",
+          "gender": "bencong",
+          "email": "first@gmail.com",
+          "phone": "08111111",
+          "role": "member",
+          "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669791800/NaN/aiequfty89e5o6owx11e.jpg",
+          "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMwNDlkYmE5LTA0YjgtNDYxYy05NDI0LWFmYWFmZjY0Y2Y2NyIsImZpcnN0bmFtZSI6ImNhcGNhaSIsImxhc3RuYW1lIjoieXVodXUiLCJnZW5kZXIiOiJiZW5jb25nIiwiZW1haWwiOiJmaXJzdEBnbWFpbC5jb20iLCJwaG9uZSI6IjA4MTExMTExIiwicm9sZSI6Im1lbWJlciIsInByb2ZpbGVfaW1hZ2UiOiJodHRwczovL3Jlcy5jbG91ZGluYXJ5LmNvbS9keW5nZ2JjMGEvaW1hZ2UvdXBsb2FkL3YxNjY5NzkxODAwL05hTi9haWVxdWZ0eTg5ZTVvNm93eDExZS5qcGciLCJpYXQiOjE2NzA2MDM5NjUsImV4cCI6MTY3MDY5MDM2NX0.7frjeWIqtM3El0Al5yGf2WG3IZI2RTP5KUDZPbu5DUk"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/Data1"
+        }
+      },
+      "required": [
+        "status",
+        "message",
+        "data"
+      ]
+    },
+    "Data1": {
+      "title": "Data1",
+      "example": {
+        "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
+        "firstname": "capcai",
+        "lastname": "yuhuu",
+        "gender": "bencong",
+        "email": "first@gmail.com",
+        "phone": "08111111",
+        "role": "member",
+        "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669791800/NaN/aiequfty89e5o6owx11e.jpg",
+        "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMwNDlkYmE5LTA0YjgtNDYxYy05NDI0LWFmYWFmZjY0Y2Y2NyIsImZpcnN0bmFtZSI6ImNhcGNhaSIsImxhc3RuYW1lIjoieXVodXUiLCJnZW5kZXIiOiJiZW5jb25nIiwiZW1haWwiOiJmaXJzdEBnbWFpbC5jb20iLCJwaG9uZSI6IjA4MTExMTExIiwicm9sZSI6Im1lbWJlciIsInByb2ZpbGVfaW1hZ2UiOiJodHRwczovL3Jlcy5jbG91ZGluYXJ5LmNvbS9keW5nZ2JjMGEvaW1hZ2UvdXBsb2FkL3YxNjY5NzkxODAwL05hTi9haWVxdWZ0eTg5ZTVvNm93eDExZS5qcGciLCJpYXQiOjE2NzA2MDM5NjUsImV4cCI6MTY3MDY5MDM2NX0.7frjeWIqtM3El0Al5yGf2WG3IZI2RTP5KUDZPbu5DUk"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "profile_image": {
+          "type": "string"
+        },
+        "accessToken": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "firstname",
+        "lastname",
+        "gender",
+        "email",
+        "phone",
+        "role",
+        "profile_image",
+        "accessToken"
+      ]
+    },
+    "GetCurrentUser": {
+      "title": "GetCurrentUser",
+      "example": {
+        "status": "success",
+        "message": "User found",
+        "data": {
+          "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
+          "firstname": "first",
+          "lastname": "name",
+          "gender": "male",
+          "email": "first@gmail.com",
+          "phone": "0812324123",
+          "role": "member",
+          "profileImage": "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/Data2"
+        }
+      },
+      "required": [
+        "status",
+        "message",
+        "data"
+      ]
+    },
+    "Data2": {
+      "title": "Data2",
+      "example": {
+        "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
+        "firstname": "first",
+        "lastname": "name",
+        "gender": "male",
+        "email": "first@gmail.com",
+        "phone": "0812324123",
+        "role": "member",
+        "profileImage": "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "profileImage": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "firstname",
+        "lastname",
+        "gender",
+        "email",
+        "phone",
+        "role",
+        "profileImage"
+      ]
+    },
+    "UpdateCurrentUser": {
+      "title": "UpdateCurrentUser",
+      "example": {
+        "status": "success",
+        "message": "User updated",
+        "data": {
+          "firstname": "capcai",
+          "lastname": "yuhuu",
+          "gender": "bencong",
+          "phone": "08111111",
+          "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1670604047/NaN/onhgofthkqjccagujiix.jpg",
+          "password": "$2b$10$xfxIy8.5aQQ5zyv.wr4/quSICsA5FjKSr2KVSoDo.BdtW6z4T.r9a"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/Data3"
+        }
+      },
+      "required": [
+        "status",
+        "message",
+        "data"
+      ]
+    },
+    "Data3": {
+      "title": "Data3",
+      "example": {
+        "firstname": "capcai",
+        "lastname": "yuhuu",
+        "gender": "bencong",
+        "phone": "08111111",
+        "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1670604047/NaN/onhgofthkqjccagujiix.jpg",
+        "password": "$2b$10$xfxIy8.5aQQ5zyv.wr4/quSICsA5FjKSr2KVSoDo.BdtW6z4T.r9a"
+      },
+      "type": "object",
+      "properties": {
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "profile_image": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "firstname",
+        "lastname",
+        "gender",
+        "phone",
+        "profile_image",
+        "password"
+      ]
+    },
+    "GetUserDataMember": {
+      "title": "GetUserDataMember",
+      "example": {
+        "status": true,
+        "message": "Get all user data role member",
+        "data": [
+          {
+            "id": "4d53346b-5c7f-4171-b84e-1fbd19bb7b7e",
+            "firstname": "adi",
+            "lastname": "pras",
+            "gender": "male",
+            "email": "adi@gmail.com",
+            "password": "$2b$10$ozy2vIhUL6pUYTXVxhV3ROdvlr/H7SBOYUOehA/rrg3oqVjNFnYJi",
+            "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRkNTMzNDZiLTVjN2YtNDE3MS1iODRlLTFmYmQxOWJiN2I3ZSIsImZpcnN0bmFtZSI6ImFkaSIsImxhc3RuYW1lIjoicHJhcyIsImdlbmRlciI6Im1hbGUiLCJlbWFpbCI6ImFkaUBnbWFpbC5jb20iLCJwaG9uZSI6IjA4MTIzMjQxMjMiLCJyb2xlIjoibWVtYmVyIiwicHJvZmlsZV9pbWFnZSI6ImRlZmF1bHQucG5nIiwiaWF0IjoxNjY5NzkwNzI2LCJleHAiOjE2NzAzOTU1MjZ9.DJ6FiaaA0A1I0l_qEDd_SH4_DvBS8wCm-iU43B5W8jA",
+            "phone": "0812324123",
+            "role": "member",
+            "profile_image": "default.png",
+            "createdAt": "2022-11-27T08:22:18.492Z",
+            "updatedAt": "2022-11-30T06:45:26.050Z"
+          },
+          {
+            "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
+            "firstname": "first",
+            "lastname": "name",
+            "gender": "male",
+            "email": "first@gmail.com",
+            "password": "$2b$10$smXw0rsV6RUV88QPxYhv2.XES0r3ObE/QGR6zYPzXW8Bu.JX4VYP2",
+            "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjMwNDlkYmE5LTA0YjgtNDYxYy05NDI0LWFmYWFmZjY0Y2Y2NyIsImZpcnN0bmFtZSI6ImZpcnN0IiwibGFzdG5hbWUiOiJuYW1lIiwiZ2VuZGVyIjoibWFsZSIsImVtYWlsIjoiZmlyc3RAZ21haWwuY29tIiwicGhvbmUiOiIwODEyMzI0MTIzIiwicm9sZSI6Im1lbWJlciIsInByb2ZpbGVfaW1hZ2UiOiJodHRwczovL3d3dy5raW5kcG5nLmNvbS9waWNjL20vMjEtMjE0NDM5X2ZyZWUtaGlnaC1xdWFsaXR5LXBlcnNvbi1pY29uLWRlZmF1bHQtcHJvZmlsZS1waWN0dXJlLnBuZyIsImlhdCI6MTY2OTc5MDg1MywiZXhwIjoxNjcwMzk1NjUzfQ.J3C8Nse2ep7ZEPJk6A0R7ur6iCaGMvY1yArFHY1itr8",
+            "phone": "0812324123",
+            "role": "member",
+            "profile_image": "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png",
+            "createdAt": "2022-11-30T06:46:00.907Z",
+            "updatedAt": "2022-11-30T06:47:33.456Z"
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Data4"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "message",
+        "data"
+      ]
+    },
+    "Data4": {
+      "title": "Data4",
+      "example": {
+        "id": "4d53346b-5c7f-4171-b84e-1fbd19bb7b7e",
+        "firstname": "adi",
+        "lastname": "pras",
+        "gender": "male",
+        "email": "adi@gmail.com",
+        "password": "$2b$10$ozy2vIhUL6pUYTXVxhV3ROdvlr/H7SBOYUOehA/rrg3oqVjNFnYJi",
+        "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRkNTMzNDZiLTVjN2YtNDE3MS1iODRlLTFmYmQxOWJiN2I3ZSIsImZpcnN0bmFtZSI6ImFkaSIsImxhc3RuYW1lIjoicHJhcyIsImdlbmRlciI6Im1hbGUiLCJlbWFpbCI6ImFkaUBnbWFpbC5jb20iLCJwaG9uZSI6IjA4MTIzMjQxMjMiLCJyb2xlIjoibWVtYmVyIiwicHJvZmlsZV9pbWFnZSI6ImRlZmF1bHQucG5nIiwiaWF0IjoxNjY5NzkwNzI2LCJleHAiOjE2NzAzOTU1MjZ9.DJ6FiaaA0A1I0l_qEDd_SH4_DvBS8wCm-iU43B5W8jA",
+        "phone": "0812324123",
+        "role": "member",
+        "profile_image": "default.png",
+        "createdAt": "2022-11-27T08:22:18.492Z",
+        "updatedAt": "2022-11-30T06:45:26.050Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "refresh_token": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "profile_image": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "firstname",
+        "lastname",
+        "gender",
+        "email",
+        "password",
+        "refresh_token",
+        "phone",
+        "role",
+        "profile_image",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "POSTUserDataMember": {
+      "title": "POSTUserDataMember",
+      "example": {
+        "status": "success",
+        "message": "User created successfully",
+        "data": {
+          "id": "2ed8bd90-c0c5-4fdf-b396-05aea4af104c",
+          "firstname": "asrof",
+          "lastname": "asrofww",
+          "gender": "laki",
+          "email": "afif@gmail.com",
+          "role": "member",
+          "password": "$2b$10$qcRkgqbq7D47DxkdeuSPAO9fPaOnaxYfc2JQoipr8Fdd2oKOGUx9S",
+          "phone": "08123123",
+          "profile_image": "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png",
+          "updatedAt": "2022-11-30T06:56:04.497Z",
+          "createdAt": "2022-11-30T06:56:04.497Z",
+          "refresh_token": null
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/Data5"
+        }
+      },
+      "required": [
+        "status",
+        "message",
+        "data"
+      ]
+    },
+    "Data5": {
+      "title": "Data5",
+      "example": {
+        "id": "2ed8bd90-c0c5-4fdf-b396-05aea4af104c",
+        "firstname": "asrof",
+        "lastname": "asrofww",
+        "gender": "laki",
+        "email": "afif@gmail.com",
+        "role": "member",
+        "password": "$2b$10$qcRkgqbq7D47DxkdeuSPAO9fPaOnaxYfc2JQoipr8Fdd2oKOGUx9S",
+        "phone": "08123123",
+        "profile_image": "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png",
+        "updatedAt": "2022-11-30T06:56:04.497Z",
+        "createdAt": "2022-11-30T06:56:04.497Z",
+        "refresh_token": null
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "profile_image": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "refresh_token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "firstname",
+        "lastname",
+        "gender",
+        "email",
+        "role",
+        "password",
+        "phone",
+        "profile_image",
+        "updatedAt",
+        "createdAt",
+        "refresh_token"
+      ]
+    },
+    "PutUserDataMemberwithId": {
+      "title": "PutUserDataMemberwithId",
+      "example": {
+        "message": "User data updated successfully",
+        "data": [
+          1
+        ],
+        "user": {
+          "id": "2ed8bd90-c0c5-4fdf-b396-05aea4af104c",
+          "firstname": "anjing",
+          "lastname": "asrofww",
+          "gender": "laki",
+          "email": "afif@gmail.com",
+          "password": "$2b$10$XD3Yq3yCRlpXbKUqkZbGUOv.LUl/oCUtp8.rgndUXEZfqTn0y10UG",
+          "refresh_token": null,
+          "phone": "08123123",
+          "role": "admin",
+          "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669791940/NaN/uprskhxaouvyiibsjvja.jpg",
+          "createdAt": "2022-11-30T06:56:04.497Z",
+          "updatedAt": "2022-11-30T07:05:41.424Z",
+          "notifications": [],
+          "transactions": [],
+          "wishlists": []
+        }
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "user": {
+          "$ref": "#/definitions/User"
+        }
+      },
+      "required": [
+        "message",
+        "data",
+        "user"
+      ]
+    },
+    "User": {
+      "title": "User",
+      "example": {
+        "id": "2ed8bd90-c0c5-4fdf-b396-05aea4af104c",
+        "firstname": "anjing",
+        "lastname": "asrofww",
+        "gender": "laki",
+        "email": "afif@gmail.com",
+        "password": "$2b$10$XD3Yq3yCRlpXbKUqkZbGUOv.LUl/oCUtp8.rgndUXEZfqTn0y10UG",
+        "refresh_token": null,
+        "phone": "08123123",
+        "role": "admin",
+        "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669791940/NaN/uprskhxaouvyiibsjvja.jpg",
+        "createdAt": "2022-11-30T06:56:04.497Z",
+        "updatedAt": "2022-11-30T07:05:41.424Z",
+        "notifications": [],
+        "transactions": [],
+        "wishlists": []
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstname": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "refresh_token": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "profile_image": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "notifications": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "transactions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "wishlists": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "firstname",
+        "lastname",
+        "gender",
+        "email",
+        "password",
+        "refresh_token",
+        "phone",
+        "role",
+        "profile_image",
+        "createdAt",
+        "updatedAt",
+        "notifications",
+        "transactions",
+        "wishlists"
+      ]
+    },
+    "DeleteUserDataMemberwithIdCopy": {
+      "title": "DeleteUserDataMemberwithIdCopy",
+      "example": {
+        "message": "User data deleted successfully",
+        "user": 1
+      },
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "user": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "message",
+        "user"
+      ]
+    },
+    "ForgetPass": {
+      "title": "ForgetPass",
+      "example": {
+        "status": "success",
+        "message": "Check your email to reset password",
+        "data": {}
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "status",
+        "message",
+        "data"
+      ]
+    },
+    "ResetPass": {
+      "title": "ResetPass",
+      "example": {
+        "status": "success",
+        "message": "Password reset successfully",
+        "data": {}
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "status",
+        "message",
+        "data"
+      ]
+    },
+    "posttransactiondatarequest": {
+      "title": "posttransactiondatarequest",
+      "example": {
+        "ticketsId": "6be86e24-9925-43f8-83a1-f0257eb87625",
+        "payment_method": "SHOPEEPAY",
+        "quantity": {
+          "adult": 2,
+          "child": 0
+        },
+        "traveler": [
+          {
+            "tittle": "mrs",
+            "name": "test",
+            "surname": "testingan",
+            "datebirth": "tanggallahir",
+            "nationality": "indonesia",
+            "id_card": "ktp",
+            "no_ktp": "83424324",
+            "type": "adult"
+          },
+          {
+            "tittle": "mr",
+            "name": "test2",
+            "surname": "testingan2",
+            "datebirth": "tanggallahir2",
+            "nationality": "indonesia2",
+            "id_card": "ktp",
+            "no_ktp": "83424324",
+            "type": "adult"
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "ticketsId": {
+          "type": "string"
+        },
+        "payment_method": {
+          "type": "string"
+        },
+        "quantity": {
+          "$ref": "#/definitions/Quantity"
+        },
+        "traveler": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Traveler"
+          }
+        }
+      },
+      "required": [
+        "ticketsId",
+        "payment_method",
+        "quantity",
+        "traveler"
+      ]
+    },
+    "Quantity": {
+      "title": "Quantity",
+      "example": {
+        "adult": 2,
+        "child": 0
+      },
+      "type": "object",
+      "properties": {
+        "adult": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "child": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "adult",
+        "child"
+      ]
+    },
+    "Traveler": {
+      "title": "Traveler",
+      "example": {
+        "tittle": "mrs",
+        "name": "test",
+        "surname": "testingan",
+        "datebirth": "tanggallahir",
+        "nationality": "indonesia",
+        "id_card": "ktp",
+        "no_ktp": "83424324",
+        "type": "adult"
+      },
+      "type": "object",
+      "properties": {
+        "tittle": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "surname": {
+          "type": "string"
+        },
+        "datebirth": {
+          "type": "string"
+        },
+        "nationality": {
+          "type": "string"
+        },
+        "id_card": {
+          "type": "string"
+        },
+        "no_ktp": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "tittle",
+        "name",
+        "surname",
+        "datebirth",
+        "nationality",
+        "id_card",
+        "no_ktp",
+        "type"
+      ]
+    },
+    "CreateTicketRequest": {
+      "title": "CreateTicketRequest",
+      "example": {
+        "from": "Jakarta",
+        "to": "Bali",
+        "airport_from": "Soekarno Hatta International Airport",
+        "airport_to": "I Gusti Ngurah Rai International Airport",
+        "departure_time": "14:00",
+        "arrival_time": "16:30",
+        "date": "2022-11-25 13:39:42.408 +00:00",
+        "type": "Sekali Jalan",
+        "adult_price": 2200000,
+        "child_price": 1500000,
+        "available": true,
+        "init_stock": 200,
+        "curr_stock": 200
+      },
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "airport_from": {
+          "type": "string"
+        },
+        "airport_to": {
+          "type": "string"
+        },
+        "departure_time": {
+          "type": "string"
+        },
+        "arrival_time": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "adult_price": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "child_price": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "init_stock": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "curr_stock": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "airport_from",
+        "airport_to",
+        "departure_time",
+        "arrival_time",
+        "date",
+        "type",
+        "adult_price",
+        "child_price",
+        "available",
+        "init_stock",
+        "curr_stock"
+      ]
+    },
+    "UpdateTicketRequest": {
+      "title": "UpdateTicketRequest",
+      "example": {
+        "type": "Sekali Jalan"
+      },
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "CreateWishlistRequest": {
+      "title": "CreateWishlistRequest",
+      "example": {
+        "usersId": "9dde98a9-8a7e-4139-95a6-1182fbccdac0",
+        "ticketsId": "ced2a7f6-6096-4e4b-99f3-d890c238f5f2"
+      },
+      "type": "object",
+      "properties": {
+        "usersId": {
+          "type": "string"
+        },
+        "ticketsId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "usersId",
+        "ticketsId"
+      ]
+    },
+    "GetPromobyAdmin": {
+      "title": "GetPromobyAdmin",
+      "example": {
+        "status": "success",
+        "message": "Success",
+        "data": [
+          {
+            "id": "035bc054-138e-4877-aebd-dd936142c124",
+            "title": "Stay Happy Weekly Bersama OCBC NISP, Dapatkan Diskon 12%",
+            "desc": "Harga Hemat Bersama OCBC NISP ",
+            "promo_code": "WEEKLYHO",
+            "discount": 12,
+            "terms": "1. Periode Promo 1 Juli - 31 Desember 2022\n2. Periode Menginap: Kapan pun\n3. Promo ini berlaku setiap hari Selasa selama periode promo.\n4. Penggunaan kupon berbasis first-come, first serve selama kuota masih tersedia.\n5. Dapatkan diskon sebesar 12% hingga Rp.100.000 menggunakan kode promo WEEKLYHO dengan minimal pembelian Rp. 1.200.000 dan berlaku untuk semua hotel.\n6. Promo ini hanya berlaku untuk pembayaran dengan menggunakan metode pembayaran semua Kartu Kredit OCBC NISP.\n7. Promo hanya bisa dipakai dengan menggunakan mata uang IDR/Indonesian Rupiah.\n8. Promo hanya bisa dipakai sekali per akun dan per minggu selama periode promo.\n9. Promo berlaku untuk pemesanan melalui aplikasi Airpaz.\n10. Aplikasi dapat di download dengan klik link ini  https://airpaz.link/android (Android) dan https://airpaz.link/ios (iOS).\n11. Promo tidak dapat dipindahtangankan dan tidak dapat digunakan bersamaan dengan promosi atau diskon, termasuk kupon serta penawaran keanggotaan lainnya.\n12. Promo ini tidak dapat ditransfer atau ditukar dengan uang tunai, batas kredit atau diskon/ produk/ layanan lainnya.\n13. Pemegang kartu yang memenuhi syarat dan menggunakan promo ini terikat oleh syarat dan ketentuan Airpaz dan OCBC NISP.\n14. Airpaz dan OCBC NISP berhak untuk mengakhiri, mengubah atau menambah syarat dan ketentuan ini dari waktu ke waktu dengan pemberitahuan minimal lima (5) hari kalender sebelumnya kepada pengguna akun OCBC NISP sebelum syarat dan ketentuan baru diberlakukan.\n15. Airpaz dan OCBC NISP berhak untuk membatalkan promo ini apabila transaksi tidak memenuhi Syarat dan Ketentuan yang berlaku.\n16. Promo bersifat Non-refundable dan tidak dapat diuangkan.",
+            "promo_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669979803/NaN/hz8cs1tqb2ajo13zlai4.jpg",
+            "createdAt": "2022-12-02T11:16:44.261Z",
+            "updatedAt": "2022-12-02T11:16:44.261Z"
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Data6"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "message",
+        "data"
+      ]
+    },
+    "Data6": {
+      "title": "Data6",
+      "example": {
+        "id": "035bc054-138e-4877-aebd-dd936142c124",
+        "title": "Stay Happy Weekly Bersama OCBC NISP, Dapatkan Diskon 12%",
+        "desc": "Harga Hemat Bersama OCBC NISP ",
+        "promo_code": "WEEKLYHO",
+        "discount": 12,
+        "terms": "1. Periode Promo 1 Juli - 31 Desember 2022\n2. Periode Menginap: Kapan pun\n3. Promo ini berlaku setiap hari Selasa selama periode promo.\n4. Penggunaan kupon berbasis first-come, first serve selama kuota masih tersedia.\n5. Dapatkan diskon sebesar 12% hingga Rp.100.000 menggunakan kode promo WEEKLYHO dengan minimal pembelian Rp. 1.200.000 dan berlaku untuk semua hotel.\n6. Promo ini hanya berlaku untuk pembayaran dengan menggunakan metode pembayaran semua Kartu Kredit OCBC NISP.\n7. Promo hanya bisa dipakai dengan menggunakan mata uang IDR/Indonesian Rupiah.\n8. Promo hanya bisa dipakai sekali per akun dan per minggu selama periode promo.\n9. Promo berlaku untuk pemesanan melalui aplikasi Airpaz.\n10. Aplikasi dapat di download dengan klik link ini  https://airpaz.link/android (Android) dan https://airpaz.link/ios (iOS).\n11. Promo tidak dapat dipindahtangankan dan tidak dapat digunakan bersamaan dengan promosi atau diskon, termasuk kupon serta penawaran keanggotaan lainnya.\n12. Promo ini tidak dapat ditransfer atau ditukar dengan uang tunai, batas kredit atau diskon/ produk/ layanan lainnya.\n13. Pemegang kartu yang memenuhi syarat dan menggunakan promo ini terikat oleh syarat dan ketentuan Airpaz dan OCBC NISP.\n14. Airpaz dan OCBC NISP berhak untuk mengakhiri, mengubah atau menambah syarat dan ketentuan ini dari waktu ke waktu dengan pemberitahuan minimal lima (5) hari kalender sebelumnya kepada pengguna akun OCBC NISP sebelum syarat dan ketentuan baru diberlakukan.\n15. Airpaz dan OCBC NISP berhak untuk membatalkan promo ini apabila transaksi tidak memenuhi Syarat dan Ketentuan yang berlaku.\n16. Promo bersifat Non-refundable dan tidak dapat diuangkan.",
+        "promo_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669979803/NaN/hz8cs1tqb2ajo13zlai4.jpg",
+        "createdAt": "2022-12-02T11:16:44.261Z",
+        "updatedAt": "2022-12-02T11:16:44.261Z"
+      },
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "promo_code": {
+          "type": "string"
+        },
+        "discount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "terms": {
+          "type": "string"
+        },
+        "promo_image": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "desc",
+        "promo_code",
+        "discount",
+        "terms",
+        "promo_image",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "CreatePromobyAdmin": {
+      "title": "CreatePromobyAdmin",
+      "example": {
+        "status": "success",
+        "message": "Success",
+        "data": {
+          "id": "73b30b98-501e-4bdb-a378-df7aeb5397dc",
+          "title": "Stay Happy Weekly Bersama OCBC NISP, Dapatkan Diskon 12%",
+          "desc": "Harga Hemat Bersama OCBC NISP ",
+          "promo_code": "WEEKLYHO",
+          "discount": 12,
+          "terms": "1. Periode Promo 1 Juli - 31 Desember 2022\n2. Periode Menginap: Kapan pun\n3. Promo ini berlaku setiap hari Selasa selama periode promo.\n4. Penggunaan kupon berbasis first-come, first serve selama kuota masih tersedia.\n5. Dapatkan diskon sebesar 12% hingga Rp.100.000 menggunakan kode promo WEEKLYHO dengan minimal pembelian Rp. 1.200.000 dan berlaku untuk semua hotel.\n6. Promo ini hanya berlaku untuk pembayaran dengan menggunakan metode pembayaran semua Kartu Kredit OCBC NISP.\n7. Promo hanya bisa dipakai dengan menggunakan mata uang IDR/Indonesian Rupiah.\n8. Promo hanya bisa dipakai sekali per akun dan per minggu selama periode promo.\n9. Promo berlaku untuk pemesanan melalui aplikasi Airpaz.\n10. Aplikasi dapat di download dengan klik link ini  https://airpaz.link/android (Android) dan https://airpaz.link/ios (iOS).\n11. Promo tidak dapat dipindahtangankan dan tidak dapat digunakan bersamaan dengan promosi atau diskon, termasuk kupon serta penawaran keanggotaan lainnya.\n12. Promo ini tidak dapat ditransfer atau ditukar dengan uang tunai, batas kredit atau diskon/ produk/ layanan lainnya.\n13. Pemegang kartu yang memenuhi syarat dan menggunakan promo ini terikat oleh syarat dan ketentuan Airpaz dan OCBC NISP.\n14. Airpaz dan OCBC NISP berhak untuk mengakhiri, mengubah atau menambah syarat dan ketentuan ini dari waktu ke waktu dengan pemberitahuan minimal lima (5) hari kalender sebelumnya kepada pengguna akun OCBC NISP sebelum syarat dan ketentuan baru diberlakukan.\n15. Airpaz dan OCBC NISP berhak untuk membatalkan promo ini apabila transaksi tidak memenuhi Syarat dan Ketentuan yang berlaku.\n16. Promo bersifat Non-refundable dan tidak dapat diuangkan.",
+          "promo_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669979710/NaN/icg8djydpkqmx2gvxjkh.jpg",
+          "updatedAt": "2022-12-02T11:15:10.969Z",
+          "createdAt": "2022-12-02T11:15:10.969Z"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/Data6"
+        }
+      },
+      "required": [
+        "status",
+        "message",
+        "data"
+      ]
+    },
+    "UpdatePromobyAdmin": {
+      "title": "UpdatePromobyAdmin",
+      "example": {
+        "status": "success",
+        "message": "Success",
+        "data": {
+          "id": "73b30b98-501e-4bdb-a378-df7aeb5397dc",
+          "title": "Stay Happy Weekly Bersama OCBC NISP, Dapatkan Diskon 12%",
+          "desc": "Harga Hemat Bersama OCBC NISP ",
+          "promo_code": "WEEKLYHOwww",
+          "discount": 12,
+          "terms": "1. Periode Promo 1 Juli - 31 Desember 2022\n2. Periode Menginap: Kapan pun\n3. Promo ini berlaku setiap hari Selasa selama periode promo.\n4. Penggunaan kupon berbasis first-come, first serve selama kuota masih tersedia.\n5. Dapatkan diskon sebesar 12% hingga Rp.100.000 menggunakan kode promo WEEKLYHO dengan minimal pembelian Rp. 1.200.000 dan berlaku untuk semua hotel.\n6. Promo ini hanya berlaku untuk pembayaran dengan menggunakan metode pembayaran semua Kartu Kredit OCBC NISP.\n7. Promo hanya bisa dipakai dengan menggunakan mata uang IDR/Indonesian Rupiah.\n8. Promo hanya bisa dipakai sekali per akun dan per minggu selama periode promo.\n9. Promo berlaku untuk pemesanan melalui aplikasi Airpaz.\n10. Aplikasi dapat di download dengan klik link ini  https://airpaz.link/android (Android) dan https://airpaz.link/ios (iOS).\n11. Promo tidak dapat dipindahtangankan dan tidak dapat digunakan bersamaan dengan promosi atau diskon, termasuk kupon serta penawaran keanggotaan lainnya.\n12. Promo ini tidak dapat ditransfer atau ditukar dengan uang tunai, batas kredit atau diskon/ produk/ layanan lainnya.\n13. Pemegang kartu yang memenuhi syarat dan menggunakan promo ini terikat oleh syarat dan ketentuan Airpaz dan OCBC NISP.\n14. Airpaz dan OCBC NISP berhak untuk mengakhiri, mengubah atau menambah syarat dan ketentuan ini dari waktu ke waktu dengan pemberitahuan minimal lima (5) hari kalender sebelumnya kepada pengguna akun OCBC NISP sebelum syarat dan ketentuan baru diberlakukan.\n15. Airpaz dan OCBC NISP berhak untuk membatalkan promo ini apabila transaksi tidak memenuhi Syarat dan Ketentuan yang berlaku.\n16. Promo bersifat Non-refundable dan tidak dapat diuangkan.",
+          "promo_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669979710/NaN/icg8djydpkqmx2gvxjkh.jpg",
+          "createdAt": "2022-12-02T11:15:10.969Z",
+          "updatedAt": "2022-12-02T11:15:59.108Z"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/Data6"
+        }
+      },
+      "required": [
+        "status",
+        "message",
+        "data"
+      ]
+    },
+    "DeletePromobyAdmin": {
+      "title": "DeletePromobyAdmin",
+      "example": {
+        "status": "success",
+        "message": "Success"
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status",
+        "message"
+      ]
+    },
+    "GetPromo": {
+      "title": "GetPromo",
+      "example": {
+        "status": "success",
+        "message": "Success",
+        "data": [
+          {
+            "id": "035bc054-138e-4877-aebd-dd936142c124",
+            "title": "Stay Happy Weekly Bersama OCBC NISP, Dapatkan Diskon 12%",
+            "desc": "Harga Hemat Bersama OCBC NISP ",
+            "promo_code": "WEEKLYHO",
+            "discount": 12,
+            "terms": "1. Periode Promo 1 Juli - 31 Desember 2022\n2. Periode Menginap: Kapan pun\n3. Promo ini berlaku setiap hari Selasa selama periode promo.\n4. Penggunaan kupon berbasis first-come, first serve selama kuota masih tersedia.\n5. Dapatkan diskon sebesar 12% hingga Rp.100.000 menggunakan kode promo WEEKLYHO dengan minimal pembelian Rp. 1.200.000 dan berlaku untuk semua hotel.\n6. Promo ini hanya berlaku untuk pembayaran dengan menggunakan metode pembayaran semua Kartu Kredit OCBC NISP.\n7. Promo hanya bisa dipakai dengan menggunakan mata uang IDR/Indonesian Rupiah.\n8. Promo hanya bisa dipakai sekali per akun dan per minggu selama periode promo.\n9. Promo berlaku untuk pemesanan melalui aplikasi Airpaz.\n10. Aplikasi dapat di download dengan klik link ini  https://airpaz.link/android (Android) dan https://airpaz.link/ios (iOS).\n11. Promo tidak dapat dipindahtangankan dan tidak dapat digunakan bersamaan dengan promosi atau diskon, termasuk kupon serta penawaran keanggotaan lainnya.\n12. Promo ini tidak dapat ditransfer atau ditukar dengan uang tunai, batas kredit atau diskon/ produk/ layanan lainnya.\n13. Pemegang kartu yang memenuhi syarat dan menggunakan promo ini terikat oleh syarat dan ketentuan Airpaz dan OCBC NISP.\n14. Airpaz dan OCBC NISP berhak untuk mengakhiri, mengubah atau menambah syarat dan ketentuan ini dari waktu ke waktu dengan pemberitahuan minimal lima (5) hari kalender sebelumnya kepada pengguna akun OCBC NISP sebelum syarat dan ketentuan baru diberlakukan.\n15. Airpaz dan OCBC NISP berhak untuk membatalkan promo ini apabila transaksi tidak memenuhi Syarat dan Ketentuan yang berlaku.\n16. Promo bersifat Non-refundable dan tidak dapat diuangkan.",
+            "promo_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669979803/NaN/hz8cs1tqb2ajo13zlai4.jpg",
+            "createdAt": "2022-12-02T11:16:44.261Z",
+            "updatedAt": "2022-12-02T11:16:44.261Z"
+          },
+          {
+            "id": "b4e9d2b0-8e54-47c4-9a95-6e603158b1ae",
+            "title": "Victorious Tuesday Bersama OCBC NISP, Dapatkan Diskon 12%",
+            "desc": "Harga Spesial Bersama OCBC NISP",
+            "promo_code": "WEEKLYFL",
+            "discount": 12,
+            "terms": "1.\tPeriode Promo: 1 Juli - 31 Desember 2022\n2.\tPeriode Perjalanan: Kapan pun\n3.\tPromo ini berlaku setiap hari Selasa selama periode promo.\n4.\tPenggunaan kupon berbasis first-come, first serve selama kuota masih tersedia.\n5.\tDapatkan diskon sebesar 12 % hingga IDR 165.000 menggunakan kode promo WEEKLYFL untuk dengan minimal pembelian IDR 1.200.000 dan berlaku untuk semua maskapai.\n6.\tPromo berlaku untuk penerbangan domestik dan internasional.\n7.\tPromo berlaku untuk sekali jalan dan/ atau pulang-pergi.\n8.\tPromo ini hanya berlaku untuk pembayaran dengan menggunakan metode pembayaran semua Kartu Kredit OCBC NISP.\n9.\tPromo hanya dapat digunakan dengan mata uang IDR/Indonesia Rupiah.\n10.\tPromo hanya bisa dipakai sekali per akun setiap satu kali seminggu selama periode promo.\n11.\tPromo berlaku untuk pemesanan melalui aplikasi Airpaz.\n12.\tAplikasi dapat di download dengan klik link ini https://airpaz.link/android (Android) dan https://airpaz.link/ios (iOS).\n13.\tPromo tidak dapat dipindahtangankan dan tidak dapat digunakan bersamaan dengan promosi atau diskon, termasuk kupon serta penawaran keanggotaan lainnya.\n14.\tPromo ini tidak dapat ditransfer atau ditukar dengan uang tunai, batas kredit atau diskon/ produk/ layanan lainnya.\n15.\tPemegang kartu yang memenuhi syarat dan menggunakan promo ini terikat oleh syarat dan ketentuan Airpaz dan OCBC NISP.\n16.\tAirpaz dan OCBC NISP berhak untuk mengakhiri, mengubah atau menambah syarat dan ketentuan ini dari waktu ke waktu dengan pemberitahuan minimal lima (5) hari kalender sebelumnya kepada pengguna OCBC NISP sebelum syarat dan ketentuan baru diberlakukan.\n17.\tAirpaz dan OCBC NISP berhak untuk membatalkan promo ini apabila transaksi tidak memenuhi Syarat dan Ketentuan yang berlaku.\n18.\tPromo bersifat Non-refundable dan tidak dapat diuangkan.\n\n",
+            "promo_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669981019/NaN/ksvlc8gr4uia8dewki9g.jpg",
+            "createdAt": "2022-12-02T11:36:59.818Z",
+            "updatedAt": "2022-12-02T11:36:59.818Z"
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Data6"
+          }
+        }
+      },
+      "required": [
+        "status",
+        "message",
+        "data"
+      ]
+    },
+    "GetPromowithid(fordetail)": {
+      "title": "GetPromowithid(fordetail)",
+      "example": {
+        "status": "success",
+        "message": "Success",
+        "data": {
+          "id": "035bc054-138e-4877-aebd-dd936142c124",
+          "title": "Stay Happy Weekly Bersama OCBC NISP, Dapatkan Diskon 12%",
+          "desc": "Harga Hemat Bersama OCBC NISP ",
+          "promo_code": "WEEKLYHO",
+          "discount": 12,
+          "terms": "1. Periode Promo 1 Juli - 31 Desember 2022\n2. Periode Menginap: Kapan pun\n3. Promo ini berlaku setiap hari Selasa selama periode promo.\n4. Penggunaan kupon berbasis first-come, first serve selama kuota masih tersedia.\n5. Dapatkan diskon sebesar 12% hingga Rp.100.000 menggunakan kode promo WEEKLYHO dengan minimal pembelian Rp. 1.200.000 dan berlaku untuk semua hotel.\n6. Promo ini hanya berlaku untuk pembayaran dengan menggunakan metode pembayaran semua Kartu Kredit OCBC NISP.\n7. Promo hanya bisa dipakai dengan menggunakan mata uang IDR/Indonesian Rupiah.\n8. Promo hanya bisa dipakai sekali per akun dan per minggu selama periode promo.\n9. Promo berlaku untuk pemesanan melalui aplikasi Airpaz.\n10. Aplikasi dapat di download dengan klik link ini  https://airpaz.link/android (Android) dan https://airpaz.link/ios (iOS).\n11. Promo tidak dapat dipindahtangankan dan tidak dapat digunakan bersamaan dengan promosi atau diskon, termasuk kupon serta penawaran keanggotaan lainnya.\n12. Promo ini tidak dapat ditransfer atau ditukar dengan uang tunai, batas kredit atau diskon/ produk/ layanan lainnya.\n13. Pemegang kartu yang memenuhi syarat dan menggunakan promo ini terikat oleh syarat dan ketentuan Airpaz dan OCBC NISP.\n14. Airpaz dan OCBC NISP berhak untuk mengakhiri, mengubah atau menambah syarat dan ketentuan ini dari waktu ke waktu dengan pemberitahuan minimal lima (5) hari kalender sebelumnya kepada pengguna akun OCBC NISP sebelum syarat dan ketentuan baru diberlakukan.\n15. Airpaz dan OCBC NISP berhak untuk membatalkan promo ini apabila transaksi tidak memenuhi Syarat dan Ketentuan yang berlaku.\n16. Promo bersifat Non-refundable dan tidak dapat diuangkan.",
+          "promo_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1669979803/NaN/hz8cs1tqb2ajo13zlai4.jpg",
+          "createdAt": "2022-12-02T11:16:44.261Z",
+          "updatedAt": "2022-12-02T11:16:44.261Z"
+        }
+      },
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "$ref": "#/definitions/Data6"
+        }
+      },
+      "required": [
+        "status",
+        "message",
+        "data"
+      ]
+    }
+  },
+  "security": [],
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Untuk Autentikasi"
+    },
+    {
+      "name": "User by member"
+    },
+    {
+      "name": "CRUD Users By Admin",
+      "description": "CRUD untuk user yang hanya bisa di lakukan oleh admin yang sedang login dan menggunakan accesToken admin"
+    },
+    {
+      "name": "User Forget Password"
+    },
+    {
+      "name": "Transaksi CRUD"
+    },
+    {
+      "name": "Tickets"
+    },
+    {
+      "name": "Wishlists"
+    },
+    {
+      "name": "Searches"
+    },
+    {
+      "name": "CRUD Promo by Admin",
+      "description": "CRUD Promo by Admin"
+    },
+    {
+      "name": "Get Promo",
+      "description": "Get Promo"
+    },
+    {
+      "name": "Notifications"
+    }
+  ]
+}
