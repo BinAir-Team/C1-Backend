@@ -51,13 +51,13 @@ module.exports = {
         notifService.deleteByPk(id)
         .then(notif => {
             res.status(200).json({
-                msg: "success delete data",
+                msg: "success delete notif",
                 status: 200,
             });
         })
         .catch(err => {
             res.status(500).json({
-                msg: "error delete data",
+                msg: "error delete notif",
                 status: 500,
                 err
             });
@@ -102,7 +102,7 @@ module.exports = {
         notifService.updateNotif(id,{isRead: true})
         .then(notif => {
             res.status(200).json({
-                msg: "notif updated",
+                msg: "success update notif",
                 status: 200,
                 data: notif
             });
@@ -138,13 +138,13 @@ module.exports = {
             const find = await notifService.findByUser(usersId)
             global.io.sockets.in(usersId).emit('notify-update', find);
             res.status(200).json({
-                msg: "notif updated",
+                msg: "success create notif",
                 status: 200,
                 data: create
             });
         }else{
             res.status(500).json({
-                msg: "notif fails updated",
+                msg: "fails create notif",
                 status: 500,
             });
         }
