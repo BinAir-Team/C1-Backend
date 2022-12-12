@@ -222,4 +222,14 @@ router.put(
 router.get(prefix + "/search", controllers.searchControllers.getSearch);
 router.post(prefix + "/search", controllers.searchControllers.addSearch);
 
+//tes member notif api
+router.get(prefix + "/notify", verifyToken ,controllers.notifControllers.getNotifByUserId);
+router.put(prefix + "/notify/:id", controllers.notifControllers.updateNotif);
+
+//admin notif
+router.get(prefix + "/notify/admin", verifyToken, verifyAdmin ,controllers.notifControllers.getAllNotif);
+router.get(prefix + "/notify/admin/:id", verifyToken, verifyAdmin ,controllers.notifControllers.getNotifByid);
+router.post(prefix + "/notify/admin", verifyToken, verifyAdmin ,controllers.notifControllers.createAdmin);
+router.delete(prefix + "/notify/admin/:id", verifyToken, verifyAdmin ,controllers.notifControllers.deleteNotifById);
+
 module.exports = router;

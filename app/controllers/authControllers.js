@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const moment = require("moment");
 const { getUserByToken } = require("../services/authService");
 const {
   getUserById,
@@ -10,6 +11,7 @@ const {
 const { v4: uuid } = require("uuid");
 const { users } = require("../models");
 const SALT = 10;
+const notifControllers = require('./notificationsControllers');
 
 // ecrypt password
 function encryptPassword(password) {
@@ -85,6 +87,7 @@ exports.registerMember = async (req, res) => {
       profile_image:
         "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png",
     };
+    await notifService.createNotif({id: uuid(),usersId: data.id,message: `User Sukses Registrasi pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
     const newUser = await createUser(data);
     // send response
     res.status(201).json({
@@ -148,8 +151,9 @@ exports.login = async (req, res) => {
     const accessToken = jwt.sign(
       { id, firstname, lastname, gender, email, phone, role, profile_image },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "1h" }
     );
+    await notifControllers.createNotif(id,{id: uuid(),usersId: id,message: `Sukses Login pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
     res.status(200).json({
       status: "success",
       message: "Login success",
@@ -224,6 +228,8 @@ exports.putCurrentUserData = async (req, res) => {
       data: {},
     });
   }
+  //set notif
+  await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses Update Profile Pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
   try {
     // get data
     const { firstname, lastname, gender, phone, profile_image, password } =
