@@ -1,9 +1,37 @@
 #!/usr/bin/env node
 
 require('dotenv').config();
+const http = require('http');
+const socketIO = require('socket.io');
 const app = require("../app/index")
 const port = process.env.PORT || 8000;
+let clients = [];
 
-app.listen(port, () => {
+const server = http.createServer(app)
+const io = socketIO(server, {
+  transports:['polling'],
+  cors: {
+    origin: '*',
+    methods: ["GET", "POST"]
+  }
+})
+
+io.on('connection', (socket) => {
+  console.log("user connected")
+
+  socket.on('create', function(room) {
+    socket.join(room);
+  });
+
+  socket.on('disconnect', () => {
+    clients.filter(function( obj ) {
+      return obj.clientId !== socket.id;
+    })
+  })
+})
+
+global.io = io;
+
+server.listen(port, () => {
   console.log(`Listening on http://localhost:${port}`)
 })
