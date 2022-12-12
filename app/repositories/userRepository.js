@@ -11,6 +11,15 @@ exports.findAll = () => {
   });
 };
 
+//  find  by refresh_token
+exports.findByRefreshToken = (refresh_token) => {
+  return users.findOne({
+    where: {
+      refresh_token,
+    },
+  });
+};
+
 // findOne
 exports.findOne = (id) => {
   return users.findOne({
@@ -28,6 +37,16 @@ exports.findByEmail = (email) => {
       email,
     },
     include: ["notifications", "transactions", "wishlists"],
+  });
+};
+
+// check verified
+exports.checkVerified = (email) => {
+  return users.findOne({
+    attributes: ["verified"],
+    where: {
+      email,
+    },
   });
 };
 

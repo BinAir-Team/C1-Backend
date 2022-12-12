@@ -1,19 +1,18 @@
 const searchRepository = require('../repositories/searchRepository');
 
 module.exports = {
-    async findCity(key) {
+    async findSearch() {
         try{
-            const search = await searchRepository.findCity(key);
+            const search = await searchRepository.findSearch();
             return search;
         }
         catch(err) {
             throw err;
         }
     },
-
-    async findAirport(key) {
+    async addSearch(data) {
         try{
-            const search = await searchRepository.findAirport(key);
+            const search = await searchRepository.addSearch(data);
             return search;
         }
         catch(err) {
