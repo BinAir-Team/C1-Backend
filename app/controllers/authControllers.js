@@ -15,6 +15,7 @@ const { v4: uuid } = require("uuid");
 const { users } = require("../models");
 const SALT = 10;
 const notifControllers = require("./notificationsControllers");
+const notifService = require("../services/notifService");
 const {sendEmailVerification} = require('./emailVerification');
 
 // ecrypt password
