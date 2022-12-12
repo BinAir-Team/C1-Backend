@@ -22,6 +22,11 @@ exports.getUserByEmail = (email) => {
   return userRepository.findByEmail(email);
 };
 
+//get verified status
+exports.getVerifiedStatus = (email) => {
+  return userRepository.checkVerified(email);
+};
+
 // updateUser
 exports.updateUser = (id, data) => {
   return userRepository.update(id, data);
