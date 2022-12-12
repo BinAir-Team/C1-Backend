@@ -82,16 +82,6 @@ module.exports = {
         const available = req.body.available;
         const init_stock = req.body.init_stock;
         const curr_stock = req.body.curr_stock;
-        const find = await ticketService.getTicketById(id);
-        if(!find){
-            return res.status(404).json(
-                {
-                    status: "error",
-                    message: "id ticket not found",
-                    data: {}
-                }
-            );
-        }
         const newTicket = await ticketService.createTicket({
             id: id,
             from: from,
