@@ -1,5 +1,7 @@
 const ticketService = require('../services/ticketService');
+const notifControllers = require('./notificationsControllers');
 const {v4:uuid} = require('uuid');
+const moment = require('moment');
 
 module.exports = {
     async getAllTickets(req, res){
@@ -82,6 +84,7 @@ module.exports = {
         const available = req.body.available;
         const init_stock = req.body.init_stock;
         const curr_stock = req.body.curr_stock;
+        await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses Menambah tiket rute ${from}-${to} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
         const newTicket = await ticketService.createTicket({
             id: id,
             from: from,
@@ -129,6 +132,7 @@ module.exports = {
                 }
             );
         }
+        await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses update tiket dengan id:${id} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
         const updatedTicket = await ticketService.updateTicket(id, ticket)
         .then(ticket => {
             res.status(200).json(
@@ -160,6 +164,7 @@ module.exports = {
                 }
             );
         }
+        await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses menghapus tiket rute ${find.dataValues.from}-${find.dataValues.to} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
         const deletedTicket = await ticketService.deleteTicket(id)
         .then(ticket => {
             res.status(200).json(
