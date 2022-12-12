@@ -7,11 +7,14 @@ const {
   getUserByEmail,
   updateUser,
   createUser,
+  getVerifiedStatus
 } = require("../services/userService");
 const { v4: uuid } = require("uuid");
 const { users } = require("../models");
 const SALT = 10;
 const notifControllers = require('./notificationsControllers');
+const {sendEmailVerification} = require('./emailVerification');
+const notifService = require('../services/notifService');
 
 // ecrypt password
 function encryptPassword(password) {
@@ -89,10 +92,12 @@ exports.registerMember = async (req, res) => {
     };
     await notifService.createNotif({id: uuid(),usersId: data.id,message: `User Sukses Registrasi pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
     const newUser = await createUser(data);
+    // send email verification
+    await sendEmailVerification(req, res);
     // send response
     res.status(201).json({
       status: "success",
-      message: "Register member success",
+      message: "Register member success, check email for verification",
       data: {
         id: newUser.id,
         firstname: newUser.firstname,
@@ -153,6 +158,16 @@ exports.login = async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "1h" }
     );
+    //check if email verified
+    const isEmailVerified = await getVerifiedStatus(email);
+    if(!isEmailVerified.verified){
+      await sendEmailVerification(req, res);
+      return res.status(401).json({
+        status: "error",
+        message: "Email not verified, check your email!",
+        data: {},
+      });
+    }
     await notifControllers.createNotif(id,{id: uuid(),usersId: id,message: `Sukses Login pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
     res.status(200).json({
       status: "success",

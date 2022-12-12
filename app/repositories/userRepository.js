@@ -40,6 +40,16 @@ exports.findByEmail = (email) => {
   });
 };
 
+// check verified
+exports.checkVerified = (email) => {
+  return users.findOne({
+    attributes: ["verified"],
+    where: {
+      email,
+    },
+  });
+};
+
 // update
 exports.update = (id, data) => {
   return users.update(data, {

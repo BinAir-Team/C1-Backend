@@ -5,7 +5,6 @@ module.exports = {
     //send email verification
     sendEmailVerification : (req, res) => {
         const { email } = req.body;
-        console.log("Email >>>> ", email)
 
         //find user by email
         userService.getUserByEmail(email)
@@ -69,7 +68,7 @@ module.exports = {
                 margin: 4px 2px;color: white;
                 padding: 16px 32px;
                 transition-duration: 0.4s;" 
-                href='https://binair-backend-production.up.railway.app/api/v1/verify-email/${email} target="_blank" rel="reset"'>Verify Email</a>
+                href='https://binair-backend-production.up.railway.app/api/v1/verify-email/${email}'>Verify Email</a>
             </button>
             <center>
                     `,
@@ -107,7 +106,6 @@ module.exports = {
             }
             else{
                 const userId = result.id;
-                console.log("User ID >>>>> " ,userId);
                 userService.updateUser(userId, { verified: true })
                 .then((result) => {
                     res.status(200).json({
@@ -129,7 +127,7 @@ module.exports = {
             res.status(500).json({
                 status: "error",
                 message: "find email error",
-                data: {},
+                data: err,
             });
         });        
     }
