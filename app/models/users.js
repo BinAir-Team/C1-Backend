@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.wishlists, { foreignKey: "usersId" });
     }
   }
-<<<<<<< HEAD
   users.init({
     firstname: DataTypes.STRING,
     lastname: DataTypes.STRING,
@@ -29,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'users',
   });
-=======
   users.init(
     {
       firstname: DataTypes.STRING,
@@ -46,6 +44,5 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "users",
     }
   );
->>>>>>> 1bbf91599d773a9bd10c6ecd05d5e647662cf682
   return users;
 };
