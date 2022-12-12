@@ -128,6 +128,7 @@ module.exports = {
             ...body,
             usersId: id,
             id: uuid(),
+            payment_method: "default",
             quantity: json_quan,
             amounts: amounts,
             traveler: json_trav,
@@ -157,6 +158,7 @@ module.exports = {
     },
     async updateTrans(req,res) {
         const {id} = req.params;
+        const {payment_method} = req.body
         if(req.file == null){
             res.status(404).json({
                 msg: "image verification not found",
@@ -165,7 +167,7 @@ module.exports = {
             return
         }
         await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message:`Pembayaran Anda sudah diverifikasi pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}, silahkan cek status transaksi anda`,isRead: false})
-        transService.updateTrans(id,{status: "PAYMENT SUCCESS"})
+        transService.updateTrans(id,{status: "PAYMENT SUCCESS",payment_method})
         .then(trans => {
             fs.unlinkSync(req.file.path);
             if(trans.length == 0){
