@@ -185,7 +185,7 @@ router.get(prefix + "/openapi", swaggerUi.setup(swaggerDocument, options));
 
 //transactions api
 router.get(
-  prefix + "/trans",
+  prefix + "/admin/trans",
   verifyToken,
   verifyAdmin,
   controllers.transControllers.getAllTrans
@@ -206,7 +206,7 @@ router.post(
   controllers.transControllers.createTrans
 );
 router.delete(
-  prefix + "/trans/:id",
+  prefix + "/admin/trans/:id",
   verifyToken,
   verifyAdmin,
   controllers.transControllers.deleteTransById
@@ -220,19 +220,16 @@ router.put(
 
 //search API
 router.get(prefix + "/search", controllers.searchControllers.getSearch);
-router.post(prefix + "/search", controllers.searchControllers.addSearch);
-<<<<<<< HEAD
-=======
+router.post(prefix + "/admin/search", verifyToken, verifyAdmin, controllers.searchControllers.addSearch);
 
 //tes member notif api
 router.get(prefix + "/notify", verifyToken ,controllers.notifControllers.getNotifByUserId);
 router.put(prefix + "/notify/:id", controllers.notifControllers.updateNotif);
 
 //admin notif
-router.get(prefix + "/notify/admin", verifyToken, verifyAdmin ,controllers.notifControllers.getAllNotif);
-router.get(prefix + "/notify/admin/:id", verifyToken, verifyAdmin ,controllers.notifControllers.getNotifByid);
-router.post(prefix + "/notify/admin", verifyToken, verifyAdmin ,controllers.notifControllers.createAdmin);
-router.delete(prefix + "/notify/admin/:id", verifyToken, verifyAdmin ,controllers.notifControllers.deleteNotifById);
->>>>>>> 32b7c8d3155be8a74c975a179bb225d6101a0ec8
+router.get(prefix + "/admin/notify/", verifyToken, verifyAdmin ,controllers.notifControllers.getAllNotif);
+router.get(prefix + "/admin/notify/:id", verifyToken, verifyAdmin ,controllers.notifControllers.getNotifByid);
+router.post(prefix + "/admin/notify", verifyToken, verifyAdmin ,controllers.notifControllers.createAdmin);
+router.delete(prefix + "/admin/notify/:id", verifyToken, verifyAdmin ,controllers.notifControllers.deleteNotifById);
 
 module.exports = router;
