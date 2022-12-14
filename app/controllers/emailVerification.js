@@ -108,11 +108,7 @@ module.exports = {
                 const userId = result.id;
                 userService.updateUser(userId, { verified: true })
                 .then((result) => {
-                    res.status(200).json({
-                        status: "success",
-                        message: "Email verified",
-                        data: {},
-                    });
+                    res.render("emailVerified.ejs");
                 })
                 .catch((err) => {
                     res.status(500).json({
