@@ -95,6 +95,11 @@ router.post(prefix + "/reset-password/:token", resetPass);
 router.post(prefix + "/send-email/", sendEmailVerification);
 router.get(prefix + "/verify-email/:email", verifyEmail);
 
+// email verified view (just check if it works)
+router.get("/email-verified", function(req, res) {
+  res.render("emailVerified.ejs");
+});
+
 // user routes
 // get current user data (token required)
 router.get(prefix + "/user", verifyToken, getCurrentUserData);
