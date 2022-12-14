@@ -91,12 +91,17 @@ router.post(prefix + "/login", login);
 router.post(prefix + "/forget-password", forgetPass);
 router.post(prefix + "/reset-password/:token", resetPass);
 
+// reset password view (just check if it works)
+router.get("/reset-password", function (req, res) {
+  res.render("resetPassword.ejs");
+});
+
 // email verification
 router.post(prefix + "/send-email/", sendEmailVerification);
 router.get(prefix + "/verify-email/:email", verifyEmail);
 
 // email verified view (just check if it works)
-router.get("/email-verified", function(req, res) {
+router.get("/email-verified", function (req, res) {
   res.render("emailVerified.ejs");
 });
 

@@ -1,0 +1,25 @@
+.verified-container{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img-success{
+    width: 400px;
+    height: fit-content;
+}
+h2{
+    color: #59595B;
+}
+h4, p{
+    color: #9A9A9D;
+}
+.btn{
+    background-color: #F37C20;
+    color: white;
+}
+.btn:hover{
+    color: white;
+    background-color: #FBA563;
+}
