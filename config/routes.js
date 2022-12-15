@@ -33,6 +33,7 @@ const {
 
 const {
   forgetPass,
+  resetPassView,
   resetPass,
 } = require("../app/controllers/forgetPassController");
 
@@ -89,12 +90,8 @@ router.post(prefix + "/login", login);
 
 // forget password
 router.post(prefix + "/forget-password", forgetPass);
-router.post(prefix + "/reset-password/:token", resetPass);
-
-// reset password view (just check if it works)
-router.get("/reset-password", function (req, res) {
-  res.render("resetPassword.ejs");
-});
+router.get(prefix + "/reset-password/:token", resetPassView);
+router.put(prefix + "/reset-password", resetPass);
 
 // email verification
 router.post(prefix + "/send-email/", sendEmailVerification);
