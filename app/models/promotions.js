@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       promo_code: DataTypes.STRING,
       discount: DataTypes.INTEGER,
       terms: DataTypes.TEXT,
+      expire: DataTypes.DATE,
       promo_image: DataTypes.STRING,
     },
     {
