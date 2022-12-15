@@ -366,7 +366,7 @@ module.exports = {
           curr_stock: 120,
           createdAt: new Date(),
           updatedAt: new Date(),
-        }
+        },
       ],
       {}
     );

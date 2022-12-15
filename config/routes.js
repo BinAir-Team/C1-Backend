@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./swagger.json');
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 let options = {
-    explorer: true
-  };
+  explorer: true,
+};
 
 // import auth controller
 const {
@@ -33,6 +33,7 @@ const {
 
 const {
   forgetPass,
+  resetPassView,
   resetPass,
 } = require("../app/controllers/forgetPassController");
 
@@ -89,11 +90,17 @@ router.post(prefix + "/login", login);
 
 // forget password
 router.post(prefix + "/forget-password", forgetPass);
-router.post(prefix + "/reset-password/:token", resetPass);
+router.get(prefix + "/reset-password/:token", resetPassView);
+router.put(prefix + "/reset-password", resetPass);
 
 // email verification
 router.post(prefix + "/send-email/", sendEmailVerification);
 router.get(prefix + "/verify-email/:email", verifyEmail);
+
+// email verified view (just check if it works)
+router.get("/email-verified", function (req, res) {
+  res.render("emailVerified.ejs");
+});
 
 // user routes
 // get current user data (token required)
@@ -220,16 +227,45 @@ router.put(
 
 //search API
 router.get(prefix + "/search", controllers.searchControllers.getSearch);
-router.post(prefix + "/admin/search", verifyToken, verifyAdmin, controllers.searchControllers.addSearch);
+router.post(
+  prefix + "/admin/search",
+  verifyToken,
+  verifyAdmin,
+  controllers.searchControllers.addSearch
+);
 
 //tes member notif api
-router.get(prefix + "/notify", verifyToken ,controllers.notifControllers.getNotifByUserId);
+router.get(
+  prefix + "/notify",
+  verifyToken,
+  controllers.notifControllers.getNotifByUserId
+);
 router.put(prefix + "/notify/:id", controllers.notifControllers.updateNotif);
 
 //admin notif
-router.get(prefix + "/admin/notify/", verifyToken, verifyAdmin ,controllers.notifControllers.getAllNotif);
-router.get(prefix + "/admin/notify/:id", verifyToken, verifyAdmin ,controllers.notifControllers.getNotifByid);
-router.post(prefix + "/admin/notify", verifyToken, verifyAdmin ,controllers.notifControllers.createAdmin);
-router.delete(prefix + "/admin/notify/:id", verifyToken, verifyAdmin ,controllers.notifControllers.deleteNotifById);
+router.get(
+  prefix + "/admin/notify/",
+  verifyToken,
+  verifyAdmin,
+  controllers.notifControllers.getAllNotif
+);
+router.get(
+  prefix + "/admin/notify/:id",
+  verifyToken,
+  verifyAdmin,
+  controllers.notifControllers.getNotifByid
+);
+router.post(
+  prefix + "/admin/notify",
+  verifyToken,
+  verifyAdmin,
+  controllers.notifControllers.createAdmin
+);
+router.delete(
+  prefix + "/admin/notify/:id",
+  verifyToken,
+  verifyAdmin,
+  controllers.notifControllers.deleteNotifById
+);
 
 module.exports = router;
