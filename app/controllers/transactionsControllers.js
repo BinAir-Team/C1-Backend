@@ -1,5 +1,6 @@
 const transService = require('../services/transServices');
 const ticketService = require('../services/ticketService');
+const promoService = require('../services/promoService')
 const notifControllers = require('./notificationsControllers');
 
 const {v4: uuid} = require('uuid');
@@ -104,7 +105,7 @@ module.exports = {
         const {body} = req;
         const {id} = req.user;
         const status = "PENDING PAYMENT";
-        const {ticketsId, quantity, traveler} = req.body;
+        const {ticketsId, quantity, traveler, promo_code} = req.body;
         const ticketdata = await ticketService.getTicketById(ticketsId);
         if(!ticketdata){
             res.status(404).json({
@@ -113,17 +114,41 @@ module.exports = {
             });
             return
         }
-        const transdata = await transService.findByUser(id);
         let pp = 0;
         if(ticketdata.dataValues.type == "roundtrip"){
             pp = 2;
         }else{
             pp = 1;
         }
+        let amounts = ((ticketdata.dataValues.adult_price * quantity.adult)+(ticketdata.dataValues.child_price * quantity.child))*pp;
+        if(promo_code != null){
+            let today = moment().format("YYYY-MM-DD");
+            const promodata = await promoService.findCode(promo_code);
+            if(!promodata){
+                res.status(404).json({
+                    msg: "promo code not found / invalid",
+                    status: 404,
+                });
+                return;
+            }else{
+                console.log(today)
+                if(promodata.dataValues.expire >= today){
+                    const discount = promodata.dataValues.discount;
+                    amounts = amounts - (amounts * (discount/100));
+                }else{
+                    res.status(400).json({
+                        msg: "promo code is expire",
+                        status: 400,
+                    });
+                    return;
+                }
+            }
+        }
+        const transdata = await transService.findByUser(id);
+        
         const json_trav = JSON.stringify(traveler);
         const json_quan = JSON.stringify(quantity);
-        const amounts = ((ticketdata.dataValues.adult_price * quantity.adult)+(ticketdata.dataValues.child_price * quantity.child))*pp;
-        
+
         let newData = {
             ...body,
             usersId: id,

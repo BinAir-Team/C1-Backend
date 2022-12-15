@@ -25,4 +25,11 @@ module.exports = {
   deletePromo(id) {
     return promotions.destroy({ where: { id: id } });
   },
+
+  //find by code
+  findcode(code) {
+    return promotions.findOne({
+      where: {promo_code: code}
+    })
+  }
 };

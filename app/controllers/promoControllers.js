@@ -42,7 +42,7 @@ module.exports = {
   // Create a new promotion
   createPromo: async (req, res) => {
     try {
-      const { title, desc, promo_code, discount, terms, promo_image } =
+      const { title, desc, promo_code, discount, terms, promo_image, expire } =
         req.body;
       await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses Menambah promo dengan title: ${title} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
       const newPromo = await promoService.createPromo({
@@ -52,6 +52,7 @@ module.exports = {
         promo_code,
         discount,
         terms,
+        expire,
         promo_image,
       });
       res.status(201).json({
