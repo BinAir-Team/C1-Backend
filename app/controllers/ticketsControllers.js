@@ -78,7 +78,8 @@ module.exports = {
         const airport_to = req.body.airport_to;
         const departure_time = req.body.departure_time;
         const arrival_time = req.body.arrival_time;
-        const date = req.body.date;
+        const date_start = req.body.date_start;
+        const date_end = req.body.date_end;
         const type = req.body.type;
         const adult_price = req.body.adult_price;
         const child_price = req.body.child_price;
@@ -94,7 +95,8 @@ module.exports = {
             airport_to: airport_to,
             departure_time: departure_time,
             arrival_time: arrival_time,
-            date: date,
+            date_start: date_start,
+            date_end: date_end,
             type: type,
             adult_price: adult_price,
             child_price: child_price,
