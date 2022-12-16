@@ -12,7 +12,7 @@ const {
   getVerifiedStatus,
 } = require("../services/userService");
 const { v4: uuid } = require("uuid");
-const moment = require('moment');
+const moment = require("moment");
 const { users } = require("../models");
 const SALT = 10;
 const notifControllers = require("./notificationsControllers");
@@ -271,8 +271,13 @@ exports.putCurrentUserData = async (req, res) => {
   });
   try {
     // get data
-    const { firstname, lastname, gender, phone, profile_image, password } =
+    let { firstname, lastname, gender, phone, profile_image, password } =
       req.body;
+
+    // if else profile image null set profile image user
+    if (!profile_image) {
+      profile_image = user.profile_image;
+    }
 
     //  hash password
     const encryptedPassword = await encryptPassword(password);
