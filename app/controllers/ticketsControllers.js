@@ -9,10 +9,11 @@ module.exports = {
         const airport_from = req.query.airport_from ? req.query.airport_from : '';
         const to = req.query.to ? req.query.to : '';
         const airport_to = req.query.airport_to ? req.query.airport_to : '';
-        const date = req.query.date;
+        const date_start = req.query.date_start;
+        const date_end = req.query.date_end ? req.query.date_end : null;
         const type = req.query.type ? req.query.type : '';
         const willFly = req.query.willFly ? req.query.willFly : 'false';
-        const tickets = await ticketService.getAllTickets(from, to, airport_from, airport_to, date, type, willFly)
+        const tickets = await ticketService.getAllTickets(from, to, airport_from, airport_to, date_start, date_end, type, willFly)
         .then(tickets => {
             if(tickets.length == 0){
                 res.status(404).json(

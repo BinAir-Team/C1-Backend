@@ -12,6 +12,7 @@ const {
   getVerifiedStatus,
 } = require("../services/userService");
 const { v4: uuid } = require("uuid");
+const moment = require('moment');
 const { users } = require("../models");
 const SALT = 10;
 const notifControllers = require("./notificationsControllers");

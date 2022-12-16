@@ -89,7 +89,7 @@ let bandara = [
     id: uuid(),
     code: "CGK",
     city: "Jakarta",
-    airport: "Soekarno-Hatta International Airport",
+    airport: "Soekarno Hatta International Airport",
     createdAt: new Date(),
     updatedAt: new Date()
   },{
@@ -138,7 +138,7 @@ let bandara = [
     id: uuid(),
     code: "DPS",
     city: "Denpasar",
-    airport: "Ngurah Rai International Airport",
+    airport: "I Gusti Ngurah Rai International Airport",
     createdAt: new Date(),
     updatedAt: new Date()
   },{
@@ -677,7 +677,7 @@ let bandara = [
     id: uuid(),
     code: "HLP",
     city: "Jakarta",
-    airport: "Halim Perdana Kusuma Airport",
+    airport: "Halim Perdanakusuma International Airport",
     createdAt: new Date(),
     updatedAt: new Date()
   },{
