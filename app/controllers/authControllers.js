@@ -9,15 +9,15 @@ const {
   getUserByEmail,
   updateUser,
   createUser,
-  getVerifiedStatus
+  getVerifiedStatus,
 } = require("../services/userService");
 const { v4: uuid } = require("uuid");
-const moment = require('moment');
+const moment = require("moment");
 const { users } = require("../models");
 const SALT = 10;
 const notifControllers = require("./notificationsControllers");
 const notifService = require("../services/notifService");
-const {sendEmailVerification} = require('./emailVerification');
+const { sendEmailVerification } = require("./emailVerification");
 
 // ecrypt password
 function encryptPassword(password) {
@@ -170,7 +170,7 @@ exports.login = async (req, res) => {
     );
     //check if email verified
     const isEmailVerified = await getVerifiedStatus(email);
-    if(!isEmailVerified.verified){
+    if (!isEmailVerified.verified) {
       await sendEmailVerification(req, res);
       return res.status(401).json({
         status: "error",
@@ -178,7 +178,14 @@ exports.login = async (req, res) => {
         data: {},
       });
     }
-    await notifControllers.createNotif(id,{id: uuid(),usersId: id,message: `Sukses Login pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
+    await notifControllers.createNotif(id, {
+      id: uuid(),
+      usersId: id,
+      message: `Sukses Login pada ${moment().format(
+        "MMMM Do YYYY, h:mm:ss a"
+      )}`,
+      isRead: false,
+    });
     res.status(200).json({
       status: "success",
       message: "Login success",
@@ -264,8 +271,13 @@ exports.putCurrentUserData = async (req, res) => {
   });
   try {
     // get data
-    const { firstname, lastname, gender, phone, profile_image, password } =
+    let { firstname, lastname, gender, phone, profile_image, password } =
       req.body;
+
+    // if else profile image null set profile image user
+    if (!profile_image) {
+      profile_image = user.profile_image;
+    }
 
     //  hash password
     const encryptedPassword = await encryptPassword(password);
