@@ -3571,8 +3571,9 @@
         "airport_to": "I Gusti Ngurah Rai International Airport",
         "departure_time": "14:00",
         "arrival_time": "16:30",
-        "date": "2022-11-25 13:39:42.408 +00:00",
-        "type": "Sekali Jalan",
+        "date_start": "22-01-2023",
+        "date_end": "25-01-2023",
+        "type": "roundtrip",
         "adult_price": 2200000,
         "child_price": 1500000,
         "available": true,
@@ -3644,7 +3645,8 @@
     "UpdateTicketRequest": {
       "title": "UpdateTicketRequest",
       "example": {
-        "type": "Sekali Jalan"
+        "type": "oneway",
+        "date_end": null
       },
       "type": "object",
       "properties": {
