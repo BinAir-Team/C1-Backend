@@ -75,7 +75,7 @@ module.exports = {
             })
             return
         }
-        await notifService.createNotif({id: uuid(),usersId: req.user.id,message: `Transaksi dengan id: ${id} dihapus oleh ${req.user.email} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})      
+        await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Transaksi dengan id: ${id} dihapus oleh ${req.user.email} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})      
         transService.deleteByPk(id)
         .then(trans => {
             if(trans == 0){
