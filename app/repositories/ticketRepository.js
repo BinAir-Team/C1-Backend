@@ -2,10 +2,12 @@ const {tickets} = require("../models");
 const {Sequelize, Op} = require("sequelize");
 
 module.exports = {
-    getAllTickets(from, to, dept, arr, date_start, date_end, type){
+    getAllTickets(from, to, dept, arr, date_start, date_end, type, offset, limit){
         if(date_start){
             if(date_end){
-                return tickets.findAll({
+                return tickets.findAndCountAll({
+                    limit,
+                    offset,
                     where:{
                         [Op.and]:{
                             from: {
@@ -30,7 +32,9 @@ module.exports = {
                 });
             }
             else{
-                return tickets.findAll({
+                return tickets.findAndCountAll({
+                    limit,
+                    offset,
                     where:{
                         [Op.and]:{
                             from: {
@@ -54,7 +58,9 @@ module.exports = {
                 });
             }
         } else{
-            return tickets.findAll({
+            return tickets.findAndCountAll({
+                limit,
+                offset,
                 where:{
                     [Op.and]:{
                         from: {
@@ -78,11 +84,13 @@ module.exports = {
         }
     },
 
-    getFutureTicket(from, to, dept, arr, date_start, date_end, type){
+    getFutureTicket(from, to, dept, arr, date_start, date_end, type, offset, limit){
         const nowDate = new Date();
         if(date_start){
             if(date_end){
-                return tickets.findAll({
+                return tickets.findAndCountAll({
+                    limit,
+                    offset,
                     where:{
                         [Op.and]:{
                             from: {
@@ -108,11 +116,15 @@ module.exports = {
                                 [Op.iLike]: `%${type}%`
                             }
                         }
-                    }
+                    },
+                    limit,
+                    offset
                 });
             }
             else{
-                return tickets.findAll({
+                return tickets.findAndCountAll({
+                    limit,
+                    offset,
                     where:{
                         [Op.and]:{
                             from: {
@@ -137,11 +149,15 @@ module.exports = {
                                 [Op.iLike]: `%${type}%`
                             }
                         }
-                    }
+                    },
+                    limit,
+                    offset
                 });
             }
         } else{
-            return tickets.findAll({
+            return tickets.findAndCountAll({
+                limit,
+                offset,
                 where:{
                     [Op.and]:{
                         from: {
@@ -163,7 +179,9 @@ module.exports = {
                             [Op.iLike]: `%${type}%`
                         }
                     }
-                }
+                },
+                limit,
+                offset
             });
         }
     },
