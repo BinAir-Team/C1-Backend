@@ -1396,51 +1396,62 @@
           {
             "name": "from",
             "in": "query",
-            "required": true,
             "type": "string",
             "description": ""
           },
           {
             "name": "airport_from",
             "in": "query",
-            "required": true,
             "type": "string",
             "description": ""
           },
           {
             "name": "to",
             "in": "query",
-            "required": true,
             "type": "string",
             "description": ""
           },
           {
             "name": "airport_to",
             "in": "query",
-            "required": true,
             "type": "string",
             "description": ""
           },
           {
-            "name": "date",
+            "name": "date_start",
             "in": "query",
-            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "date_end",
+            "in": "query",
             "type": "string",
             "description": ""
           },
           {
             "name": "type",
             "in": "query",
-            "required": true,
             "type": "string",
-            "description": ""
+            "description": "fill by 'roundtrip' or 'oneway'"
           },
           {
             "name": "willFly",
             "in": "query",
-            "required": true,
-            "type": "boolean",
-            "description": ""
+            "type": "string",
+            "description": "fill by 'true' or 'false'"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string",
+            "description": "which page start by 0, example = 2"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "type": "string",
+            "description": "size page, example = 10"
           }
         ],
         "responses": {
