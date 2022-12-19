@@ -9,10 +9,11 @@ module.exports = {
         const airport_from = req.query.airport_from ? req.query.airport_from : '';
         const to = req.query.to ? req.query.to : '';
         const airport_to = req.query.airport_to ? req.query.airport_to : '';
-        const date = req.query.date;
+        const date_start = req.query.date_start;
+        const date_end = req.query.date_end ? req.query.date_end : null;
         const type = req.query.type ? req.query.type : '';
         const willFly = req.query.willFly ? req.query.willFly : 'false';
-        const tickets = await ticketService.getAllTickets(from, to, airport_from, airport_to, date, type, willFly)
+        const tickets = await ticketService.getAllTickets(from, to, airport_from, airport_to, date_start, date_end, type, willFly)
         .then(tickets => {
             if(tickets.length == 0){
                 res.status(404).json(
@@ -77,7 +78,8 @@ module.exports = {
         const airport_to = req.body.airport_to;
         const departure_time = req.body.departure_time;
         const arrival_time = req.body.arrival_time;
-        const date = req.body.date;
+        const date_start = req.body.date_start;
+        const date_end = req.body.date_end;
         const type = req.body.type;
         const adult_price = req.body.adult_price;
         const child_price = req.body.child_price;
@@ -93,7 +95,8 @@ module.exports = {
             airport_to: airport_to,
             departure_time: departure_time,
             arrival_time: arrival_time,
-            date: date,
+            date_start: date_start,
+            date_end: date_end,
             type: type,
             adult_price: adult_price,
             child_price: child_price,

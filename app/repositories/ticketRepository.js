@@ -2,30 +2,57 @@ const {tickets} = require("../models");
 const {Sequelize, Op} = require("sequelize");
 
 module.exports = {
-    getAllTickets(from, to, dept, arr, date, type){
-        if(date){
-            return tickets.findAll({
-                where:{
-                    [Op.and]:{
-                        from: {
-                            [Op.iLike]: `%${from}%`
-                        },
-                        to: {
-                            [Op.iLike]: `%${to}%`
-                        },
-                        airport_from: {
-                            [Op.iLike]: `%${dept}%`
-                        },
-                        airport_to: {
-                            [Op.iLike]: `%${arr}%`
-                        },
-                        date: date,
-                        type: {
-                            [Op.iLike]: `%${type}%`
+    getAllTickets(from, to, dept, arr, date_start, date_end, type){
+        if(date_start){
+            if(date_end){
+                return tickets.findAll({
+                    where:{
+                        [Op.and]:{
+                            from: {
+                                [Op.iLike]: `%${from}%`
+                            },
+                            to: {
+                                [Op.iLike]: `%${to}%`
+                            },
+                            airport_from: {
+                                [Op.iLike]: `%${dept}%`
+                            },
+                            airport_to: {
+                                [Op.iLike]: `%${arr}%`
+                            },
+                            date_start: date_start,
+                            date_end: date_end,
+                            type: {
+                                [Op.iLike]: `%${type}%`
+                            }
                         }
                     }
-                }
-            });
+                });
+            }
+            else{
+                return tickets.findAll({
+                    where:{
+                        [Op.and]:{
+                            from: {
+                                [Op.iLike]: `%${from}%`
+                            },
+                            to: {
+                                [Op.iLike]: `%${to}%`
+                            },
+                            airport_from: {
+                                [Op.iLike]: `%${dept}%`
+                            },
+                            airport_to: {
+                                [Op.iLike]: `%${arr}%`
+                            },
+                            date_start: date_start,
+                            type: {
+                                [Op.iLike]: `%${type}%`
+                            }
+                        }
+                    }
+                });
+            }
         } else{
             return tickets.findAll({
                 where:{
@@ -51,36 +78,68 @@ module.exports = {
         }
     },
 
-    getFutureTicket(from, to, dept, arr, date, type){
+    getFutureTicket(from, to, dept, arr, date_start, date_end, type){
         const nowDate = new Date();
-        if(date){
-            return tickets.findAll({
-                where:{
-                    [Op.and]:{
-                        from: {
-                            [Op.iLike]: `%${from}%`
-                        },
-                        to: {
-                            [Op.iLike]: `%${to}%`
-                        },
-                        airport_from: {
-                            [Op.iLike]: `%${dept}%`
-                        },
-                        airport_to: {
-                            [Op.iLike]: `%${arr}%`
-                        },
-                        date: {
-                            [Op.and]: {
-                                [Op.gte]: nowDate,
-                                [Op.eq]: date
+        if(date_start){
+            if(date_end){
+                return tickets.findAll({
+                    where:{
+                        [Op.and]:{
+                            from: {
+                                [Op.iLike]: `%${from}%`
+                            },
+                            to: {
+                                [Op.iLike]: `%${to}%`
+                            },
+                            airport_from: {
+                                [Op.iLike]: `%${dept}%`
+                            },
+                            airport_to: {
+                                [Op.iLike]: `%${arr}%`
+                            },
+                            date_start: {
+                                [Op.and]: {
+                                    [Op.gte]: nowDate,
+                                    [Op.eq]: date_start
+                                }
+                            },
+                            date_end: date_end,
+                            type: {
+                                [Op.iLike]: `%${type}%`
                             }
-                        },
-                        type: {
-                            [Op.iLike]: `%${type}%`
                         }
                     }
-                }
-            });
+                });
+            }
+            else{
+                return tickets.findAll({
+                    where:{
+                        [Op.and]:{
+                            from: {
+                                [Op.iLike]: `%${from}%`
+                            },
+                            to: {
+                                [Op.iLike]: `%${to}%`
+                            },
+                            airport_from: {
+                                [Op.iLike]: `%${dept}%`
+                            },
+                            airport_to: {
+                                [Op.iLike]: `%${arr}%`
+                            },
+                            date_start: {
+                                [Op.and]: {
+                                    [Op.gte]: nowDate,
+                                    [Op.eq]: date_start
+                                }
+                            },
+                            type: {
+                                [Op.iLike]: `%${type}%`
+                            }
+                        }
+                    }
+                });
+            }
         } else{
             return tickets.findAll({
                 where:{
@@ -97,7 +156,7 @@ module.exports = {
                         airport_to: {
                             [Op.iLike]: `%${arr}%`
                         },
-                        date:{
+                        date_start:{
                             [Op.gte]: nowDate
                         },
                         type: {

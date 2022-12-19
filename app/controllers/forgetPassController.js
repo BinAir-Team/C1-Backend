@@ -86,7 +86,7 @@ exports.forgetPass = async (req, res) => {
         margin: 4px 2px;color: white;
         padding: 16px 32px;
         transition-duration: 0.4s;" 
-        href='https://binair-backend-production.up.railway.app/api/v1/reset-password/${token}' target="_blank" rel="reset">Reset Password</a>
+        href='http://binair-backend-production.up.railway.app/api/v1/reset-password/${token}' target="_blank" rel="reset">Reset Password</a>
       </button>
     <center>
             `,
@@ -109,13 +109,47 @@ exports.forgetPass = async (req, res) => {
   }
 };
 
-// reset password
-exports.resetPass = async (req, res) => {
-  const { password, confirmPassword } = req.body;
+// reset pass view
+exports.resetPassView = async (req, res) => {
   try {
     // get token from url
     const token = req.params.token;
 
+    // verify token
+    const decodedUser = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
+    // get user by id
+    const user = await getUserById(decodedUser.id);
+
+    // check user
+    if (!user) {
+      res.status(400).send({
+        status: "error",
+        message: "Token reset password not found",
+        data: {},
+      });
+      return;
+    }
+    res.status(200).render("resetPassword", {
+      status: "success",
+      message: "reset password view",
+      data: user,
+      token,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: "invalid",
+      message: "Invalid token reset password",
+      data: {},
+    });
+  }
+};
+
+// reset password
+exports.resetPass = async (req, res) => {
+  const { password, confirmPassword } = req.body;
+  try {
+    const token = req.body.token;
     // verify token
     const decodedUser = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
 
@@ -151,9 +185,9 @@ exports.resetPass = async (req, res) => {
     });
 
     // send response
-    res.status(200).send({
+    res.status(200).render("resetSucces", {
       status: "success",
-      message: "Password reset successfully",
+      message: "reset password success",
       data: {},
     });
   } catch (error) {

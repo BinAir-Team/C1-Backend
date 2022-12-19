@@ -1,17 +1,23 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const moment = require("moment");
-const { getUserByToken } = require("../services/authService");
+const {
+  getUserByToken,
+  updateUserRefreshToken,
+} = require("../services/authService");
 const {
   getUserById,
   getUserByEmail,
   updateUser,
   createUser,
+  getVerifiedStatus,
 } = require("../services/userService");
 const { v4: uuid } = require("uuid");
+const moment = require("moment");
 const { users } = require("../models");
 const SALT = 10;
-const notifControllers = require('./notificationsControllers');
+const notifControllers = require("./notificationsControllers");
+const notifService = require("../services/notifService");
+const { sendEmailVerification } = require("./emailVerification");
 
 // ecrypt password
 function encryptPassword(password) {
@@ -87,12 +93,21 @@ exports.registerMember = async (req, res) => {
       profile_image:
         "https://www.kindpng.com/picc/m/21-214439_free-high-quality-person-icon-default-profile-picture.png",
     };
-    await notifService.createNotif({id: uuid(),usersId: data.id,message: `User Sukses Registrasi pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
+    await notifService.createNotif({
+      id: uuid(),
+      usersId: data.id,
+      message: `User Sukses Registrasi pada ${moment().format(
+        "MMMM Do YYYY, h:mm:ss a"
+      )}`,
+      isRead: false,
+    });
     const newUser = await createUser(data);
+    // send email verification
+    await sendEmailVerification(req, res);
     // send response
     res.status(201).json({
       status: "success",
-      message: "Register member success",
+      message: "Register member success, check email for verification",
       data: {
         id: newUser.id,
         firstname: newUser.firstname,
@@ -153,7 +168,24 @@ exports.login = async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "1h" }
     );
-    await notifControllers.createNotif(id,{id: uuid(),usersId: id,message: `Sukses Login pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
+    //check if email verified
+    const isEmailVerified = await getVerifiedStatus(email);
+    if (!isEmailVerified.verified) {
+      await sendEmailVerification(req, res);
+      return res.status(401).json({
+        status: "error",
+        message: "Email not verified, check your email!",
+        data: {},
+      });
+    }
+    await notifControllers.createNotif(id, {
+      id: uuid(),
+      usersId: id,
+      message: `Sukses Login pada ${moment().format(
+        "MMMM Do YYYY, h:mm:ss a"
+      )}`,
+      isRead: false,
+    });
     res.status(200).json({
       status: "success",
       message: "Login success",
@@ -229,11 +261,23 @@ exports.putCurrentUserData = async (req, res) => {
     });
   }
   //set notif
-  await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses Update Profile Pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
+  await notifControllers.createNotif(req.user.id, {
+    id: uuid(),
+    usersId: req.user.id,
+    message: `Sukses Update Profile Pada ${moment().format(
+      "MMMM Do YYYY, h:mm:ss a"
+    )}`,
+    isRead: false,
+  });
   try {
     // get data
-    const { firstname, lastname, gender, phone, profile_image, password } =
+    let { firstname, lastname, gender, phone, profile_image, password } =
       req.body;
+
+    // if else profile image null set profile image user
+    if (!profile_image) {
+      profile_image = user.profile_image;
+    }
 
     //  hash password
     const encryptedPassword = await encryptPassword(password);

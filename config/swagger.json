@@ -1198,6 +1198,34 @@
         "security": []
       }
     },
+    "/admin/trans": {
+      "get": {
+        "description": "get all data transaksi by admin binair",
+        "summary": "get all",
+        "tags": [
+          "Transaksi Admin"
+        ],
+        "operationId": "getall",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
     "/trans/user": {
       "get": {
         "description": "get data transaksi berdasarkan user id by member",
@@ -1226,12 +1254,12 @@
         "security": []
       }
     },
-    "/trans/{id-d}": {
+    "/admin/trans/{id-d}": {
       "delete": {
         "description": "delete transaksi yang dapat dilakukan oleh admin",
         "summary": "delete trans",
         "tags": [
-          "Transaksi CRUD"
+          "Transaksi Admin"
         ],
         "operationId": "deletetrans",
         "deprecated": false,
@@ -1334,6 +1362,13 @@
             "in": "formData",
             "required": true,
             "type": "file",
+            "description": ""
+          },
+          {
+            "name": "payment_method",
+            "in": "formData",
+            "required": true,
+            "type": "string",
             "description": ""
           }
         ],
@@ -2438,9 +2473,7 @@
           }
         },
         "security": []
-      }
-    },
-    "/notify/{id}": {
+      },
       "put": {
         "summary": "Update Notification Status to Read",
         "tags": [
@@ -2453,12 +2486,13 @@
         ],
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
+            "name": "Body",
+            "in": "body",
             "required": true,
-            "type": "string",
-            "format": "uuid",
-            "description": ""
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Updatenotif"
+            }
           }
         ],
         "responses": {
@@ -2467,6 +2501,149 @@
             "headers": {}
           }
         }
+      }
+    },
+    "/admin/notify": {
+      "get": {
+        "description": "get semua notifikasi user",
+        "summary": "Get All1",
+        "tags": [
+          "Notifications Admin"
+        ],
+        "operationId": "GetAll1",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          }],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Post Data",
+        "tags": [
+          "Notifications Admin"
+        ],
+        "operationId": "PostData",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "usersId",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          },
+          {
+            "name": "message",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/notify/{id}": {
+      "get": {
+        "description": "get notifikasi user berdasarkan id",
+        "summary": "Get By Id",
+        "tags": [
+          "Notifications Admin"
+        ],
+        "operationId": "GetById",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },{
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/admin/notify/{id-d}": {
+      "delete": {
+        "description": "delete user notif berdasarkan id",
+        "summary": "Delete",
+        "tags": [
+          "Notifications Admin"
+        ],
+        "operationId": "Delete",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },{
+            "name": "id-d",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
       }
     }
   },
@@ -3252,7 +3429,6 @@
       "title": "posttransactiondatarequest",
       "example": {
         "ticketsId": "6be86e24-9925-43f8-83a1-f0257eb87625",
-        "payment_method": "SHOPEEPAY",
         "quantity": {
           "adult": 2,
           "child": 0
@@ -3285,9 +3461,6 @@
         "ticketsId": {
           "type": "string"
         },
-        "payment_method": {
-          "type": "string"
-        },
         "quantity": {
           "$ref": "#/definitions/Quantity"
         },
@@ -3300,7 +3473,6 @@
       },
       "required": [
         "ticketsId",
-        "payment_method",
         "quantity",
         "traveler"
       ]
@@ -3325,6 +3497,19 @@
       "required": [
         "adult",
         "child"
+      ]
+    },
+    "Updatenotif": {
+      "title": "Updatenotif",
+      "example": {
+        "id": ["035bc054-138e-4877-aebd-dd936142c124"]
+      },
+      "type": "object",
+      "properties": {
+        "id": ["035bc054-138e-4877-aebd-dd936142c124"]
+      },
+      "required": [
+        "id"
       ]
     },
     "Traveler": {
@@ -3386,8 +3571,9 @@
         "airport_to": "I Gusti Ngurah Rai International Airport",
         "departure_time": "14:00",
         "arrival_time": "16:30",
-        "date": "2022-11-25 13:39:42.408 +00:00",
-        "type": "Sekali Jalan",
+        "date_start": "22-01-2023",
+        "date_end": "25-01-2023",
+        "type": "roundtrip",
         "adult_price": 2200000,
         "child_price": 1500000,
         "available": true,
@@ -3459,7 +3645,8 @@
     "UpdateTicketRequest": {
       "title": "UpdateTicketRequest",
       "example": {
-        "type": "Sekali Jalan"
+        "type": "oneway",
+        "date_end": null
       },
       "type": "object",
       "properties": {
@@ -3784,6 +3971,9 @@
       "name": "Transaksi CRUD"
     },
     {
+      "name": "Transaksi Admin"
+    },
+    {
       "name": "Tickets"
     },
     {
@@ -3802,6 +3992,9 @@
     },
     {
       "name": "Notifications"
+    },
+    {
+      "name": "Notifications Admin"
     }
   ]
 }

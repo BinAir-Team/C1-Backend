@@ -5,7 +5,6 @@ const http = require('http');
 const socketIO = require('socket.io');
 const app = require("../app/index")
 const port = process.env.PORT || 8000;
-let clients = [];
 
 const server = http.createServer(app)
 const io = socketIO(server, {
@@ -24,9 +23,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    clients.filter(function( obj ) {
-      return obj.clientId !== socket.id;
-    })
+    console.log("user disconnected")
   })
 })
 

@@ -22,7 +22,7 @@ module.exports = {
             res.status(500).json({
                 status: "error",
                 message: "Internal server error",
-                data: {},
+                data: err,
             });
         });
 
@@ -43,9 +43,35 @@ module.exports = {
             from: process.env.EMAIL,
             to: email,
             subject: "Email Verification",
-            html: `<h1>Click the link below to verify your email</h1>
-            <a href="https://binair-backend-production.up.railway.app/api/v1/verify-email/${email}">Verify Email</a>
-            `,
+            html: `   <center> 
+            <h1>Email Verification</h1>
+            <p>Click this link to verify your email</p>
+            <button 
+                style=
+                "
+                border: none;
+                transition-duration: 0.4s;
+                cursor: pointer;
+                background-color: #76b5c3;
+                border-radius: 12px;
+                "
+                type="button"
+            > 
+                <a 
+                style=
+                "
+                text-decoration: none;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;color: white;
+                padding: 16px 32px;
+                transition-duration: 0.4s;" 
+                href='https://binair-backend-production.up.railway.app/api/v1/verify-email/${email}'>Verify Email</a>
+            </button>
+            <center>
+                    `,
         };
 
         transporter.sendMail(mailOptions, (err, info) => {
@@ -82,11 +108,7 @@ module.exports = {
                 const userId = result.id;
                 userService.updateUser(userId, { verified: true })
                 .then((result) => {
-                    res.status(200).json({
-                        status: "success",
-                        message: "Email verified",
-                        data: {},
-                    });
+                    res.render("emailVerified.ejs");
                 })
                 .catch((err) => {
                     res.status(500).json({
@@ -101,7 +123,7 @@ module.exports = {
             res.status(500).json({
                 status: "error",
                 message: "find email error",
-                data: {},
+                data: err,
             });
         });        
     }
