@@ -240,7 +240,7 @@ router.get(
   verifyToken,
   controllers.notifControllers.getNotifByUserId
 );
-router.put(prefix + "/notify/:id", controllers.notifControllers.updateNotif);
+router.put(prefix + "/notify", controllers.notifControllers.updateNotif);
 
 //admin notif
 router.get(

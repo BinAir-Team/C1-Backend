@@ -91,14 +91,6 @@ module.exports = {
     },
     async updateNotif(req,res) {
         const {id} = req.body
-        const notif = await notifService.findByPk(id);
-        if(!notif){
-            res.status(404).json({
-                msg: "notif not found",
-                status: 404,
-            });
-            return
-        }
         notifService.updateNotif(id,{isRead: true})
         .then(notif => {
             res.status(200).json({
