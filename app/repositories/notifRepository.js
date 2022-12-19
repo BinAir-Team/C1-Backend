@@ -6,6 +6,7 @@ module.exports = {
             include: {
                 all: true, attributes: {exclude: ['createdAt','updatedAt','email','password','profile_image','phone','refresh_token','gender','lastname','role']}
             },
+            order: [['createdAt', 'ASC']]
         });
     },
 
@@ -14,7 +15,8 @@ module.exports = {
             include: {
                 all: true , attributes: {exclude: ['createdAt','updatedAt','email','password','profile_image','phone','refresh_token','gender','lastname','role']}
             },
-            where: {usersId: id}
+            where: {usersId: id},
+            order: [['createdAt', 'ASC']]
         });
     },
 
