@@ -270,13 +270,38 @@ router.delete(
 );
 
 //tes member notif api
-router.get(prefix + "/notify", verifyToken ,controllers.notifControllers.getNotifByUserId);
-router.put(prefix + "/notify/:id", controllers.notifControllers.updateNotif);
+router.get(
+  prefix + "/notify",
+  verifyToken,
+  controllers.notifControllers.getNotifByUserId
+);
+router.put(prefix + "/notify", controllers.notifControllers.updateNotif);
+router.put(prefix + "/notify/all",verifyToken , controllers.notifControllers.updateNotifAll);
 
 //admin notif
-router.get(prefix + "/notify/admin", verifyToken, verifyAdmin ,controllers.notifControllers.getAllNotif);
-router.get(prefix + "/notify/admin/:id", verifyToken, verifyAdmin ,controllers.notifControllers.getNotifByid);
-router.post(prefix + "/notify/admin", verifyToken, verifyAdmin ,controllers.notifControllers.createAdmin);
-router.delete(prefix + "/notify/admin/:id", verifyToken, verifyAdmin ,controllers.notifControllers.deleteNotifById);
+router.get(
+  prefix + "/admin/notify/",
+  verifyToken,
+  verifyAdmin,
+  controllers.notifControllers.getAllNotif
+);
+router.get(
+  prefix + "/admin/notify/:id",
+  verifyToken,
+  verifyAdmin,
+  controllers.notifControllers.getNotifByid
+);
+router.post(
+  prefix + "/admin/notify",
+  verifyToken,
+  verifyAdmin,
+  controllers.notifControllers.createAdmin
+);
+router.delete(
+  prefix + "/admin/notify/:id",
+  verifyToken,
+  verifyAdmin,
+  controllers.notifControllers.deleteNotifById
+);
 
 module.exports = router;
