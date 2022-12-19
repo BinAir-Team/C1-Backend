@@ -241,6 +241,7 @@ router.get(
   controllers.notifControllers.getNotifByUserId
 );
 router.put(prefix + "/notify", controllers.notifControllers.updateNotif);
+router.put(prefix + "/notify/all",verifyToken , controllers.notifControllers.updateNotifAll);
 
 //admin notif
 router.get(

@@ -38,5 +38,10 @@ module.exports = {
         return notifications.update(datas,{
             where: {id}
         });
+    },
+    updateNotifAll(id,datas){
+        return notifications.update(datas,{
+            where: {usersId: id}
+        });
     }
 };
