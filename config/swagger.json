@@ -2486,6 +2486,13 @@
         ],
         "parameters": [
           {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
             "name": "Body",
             "in": "body",
             "required": true,
@@ -2501,6 +2508,41 @@
             "headers": {}
           }
         }
+      }
+    },
+    "/notify/{id}": {
+      "get": {
+        "summary": "Get Notif By Id",
+        "tags": [
+          "Notifications"
+        ],
+        "operationId": "GetNotifById",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "Authorization",
+          "in": "header",
+          "required": true,
+          "default": "Bearer {token}",
+          "type": "string"
+        },
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string",
+          "format": "uuid",
+          "description": ""
+        }],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
       }
     },
     "/admin/notify": {

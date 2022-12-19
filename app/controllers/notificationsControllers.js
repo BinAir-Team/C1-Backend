@@ -96,7 +96,7 @@ module.exports = {
             res.status(200).json({
                 msg: "success update notif",
                 status: 200,
-                data: notif
+                data: notif[1].sort((a, b) => a.createdAt - b.createdAt)
             });
         })
         .catch(err => {
@@ -113,7 +113,7 @@ module.exports = {
             res.status(200).json({
                 msg: "success update all notif",
                 status: 200,
-                data: notif
+                data: notif[1].sort((a, b) => a.createdAt - b.createdAt)
             });
         })
         .catch(err => {

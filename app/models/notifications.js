@@ -1,6 +1,7 @@
 'use strict';
 const {
-  Model
+  Model,
+  Op
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class notifications extends Model {
@@ -19,6 +20,22 @@ module.exports = (sequelize, DataTypes) => {
     message: DataTypes.STRING,
     isRead: DataTypes.BOOLEAN
   }, {
+    hooks: {
+    afterCreate: async (Notifications, options) => {
+      const date = new Date();
+      date.setDate(date.getDate() - 1 );
+
+      await notifications.destroy({
+        where: {
+          isRead: true,
+          createdAt: {
+            [Op.lt]: date
+          }
+        }
+      })
+
+    }
+  },
     sequelize,
     modelName: 'notifications',
   });
