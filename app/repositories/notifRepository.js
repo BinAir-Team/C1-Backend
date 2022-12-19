@@ -36,12 +36,14 @@ module.exports = {
 
     updateNotif(id,datas){
         return notifications.update(datas,{
-            where: {id}
+            where: {id},
+            returning: true
         });
     },
     updateNotifAll(id,datas){
         return notifications.update(datas,{
-            where: {usersId: id}
+            where: {usersId: id},
+            returning: true
         });
     }
 };
