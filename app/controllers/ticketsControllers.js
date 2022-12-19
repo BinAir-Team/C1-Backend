@@ -3,6 +3,21 @@ const notifControllers = require('./notificationsControllers');
 const {v4:uuid} = require('uuid');
 const moment = require('moment');
 
+const getPagination = (page, size) => {
+    const limit = size ? +size : 7;
+    const offset = page ? page * limit : 0;
+  
+    return { limit, offset };
+};
+
+const getPagingData = (data, page, limit) => {
+    const { count: totalItems, rows: tickets } = data;
+    const currentPage = page ? +page : 0;
+    const totalPages = Math.ceil(totalItems / limit);
+  
+    return { totalItems, tickets, totalPages, currentPage };
+};
+
 module.exports = {
     async getAllTickets(req, res){
         const from = req.query.from ? req.query.from : '';
@@ -13,9 +28,12 @@ module.exports = {
         const date_end = req.query.date_end ? req.query.date_end : null;
         const type = req.query.type ? req.query.type : '';
         const willFly = req.query.willFly ? req.query.willFly : 'false';
-        const tickets = await ticketService.getAllTickets(from, to, airport_from, airport_to, date_start, date_end, type, willFly)
+        const page = req.query.page;
+        const size = req.query.size;
+        const { limit, offset } = getPagination(page, size);
+        const tickets = await ticketService.getAllTickets(from, to, airport_from, airport_to, date_start, date_end, type, willFly, offset, limit)
         .then(tickets => {
-            if(tickets.length == 0){
+            if(!tickets){
                 res.status(404).json(
                     {
                         status: "error",
@@ -25,11 +43,12 @@ module.exports = {
                 );
             }
             else{
+                const response = getPagingData(tickets, page, limit);
                 res.status(200).json(
                     {
                         status: "success",
                         message: "ticket found",
-                        data: tickets
+                        data: response
                     }
                 );
             }
