@@ -28,7 +28,12 @@ module.exports = {
                                 [Op.iLike]: `%${type}%`
                             }
                         }
-                    }
+                    },
+                    order: [
+                        ['date_start', 'ASC'],
+                        ['departure_time', 'ASC'],
+                        ['date_end', 'ASC'],
+                    ]
                 });
             }
             else{
@@ -54,7 +59,12 @@ module.exports = {
                                 [Op.iLike]: `%${type}%`
                             }
                         }
-                    }
+                    },
+                    order: [
+                        ['date_start', 'ASC'],
+                        ['departure_time', 'ASC'],
+                        ['date_end', 'ASC'],
+                    ]
                 });
             }
         } else{
@@ -79,7 +89,12 @@ module.exports = {
                             [Op.iLike]: `%${type}%`
                         }
                     }
-                }
+                },
+                order: [
+                    ['date_start', 'ASC'],
+                    ['departure_time', 'ASC'],
+                    ['date_end', 'ASC'],
+                ]
             });
         }
     },
@@ -118,7 +133,12 @@ module.exports = {
                         }
                     },
                     limit,
-                    offset
+                    offset,
+                    order: [
+                        ['date_start', 'ASC'],
+                        ['departure_time', 'ASC'],
+                        ['date_end', 'ASC'],
+                    ]
                 });
             }
             else{
@@ -151,7 +171,12 @@ module.exports = {
                         }
                     },
                     limit,
-                    offset
+                    offset,
+                    order: [
+                        ['date_start', 'ASC'],
+                        ['departure_time', 'ASC'],
+                        ['date_end', 'ASC'],
+                    ]
                 });
             }
         } else{
@@ -181,7 +206,12 @@ module.exports = {
                     }
                 },
                 limit,
-                offset
+                offset,
+                order: [
+                    ['date_start', 'ASC'],
+                    ['departure_time', 'ASC'],
+                    ['date_end', 'ASC'],
+                ]
             });
         }
     },
