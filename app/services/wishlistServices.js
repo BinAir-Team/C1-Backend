@@ -1,9 +1,9 @@
 const wishlistRepository = require('../repositories/wishlistRepository');
 
 module.exports = {
-    async getAllWishlists(){
+    async getAllWishlists(limit, offset){
         try{
-            const wishlists = await wishlistRepository.getAllWishlists();
+            const wishlists = await wishlistRepository.getAllWishlists(limit, offset);
             return wishlists;
         }
         catch(err){
@@ -21,9 +21,9 @@ module.exports = {
         }
     },
 
-    async findWhistlistByUser(usersId){
+    async findWhistlistByUser(usersId, limit, offset){
         try{
-            const wishlist = await wishlistRepository.findWishlist({usersId: usersId});
+            const wishlist = await wishlistRepository.findWishlist({usersId: usersId}, limit, offset);
             return wishlist;
         }
         catch(err){
@@ -31,9 +31,9 @@ module.exports = {
         }
     },
 
-    async findWhistlistByTicket(ticketsId){
+    async findWhistlistByTicket(ticketsId, limit, offset){
         try{
-            const wishlist = await wishlistRepository.findWishlist({ticketsId: ticketsId});
+            const wishlist = await wishlistRepository.findWishlist({ticketsId: ticketsId}, limit, offset);
             return wishlist;
         }
         catch(err){
