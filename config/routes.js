@@ -234,13 +234,15 @@ router.post(
   controllers.searchControllers.addSearch
 );
 
-//tes member notif api
+//member notif api
 router.get(
   prefix + "/notify",
   verifyToken,
   controllers.notifControllers.getNotifByUserId
 );
-router.put(prefix + "/notify/:id", controllers.notifControllers.updateNotif);
+router.get(prefix + "/notify/:id", verifyToken, controllers.notifControllers.getNotifByid);
+router.put(prefix + "/notify", verifyToken, controllers.notifControllers.updateNotif);
+router.put(prefix + "/notify/all",verifyToken , controllers.notifControllers.updateNotifAll);
 
 //admin notif
 router.get(

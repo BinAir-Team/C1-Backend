@@ -59,4 +59,13 @@ module.exports = {
             throw err;
         }
     },
+    async updateNotifAll(id,datas) {
+        try{
+            const notif = await notifRepository.updateNotifAll(id,datas);
+            return notif;
+        }
+        catch(err) {
+            throw err;
+        }
+    },
 }

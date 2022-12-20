@@ -1,11 +1,12 @@
 const {wishlists} = require('../models');
 
 module.exports = {
-    getAllWishlists(){
-        return wishlists.findAll({
+    getAllWishlists(limit, offset){
+        return wishlists.findAndCountAll({
             include: {
                 all: true
-            }
+            },
+            limit, offset
         });
     },
 
@@ -18,12 +19,13 @@ module.exports = {
             });
     },
 
-    findWishlist(where){
-        return wishlists.findAll({
+    findWishlist(where, limit, offset){
+        return wishlists.findAndCountAll({
             include: {
                 all: true
             },
-            where: where
+            where: where, 
+            limit, offset
         });
     },
 
