@@ -2,7 +2,7 @@ const promoService = require("../services/promoService");
 const notifControllers = require("./notificationsControllers");
 
 const { v4: uuid } = require("uuid");
-const moment = require("moment");
+const moment = require("moment-timezone");
 
 // get pagination
 const getPagination = (page, size) => {
