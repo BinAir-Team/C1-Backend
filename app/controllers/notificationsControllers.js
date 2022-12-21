@@ -1,14 +1,34 @@
 const notifService = require('../services/notifService');
 const {v4: uuid} = require('uuid');
 
+// get pagination
+const getPagination = (page, size) => {
+    const limit = size ? +size : 7;
+    const offset = page ? page * limit : 0;
+  
+    return { limit, offset };
+};
+  
+// get page data
+const getPagingData = (data, page, limit) => {
+    const { count: totalItems, rows: notifications } = data;
+    const currentPage = page ? +page : 0;
+    const totalPages = Math.ceil(totalItems / limit);
+
+    return { totalItems, notifications, totalPages, currentPage };
+};
+
 module.exports = {
     getAllNotif(req, res) {
-            notifService.findAll()
+            const { page, size } = req.query;
+            const { limit, offset } = getPagination(page, size);
+            notifService.findAll(limit,offset)
             .then(notif => {
+                const result = getPagingData(notif, page, limit);
                 res.status(200).json({
                     msg: "success get all notifications",
                     status: 200,
-                    data: notif
+                    data: result
                 });
             })
             .catch(err => {

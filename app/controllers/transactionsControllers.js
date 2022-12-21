@@ -1,40 +1,69 @@
-const transService = require('../services/transServices');
-const ticketService = require('../services/ticketService');
-const promoService = require('../services/promoService')
-const notifControllers = require('./notificationsControllers');
+const transService = require("../services/transServices");
+const ticketService = require("../services/ticketService");
+const promoService = require("../services/promoService")
+const notifControllers = require("./notificationsControllers");
 
-const {v4: uuid} = require('uuid');
-const fs = require('fs');
-const moment = require('moment');
+const {v4: uuid} = require("uuid");
+const fs = require("fs");
+const moment = require("moment-timezone");
+
+// get pagination
+const getPagination = (page, size) => {
+    const limit = size ? +size : 7;
+    const offset = page ? page * limit : 0;
+  
+    return { limit, offset };
+};
+  
+// get page data
+const getPagingData = (data, page, limit) => {
+    const { count: totalItems, rows: transactions } = data;
+    const currentPage = page ? +page : 0;
+    const totalPages = Math.ceil(totalItems / limit);
+    let newData = []
+    transactions.forEach(a=>{
+        let json1 = JSON.parse(a.dataValues.traveler);
+        let json2 = JSON.parse(a.dataValues.quantity);
+        newData.push({...a.dataValues,traveler: json1,quantity: json2});
+    })
+    return { totalItems, transactions: newData, totalPages, currentPage };
+};
 
 module.exports = {
-    getAllTrans(req, res) {
-            transService.findAll()
-            .then(trans => {
-                let newData = []
-                trans.forEach(a=>{
-                    let json1 = JSON.parse(a.dataValues.traveler);
-                    let json2 = JSON.parse(a.dataValues.quantity);
-                    newData.push({...a.dataValues,traveler: json1,quantity: json2});
-                })
-                res.status(200).json({
-                    msg: "get all data success",
-                    status: 200,
-                    data: newData
+    async getAllTrans(req, res) {
+        try{
+            const { page, size } = req.query;
+            const { limit, offset } = getPagination(page, size);
+            const finds = await transService.findAll(limit,offset);
+            if (finds.length == 0) {
+                res.status(404).json({
+                  status: "error",
+                  message: "Data not found",
+                  data: {},
                 });
-            })
-            .catch(err => {
-                res.status(500).json({
-                    msg: "error get all data",
-                    status: 500,
-                    err
-                });
+                return
+            };
+            
+            const result = getPagingData(finds, page, limit);
+            res.status(200).json({
+                msg: "get all trans with pagination success",
+                status: 200,
+                data: result,
             });
+        } catch(err) {
+            res.status(500).json({
+                msg: "error get all data",
+                status: 500,
+                err
+            });
+        }
     },
     getTransByUserId(req, res) {
         const {id} = req.user
+        const { page, size } = req.query;
+        const { limit, offset } = getPagination(page, size);
 
-        transService.findByUser(id)
+        transService.findByUser(id, limit, offset)
         .then(trans => {
             if(trans.length == 0){
                 res.status(404).json({
@@ -44,16 +73,11 @@ module.exports = {
                 });
                 return
             }else{
-                let newData = []
-                trans.forEach(a=>{
-                    let json1 = JSON.parse(a.dataValues.traveler);
-                    let json2 = JSON.parse(a.dataValues.quantity);
-                    newData.push({...a.dataValues,traveler: json1,quantity: json2});
-                })
+                const result = getPagingData(trans,page,limit)
                 res.status(200).json({
                     msg: "get data by userId success",
                     status: 200,
-                    data: newData
+                    data: result
                 });
             }
         })
@@ -75,7 +99,9 @@ module.exports = {
             })
             return
         }
-        await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Transaksi dengan id: ${id} dihapus oleh ${req.user.email} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})      
+        await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Transaksi dengan id: ${id} dihapus oleh ${req.user.email} pada ${moment().locale("id").tz("Asia/Jakarta").format(
+            "Do MMMM YYYY, h:mm:ss z"
+          )}`,isRead: false})      
         transService.deleteByPk(id)
         .then(trans => {
             if(trans == 0){
@@ -160,7 +186,9 @@ module.exports = {
             status: status,
             date: new Date()
         }
-        await notifControllers.createNotif(id,{id: uuid(),usersId: id,message: `Transaksi nomor ${transdata.length+1}, dengan tujuan ${ticketdata.dataValues.from}-${ticketdata.dataValues.to} sukses diproses pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})
+        await notifControllers.createNotif(id,{id: uuid(),usersId: id,message: `Transaksi nomor ${transdata.length+1}, dengan tujuan ${ticketdata.dataValues.from}-${ticketdata.dataValues.to} sukses diproses pada ${moment().locale("id").tz("Asia/Jakarta").format(
+            "Do MMMM YYYY, h:mm:ss z"
+          )}`,isRead: false})
         transService.createTrans(newData)
         .then(trans => {
             let newData = []
@@ -191,7 +219,9 @@ module.exports = {
             });
             return
         }
-        await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message:`Pembayaran Anda sudah diverifikasi pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}, silahkan cek status transaksi anda`,isRead: false})
+        await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message:`Pembayaran Anda sudah diverifikasi pada ${moment().locale("id").tz("Asia/Jakarta").format(
+            "Do MMMM YYYY, h:mm:ss z"
+          )}, silahkan cek status transaksi anda`,isRead: false})
         transService.updateTrans(id,{status: "PAYMENT SUCCESS",payment_method})
         .then(trans => {
             fs.unlinkSync(req.file.path);
