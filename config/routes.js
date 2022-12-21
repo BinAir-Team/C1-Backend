@@ -284,40 +284,4 @@ router.delete(
   controllers.notifControllers.deleteNotifById
 );
 
-//member notif api
-router.get(
-  prefix + "/notify",
-  verifyToken,
-  controllers.notifControllers.getNotifByUserId
-);
-router.get(prefix + "/notify/:id", verifyToken, controllers.notifControllers.getNotifByid);
-router.put(prefix + "/notify", verifyToken, controllers.notifControllers.updateNotif);
-router.put(prefix + "/notify/all",verifyToken , controllers.notifControllers.updateNotifAll);
-
-//admin notif
-router.get(
-  prefix + "/admin/notify/",
-  verifyToken,
-  verifyAdmin,
-  controllers.notifControllers.getAllNotif
-);
-router.get(
-  prefix + "/admin/notify/:id",
-  verifyToken,
-  verifyAdmin,
-  controllers.notifControllers.getNotifByid
-);
-router.post(
-  prefix + "/admin/notify",
-  verifyToken,
-  verifyAdmin,
-  controllers.notifControllers.createAdmin
-);
-router.delete(
-  prefix + "/admin/notify/:id",
-  verifyToken,
-  verifyAdmin,
-  controllers.notifControllers.deleteNotifById
-);
-
 module.exports = router;
