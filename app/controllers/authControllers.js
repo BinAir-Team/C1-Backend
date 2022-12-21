@@ -12,7 +12,7 @@ const {
   getVerifiedStatus,
 } = require("../services/userService");
 const { v4: uuid } = require("uuid");
-const moment = require("moment");
+const moment = require("moment-timezone");
 const { users } = require("../models");
 const SALT = 10;
 const notifControllers = require("./notificationsControllers");
@@ -96,8 +96,8 @@ exports.registerMember = async (req, res) => {
     await notifService.createNotif({
       id: uuid(),
       usersId: data.id,
-      message: `User Sukses Registrasi pada ${moment().format(
-        "MMMM Do YYYY, h:mm:ss a"
+      message: `User Sukses Registrasi pada ${moment().locale("id").tz("Asia/Jakarta").format(
+        "Do MMMM YYYY, h:mm:ss z"
       )}`,
       isRead: false,
     });
@@ -181,8 +181,8 @@ exports.login = async (req, res) => {
     await notifControllers.createNotif(id, {
       id: uuid(),
       usersId: id,
-      message: `Sukses Login pada ${moment().format(
-        "MMMM Do YYYY, h:mm:ss a"
+      message: `Sukses Login pada ${moment().locale("id").tz("Asia/Jakarta").format(
+        "Do MMMM YYYY, h:mm:ss z"
       )}`,
       isRead: false,
     });
@@ -264,23 +264,32 @@ exports.putCurrentUserData = async (req, res) => {
   await notifControllers.createNotif(req.user.id, {
     id: uuid(),
     usersId: req.user.id,
-    message: `Sukses Update Profile Pada ${moment().format(
-      "MMMM Do YYYY, h:mm:ss a"
+    message: `Sukses Update Profile Pada ${moment().locale("id").tz("Asia/Jakarta").format(
+      "Do MMMM YYYY, h:mm:ss z"
     )}`,
     isRead: false,
   });
   try {
     // get data
-    let { firstname, lastname, gender, phone, profile_image, password } =
-      req.body;
+    let { firstname, lastname, gender, phone, profile_image } = req.body;
 
-    // if else profile image null set profile image user
+    // check if data is emptys
     if (!profile_image) {
       profile_image = user.profile_image;
     }
 
-    //  hash password
-    const encryptedPassword = await encryptPassword(password);
+    if (!firstname) {
+      firstname = user.firstname;
+    }
+
+    if (!lastname) {
+      lastname = user.lastname;
+    }
+
+    if (!phone) {
+      phone = user.phone;
+    }
+
     // update user
     const updatedUser = await updateUser(user.id, {
       firstname,
@@ -288,7 +297,6 @@ exports.putCurrentUserData = async (req, res) => {
       gender,
       phone,
       profile_image,
-      password: encryptedPassword,
     });
     // send response
     res.status(200).json({
@@ -301,8 +309,61 @@ exports.putCurrentUserData = async (req, res) => {
         gender,
         phone,
         profile_image,
-        password: encryptedPassword,
       },
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: "Update current user failed",
+      error: error.message,
+      data: {},
+    });
+  }
+};
+
+// put current user password
+exports.putCurrentUserPassword = async (req, res) => {
+  const user = await getUserById(req.user.id);
+  // user not found
+  if (!user) {
+    return res.status(400).json({
+      status: "error",
+      message: "User not found ",
+      data: {},
+    });
+  }
+  try {
+    // get data from body old new confirm
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+
+    // check if password match
+    const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(400).json({
+        status: "error",
+        message: "Old password is wrong",
+        data: {},
+      });
+    }
+    // check if new password match
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({
+        status: "error",
+        message: "New password and confirm password not match",
+        data: {},
+      });
+    }
+    //  hash password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    // update user
+    const updatedUser = await updateUser(user.id, {
+      password: hashedPassword,
+    });
+    // send response
+    res.status(200).json({
+      status: "success",
+      message: "User new password updated",
+      data: {},
     });
   } catch (error) {
     res.status(500).json({

@@ -11,7 +11,7 @@ const {
   login,
   getCurrentUserData,
   putCurrentUserData,
-  logout,
+  putCurrentUserPassword,
 } = require("../app/controllers/authControllers");
 // import promo controller
 
@@ -113,6 +113,8 @@ router.put(
   uploadWithCloudinary,
   putCurrentUserData
 );
+// update current user password (token required)
+router.put(prefix + "/user/password", verifyToken, putCurrentUserPassword);
 
 // admin CRUD user routes
 router.get(
@@ -240,9 +242,21 @@ router.get(
   verifyToken,
   controllers.notifControllers.getNotifByUserId
 );
-router.get(prefix + "/notify/:id", verifyToken, controllers.notifControllers.getNotifByid);
-router.put(prefix + "/notify", verifyToken, controllers.notifControllers.updateNotif);
-router.put(prefix + "/notify/all",verifyToken , controllers.notifControllers.updateNotifAll);
+router.get(
+  prefix + "/notify/:id",
+  verifyToken,
+  controllers.notifControllers.getNotifByid
+);
+router.put(
+  prefix + "/notify",
+  verifyToken,
+  controllers.notifControllers.updateNotif
+);
+router.put(
+  prefix + "/notify/all",
+  verifyToken,
+  controllers.notifControllers.updateNotifAll
+);
 
 //admin notif
 router.get(

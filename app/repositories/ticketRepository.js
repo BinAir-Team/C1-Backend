@@ -206,7 +206,8 @@ module.exports = {
                         ['date_start', 'ASC'],
                         ['departure_time', 'ASC'],
                         ['date_end', 'ASC'],
-                    ]
+                    ],
+                    offset
                 });
             }
         } else{

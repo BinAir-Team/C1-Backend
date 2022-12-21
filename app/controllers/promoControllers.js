@@ -2,7 +2,7 @@ const promoService = require("../services/promoService");
 const notifControllers = require('./notificationsControllers');
 
 const { v4: uuid } = require("uuid");
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 module.exports = {
   // Get all promotions
@@ -44,7 +44,9 @@ module.exports = {
     try {
       const { title, desc, promo_code, discount, terms, promo_image, expire } =
         req.body;
-      await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses Menambah promo dengan title: ${title} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
+      await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses Menambah promo dengan title: ${title} pada ${moment().locale("id").tz("Asia/Jakarta").format(
+        "Do MMMM YYYY, h:mm:ss z"
+      )}`, isRead: false});
       const newPromo = await promoService.createPromo({
         id: uuid(),
         title,
@@ -82,7 +84,9 @@ module.exports = {
         terms,
         promo_image,
       });
-      await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses update promo dengan title: ${title} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
+      await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses update promo dengan title: ${title} pada ${moment().locale("id").tz("Asia/Jakarta").format(
+        "Do MMMM YYYY, h:mm:ss z"
+      )}`, isRead: false});
       const updatedPromo = await promoService.getPromoById(id);
       res.status(200).json({
         status: "success",
@@ -100,7 +104,9 @@ module.exports = {
   // Delete a promotion
   deletePromo: async (req, res) => {
     try {
-      await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses delete promo dengan id: ${req.params.id} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
+      await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses delete promo dengan id: ${req.params.id} pada ${moment().locale("id").tz("Asia/Jakarta").format(
+        "Do MMMM YYYY, h:mm:ss z"
+      )}`, isRead: false});
       await promoService.deletePromo(req.params.id);
       res.status(200).json({
         status: "success",
