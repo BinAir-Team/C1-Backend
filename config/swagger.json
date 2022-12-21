@@ -1079,30 +1079,6 @@
       }
     },
     "/trans": {
-      "get": {
-        "description": "get all data transaksi by admin binair",
-        "summary": "get all",
-        "tags": ["Transaksi CRUD"],
-        "operationId": "getall",
-        "deprecated": false,
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "required": true,
-            "default": "Bearer {token}",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "",
-            "headers": {}
-          }
-        },
-        "security": []
-      },
       "post": {
         "description": "post data transaksi oleh member binair",
         "summary": "post transaction data",
@@ -1152,6 +1128,20 @@
             "required": true,
             "default": "Bearer {token}",
             "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "which page start by 0, example = 2"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "size page, example = 10"
           }
         ],
         "responses": {
@@ -1166,7 +1156,7 @@
     "/trans/user": {
       "get": {
         "description": "get data transaksi berdasarkan user id by member",
-        "summary": "get transaction user",
+        "summary": "get all user transaction",
         "tags": ["Transaksi CRUD"],
         "operationId": "gettransactionuser",
         "deprecated": false,
@@ -1178,6 +1168,20 @@
             "required": true,
             "default": "Bearer {token}",
             "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "which page start by 0, example = 2"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "size page, example = 10"
           }
         ],
         "responses": {
@@ -1774,6 +1778,20 @@
             "required": true,
             "default": "Bearer {token}",
             "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "which page start by 0, example = 2"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "size page, example = 10"
           }
         ],
         "responses": {
@@ -2396,6 +2414,30 @@
         }
       }
     },
+    "/notify/all": {
+      "put": {
+        "summary": "Update All Status Notif to Read",
+        "tags": ["Notifications"],
+        "operationId": "UpdateAllStatustoRead",
+        "deprecated": false,
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
     "/notify/{id}": {
       "get": {
         "summary": "Get Notif By Id",
@@ -2444,6 +2486,20 @@
             "required": true,
             "default": "Bearer {token}",
             "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "which page start by 0, example = 2"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "size page, example = 10"
           }
         ],
         "responses": {

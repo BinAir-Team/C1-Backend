@@ -1,12 +1,14 @@
 const {notifications} = require('../models');
 
 module.exports = {
-    getAllNotif(){
-        return notifications.findAll({
+    getAllNotif(limit,offset){
+        return notifications.findAndCountAll({
             include: {
                 all: true, attributes: {exclude: ['createdAt','updatedAt','email','password','profile_image','phone','refresh_token','gender','lastname','role']}
             },
-            order: [['createdAt', 'ASC']]
+            order: [['createdAt', 'ASC']],
+            limit,
+            offset
         });
     },
 

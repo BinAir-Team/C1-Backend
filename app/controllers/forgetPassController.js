@@ -2,6 +2,8 @@ const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 const SALT = 10;
 const jwt = require("jsonwebtoken");
+const { v4: uuid } = require("uuid");
+const moment = require("moment-timezone");
 
 const {
   getUserById,
@@ -93,6 +95,14 @@ exports.forgetPass = async (req, res) => {
     };
 
     // send email
+    await notifControllers.createNotif(user.dataValues.id, {
+      id: uuid(),
+      usersId: user.dataValues.id,
+      message: `Sukses send email Pada ${moment().locale("id").tz("Asia/Jakarta").format(
+        "Do MMMM YYYY, h:mm:ss z"
+      )}`,
+      isRead: false,
+    });
     await transporter.sendMail(mailOptions);
 
     res.status(200).send({

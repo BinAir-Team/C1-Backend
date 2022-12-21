@@ -8,8 +8,8 @@ const {
   createUser,
   deleteUser,
 } = require("../services/userService");
-const notifControllers = require("./notificationsControllers");
-const moment = require("moment");
+const notifControllers = require('./notificationsControllers');
+const moment = require('moment-timezone');
 // user controller
 
 const { v4: uuid } = require("uuid");
@@ -63,14 +63,9 @@ exports.postUserData = async (req, res) => {
     // encrypt password
     const encryptedPassword = await encryptPassword(password);
     //create notif
-    await notifControllers.createNotif(req.user.id, {
-      id: uuid(),
-      usersId: req.user.id,
-      message: `User dengan email ${email} ditambahkan oleh ${
-        req.user.email
-      } pada ${moment().format("MMMM Do YYYY, h:mm:ss a")}`,
-      isRead: false,
-    });
+    await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `User dengan email ${email} ditambahkan oleh ${req.user.email} pada ${moment().locale("id").tz("Asia/Jakarta").format(
+      "Do MMMM YYYY, h:mm:ss z"
+    )}`,isRead: false})      
     const data = await createUser({
       id: uuid(),
       firstname,
@@ -160,14 +155,9 @@ exports.updateUserData = async (req, res) => {
       profile_image,
     });
     //create notif
-    await notifControllers.createNotif(req.user.id, {
-      id: uuid(),
-      usersId: req.user.id,
-      message: `User dengan id: ${id} diupdate oleh ${
-        req.user.email
-      } pada ${moment().format("MMMM Do YYYY, h:mm:ss a")}`,
-      isRead: false,
-    });
+    await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `User dengan id: ${id} diupdate oleh ${req.user.email} pada ${moment().locale("id").tz("Asia/Jakarta").format(
+      "Do MMMM YYYY, h:mm:ss z"
+    )}`,isRead: false})      
     // get data after update
     const userAfterUpdate = await getUserById(id);
     res.status(200).json({
@@ -190,14 +180,9 @@ exports.updateUserData = async (req, res) => {
 exports.deleteUserData = async (req, res) => {
   try {
     const id = req.params.id;
-    await notifControllers.createNotif(req.user.id, {
-      id: uuid(),
-      usersId: req.user.id,
-      message: `User dengan id: ${id} dihapus oleh ${
-        req.user.email
-      } pada ${moment().format("MMMM Do YYYY, h:mm:ss a")}`,
-      isRead: false,
-    });
+    await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `User dengan id: ${id} dihapus oleh ${req.user.email} pada ${moment().locale("id").tz("Asia/Jakarta").format(
+      "Do MMMM YYYY, h:mm:ss z"
+    )}`,isRead: false})      
     const user = await deleteUser(id);
     if (!user) {
       return res.status(404).json({

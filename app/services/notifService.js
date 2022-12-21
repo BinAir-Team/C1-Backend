@@ -1,9 +1,9 @@
 const notifRepository = require('../repositories/notifRepository');
 
 module.exports = {
-    async findAll() {
+    async findAll(limit,offset) {
         try{
-            const notif = await notifRepository.getAllNotif();
+            const notif = await notifRepository.getAllNotif(limit,offset);
             return notif;
         }
         catch(err) {

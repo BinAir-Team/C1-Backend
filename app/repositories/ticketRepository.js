@@ -1,4 +1,4 @@
-const {tickets} = require("../models");
+const {tickets, wishlists, users} = require("../models");
 const {Sequelize, Op} = require("sequelize");
 
 module.exports = {
@@ -27,6 +27,12 @@ module.exports = {
                             type: {
                                 [Op.iLike]: `%${type}%`
                             }
+                        }
+                    },
+                    include: {
+                        model: wishlists,
+                        attributes: {
+                            exclude: ['id', 'ticketsId','createdAt', 'updatedAt']
                         }
                     },
                     order: [
@@ -60,6 +66,12 @@ module.exports = {
                             }
                         }
                     },
+                    include: {
+                        model: wishlists,
+                        attributes: {
+                            exclude: ['id', 'ticketsId','createdAt', 'updatedAt']
+                        }
+                    },
                     order: [
                         ['date_start', 'ASC'],
                         ['departure_time', 'ASC'],
@@ -88,6 +100,12 @@ module.exports = {
                         type: {
                             [Op.iLike]: `%${type}%`
                         }
+                    }
+                },
+                include: {
+                    model: wishlists,
+                    attributes: {
+                        exclude: ['id', 'ticketsId','createdAt', 'updatedAt']
                     }
                 },
                 order: [
@@ -132,6 +150,12 @@ module.exports = {
                             }
                         }
                     },
+                    include: {
+                        model: wishlists,
+                        attributes: {
+                            exclude: ['id', 'ticketsId','createdAt', 'updatedAt']
+                        }
+                    },
                     limit,
                     offset,
                     order: [
@@ -170,13 +194,20 @@ module.exports = {
                             }
                         }
                     },
+                    include: {
+                        model: wishlists,
+                        attributes: {
+                            exclude: ['id', 'ticketsId','createdAt', 'updatedAt']
+                        }
+                    },
                     limit,
                     offset,
                     order: [
                         ['date_start', 'ASC'],
                         ['departure_time', 'ASC'],
                         ['date_end', 'ASC'],
-                    ]
+                    ],
+                    offset
                 });
             }
         } else{
@@ -203,6 +234,12 @@ module.exports = {
                         type: {
                             [Op.iLike]: `%${type}%`
                         }
+                    }
+                },
+                include: {
+                    model: wishlists,
+                    attributes: {
+                        exclude: ['id', 'ticketsId','createdAt', 'updatedAt']
                     }
                 },
                 limit,
