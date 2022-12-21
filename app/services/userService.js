@@ -7,6 +7,11 @@ exports.getUserByRoleMember = () => {
   return userRepository.findAll();
 };
 
+// get all users role member with pagination
+exports.getAllUserByRoleMember = (limit, offset) => {
+  return userRepository.getAll(limit, offset);
+};
+
 // getUserByToken
 exports.getUserByToken = (refresh_token) => {
   return userRepository.findByRefreshToken(refresh_token);

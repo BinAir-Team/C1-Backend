@@ -1,14 +1,15 @@
 const { getUserByRefreshToken } = require("../services/authService");
 const {
   getUserByRoleMember,
+  getAllUserByRoleMember,
   getUserById,
   getUserByEmail,
   updateUser,
   createUser,
   deleteUser,
 } = require("../services/userService");
-const notifControllers = require('./notificationsControllers');
-const moment = require('moment');
+const notifControllers = require("./notificationsControllers");
+const moment = require("moment");
 // user controller
 
 const { v4: uuid } = require("uuid");
@@ -28,6 +29,23 @@ function encryptPassword(password) {
   });
 }
 
+// get pagination
+const getPagination = (page, size) => {
+  const limit = size ? +size : 7;
+  const offset = page ? page * limit : 0;
+
+  return { limit, offset };
+};
+
+// get paging data
+const getPagingData = (data, page, limit) => {
+  const { count: totalItems, rows: users } = data;
+  const currentPage = page ? +page : 0;
+  const totalPages = Math.ceil(totalItems / limit);
+
+  return { totalItems, users, totalPages, currentPage };
+};
+
 // POST user data
 exports.postUserData = async (req, res) => {
   try {
@@ -45,7 +63,14 @@ exports.postUserData = async (req, res) => {
     // encrypt password
     const encryptedPassword = await encryptPassword(password);
     //create notif
-    await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `User dengan email ${email} ditambahkan oleh ${req.user.email} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})      
+    await notifControllers.createNotif(req.user.id, {
+      id: uuid(),
+      usersId: req.user.id,
+      message: `User dengan email ${email} ditambahkan oleh ${
+        req.user.email
+      } pada ${moment().format("MMMM Do YYYY, h:mm:ss a")}`,
+      isRead: false,
+    });
     const data = await createUser({
       id: uuid(),
       firstname,
@@ -72,14 +97,24 @@ exports.postUserData = async (req, res) => {
   }
 };
 
-// GET user data role member
+// GET all user data role member with pagination
 exports.getUserDataMember = async (req, res) => {
   try {
-    const user = await getUserByRoleMember();
-    res.status(200).send({
-      status: "true",
-      message: "Get all user data role member",
-      data: user,
+    const { page, size } = req.query;
+    const { limit, offset } = getPagination(page, size);
+    const users = await getAllUserByRoleMember(limit, offset);
+    if (!users) {
+      res.status(404).json({
+        status: "error",
+        message: "Data not found",
+        data: {},
+      });
+    }
+    const response = getPagingData(users, page, limit);
+    res.status(200).json({
+      status: "success",
+      message: "User data with pagination retrieved successfully",
+      data: response,
     });
   } catch (error) {
     res.status(500).send({
@@ -125,7 +160,14 @@ exports.updateUserData = async (req, res) => {
       profile_image,
     });
     //create notif
-    await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `User dengan id: ${id} diupdate oleh ${req.user.email} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})      
+    await notifControllers.createNotif(req.user.id, {
+      id: uuid(),
+      usersId: req.user.id,
+      message: `User dengan id: ${id} diupdate oleh ${
+        req.user.email
+      } pada ${moment().format("MMMM Do YYYY, h:mm:ss a")}`,
+      isRead: false,
+    });
     // get data after update
     const userAfterUpdate = await getUserById(id);
     res.status(200).json({
@@ -148,7 +190,14 @@ exports.updateUserData = async (req, res) => {
 exports.deleteUserData = async (req, res) => {
   try {
     const id = req.params.id;
-    await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `User dengan id: ${id} dihapus oleh ${req.user.email} pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`,isRead: false})      
+    await notifControllers.createNotif(req.user.id, {
+      id: uuid(),
+      usersId: req.user.id,
+      message: `User dengan id: ${id} dihapus oleh ${
+        req.user.email
+      } pada ${moment().format("MMMM Do YYYY, h:mm:ss a")}`,
+      isRead: false,
+    });
     const user = await deleteUser(id);
     if (!user) {
       return res.status(404).json({
