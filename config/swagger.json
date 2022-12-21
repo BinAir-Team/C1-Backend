@@ -1774,6 +1774,20 @@
             "required": true,
             "default": "Bearer {token}",
             "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "which page start by 0, example = 2"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "size page, example = 10"
           }
         ],
         "responses": {

@@ -6,6 +6,11 @@ module.exports = {
     return promoRepository.getAllPromos();
   },
 
+  // get all promo with pagination
+  getAllPromo(limit, offset) {
+    return promoRepository.getAllPromo(limit, offset);
+  },
+
   // Get promotion by id
   getPromoById(id) {
     return promoRepository.getPromoById(id);
@@ -29,5 +34,5 @@ module.exports = {
   // find by code
   findCode(code) {
     return promoRepository.findcode(code);
-  }
+  },
 };
