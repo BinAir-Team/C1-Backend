@@ -6,6 +6,14 @@ module.exports = {
     return promotions.findAll();
   },
 
+  // get all promo role member with pagination
+  getAllPromo(limit, offset) {
+    return promotions.findAndCountAll({
+      limit,
+      offset,
+    });
+  },
+
   // Get promotion by id
   getPromoById(id) {
     return promotions.findByPk(id);
@@ -29,7 +37,7 @@ module.exports = {
   //find by code
   findcode(code) {
     return promotions.findOne({
-      where: {promo_code: code}
-    })
-  }
+      where: { promo_code: code },
+    });
+  },
 };

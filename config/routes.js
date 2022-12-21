@@ -17,6 +17,7 @@ const {
 
 const {
   getAllPromos,
+  getAllPromosWithPagination,
   getPromoById,
   createPromo,
   updatePromo,
@@ -144,7 +145,12 @@ router.get(prefix + "/promos", getAllPromos);
 router.get(prefix + "/promo/:id", getPromoById);
 
 // admin CRUD promo routes
-router.get(prefix + "/admin/promos", verifyToken, verifyAdmin, getAllPromos);
+router.get(
+  prefix + "/admin/promos",
+  verifyToken,
+  verifyAdmin,
+  getAllPromosWithPagination
+);
 router.post(
   prefix + "/admin/promos",
   verifyToken,
