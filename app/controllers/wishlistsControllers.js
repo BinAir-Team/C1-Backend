@@ -2,14 +2,39 @@ const wishlistService = require('../services/wishlistServices');
 const notifControllers = require('./notificationsControllers');
 const {v4: uuidv4} = require('uuid');
 
+const getPagination = (page, size) => {
+    const limit = size ? +size : 7;
+    const offset = page ? page * limit : 0;
+  
+    return { limit, offset };
+};
+
+const getPagingData = (data, page, limit) => {
+    const { count: totalItems, rows: wishlists } = data;
+    const currentPage = page ? +page : 0;
+    const totalPages = Math.ceil(totalItems / limit);
+  
+    return { totalItems, wishlists, totalPages, currentPage };
+};
+
 module.exports = {
     async getAllWishlists(req, res){
         try{
-            const wishlists = await wishlistService.getAllWishlists();
+            const {page, size} = req.query;
+            const {limit, offset} = getPagination(page, size);
+            const wishlists = await wishlistService.getAllWishlists(limit, offset);
+            if(!wishlists){
+                res.status(404).send({
+                    status: "error",
+                    message: "wishlist not found",
+                    data: {}
+                });
+            }
+            const response = getPagingData(wishlists, page, limit);
             res.status(200).send({
                 status: "success",
                 message: "wishlist found",
-                data: wishlists
+                data: response
             });
         }
         catch(err){
@@ -50,12 +75,15 @@ module.exports = {
 
     async findWhistlistByUser(req, res){
         try{
-            const wishlist = await wishlistService.findWhistlistByUser(req.user.id);
-            if(wishlist.length > 0){
+            const {page, size} = req.query;
+            const {limit, offset} = getPagination(page, size);
+            const wishlist = await wishlistService.findWhistlistByUser(req.user.id, limit, offset);
+            if(wishlist){
+                const response = getPagingData(wishlist, page, limit);
                 res.status(200).send({
                     status: "success",
                     message: "wishlist found",
-                    data: wishlist
+                    data: response
                 });
             }
             else{
@@ -77,12 +105,15 @@ module.exports = {
 
     async findWhistlistByTicket(req, res){
         try{
-            const wishlist = await wishlistService.findWhistlistByTicket(req.query.ticketsId);
+            const {page, size} = req.query;
+            const {limit, offset} = getPagination(page, size);
+            const wishlist = await wishlistService.findWhistlistByTicket(req.query.ticketsId, limit, offset);
             if(wishlist){
+                const response = getPagingData(wishlist, page, limit);
                 res.status(200).send({
                     status: "success",
                     message: "wishlist found",
-                    data: wishlist
+                    data: response
                 });
             }
             else{

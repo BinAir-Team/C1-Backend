@@ -9,31 +9,19 @@
   "host": "binair-backend-production.up.railway.app",
   "basePath": "/api/v1",
   "securityDefinitions": {},
-  "schemes": [
-    "https"
-  ],
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "paths": {
     "/register": {
       "post": {
         "description": "Member Register Seperti Biasa, role akan auto member, dan juga profile_picture default avatar",
         "summary": "Register",
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "operationId": "Register",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "firstname",
@@ -155,17 +143,11 @@
       "post": {
         "description": "StartFragment\n\nAdmin / Member dapat melakukan login sesuai email dan password yang sudah di inputkan,  \nmaka akan menerima accessToken yang dapat disimpan di local.storage",
         "summary": "Login",
-        "tags": [
-          "Authentication"
-        ],
+        "tags": ["Authentication"],
         "operationId": "Login",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "email",
@@ -252,21 +234,19 @@
       "get": {
         "description": "Get Current User Use accesToken yang ada di local storage\n\nharus menggunakan accesToken member yang login",
         "summary": "Get Current User",
-        "tags": [
-          "User by member"
-        ],
+        "tags": ["User by member"],
         "operationId": "GetCurrentUser",
         "deprecated": false,
-        "produces": [
-          "application/json"
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          }
         ],
-        "parameters": [{
-          "name": "Authorization",
-          "in": "header",
-          "required": true,
-          "default": "Bearer {token}",
-          "type": "string"
-        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -338,17 +318,11 @@
       "put": {
         "description": "Update Current User yang sedang login  \nharus menggunakan accesToken yang sedang login  \nuntuk profile image melakukan upload image",
         "summary": "Update Current User",
-        "tags": [
-          "User by member"
-        ],
+        "tags": ["User by member"],
         "operationId": "UpdateCurrentUser",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "Authorization",
@@ -391,14 +365,6 @@
             "required": true,
             "type": "file",
             "description": ""
-          },
-          {
-            "name": "password",
-            "in": "formData",
-            "required": true,
-            "type": "integer",
-            "format": "int32",
-            "description": ""
           }
         ],
         "responses": {
@@ -416,8 +382,7 @@
                   "lastname": "yuhuu",
                   "gender": "bencong",
                   "phone": "08111111",
-                  "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1670604047/NaN/onhgofthkqjccagujiix.jpg",
-                  "password": "$2b$10$xfxIy8.5aQQ5zyv.wr4/quSICsA5FjKSr2KVSoDo.BdtW6z4T.r9a"
+                  "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1670604047/NaN/onhgofthkqjccagujiix.jpg"
                 }
               }
             },
@@ -468,21 +433,33 @@
       "get": {
         "description": "Get All data user Member By Admin  \nharus menggunakan accesToken admin",
         "summary": "Get User Data Member",
-        "tags": [
-          "CRUD Users By Admin"
-        ],
+        "tags": ["CRUD Users By Admin"],
         "operationId": "GetUserDataMember",
         "deprecated": false,
-        "produces": [
-          "application/json"
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "which page start by 0, example = 2"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "size page, example = 10"
+          }
         ],
-        "parameters": [{
-          "name": "Authorization",
-          "in": "header",
-          "required": true,
-          "default": "Bearer {token}",
-          "type": "string"
-        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -574,17 +551,11 @@
       "post": {
         "description": "Create Data User member by admin\n\nuntuk profile_image akan otomatis default aavatar, begitu juga role adkan otomatis member",
         "summary": "POST User Data Member",
-        "tags": [
-          "CRUD Users By Admin"
-        ],
+        "tags": ["CRUD Users By Admin"],
         "operationId": "POSTUserDataMember",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "Authorization",
@@ -710,17 +681,11 @@
       "put": {
         "description": "Update Data Member dengan id By Admin  \ndapat melakukan profile_image upload  \ndan juga dapat mengganti role menjadi admin",
         "summary": "Put User Data Member with Id",
-        "tags": [
-          "CRUD Users By Admin"
-        ],
+        "tags": ["CRUD Users By Admin"],
         "operationId": "PutUserDataMemberwithId",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "Authorization",
@@ -804,9 +769,7 @@
             "examples": {
               "application/json": {
                 "message": "User data updated successfully",
-                "data": [
-                  1
-                ],
+                "data": [1],
                 "user": {
                   "id": "2ed8bd90-c0c5-4fdf-b396-05aea4af104c",
                   "firstname": "anjing",
@@ -873,17 +836,11 @@
       "delete": {
         "description": "Delete Data user member by Admin  \nharus menggunakan accesToken admin",
         "summary": "Delete User Data Member with Id Copy",
-        "tags": [
-          "CRUD Users By Admin"
-        ],
+        "tags": ["CRUD Users By Admin"],
         "operationId": "DeleteUserDataMemberwithIdCopy",
         "deprecated": false,
-        "produces": [
-          "application/json; charset=utf-8"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "produces": ["application/json; charset=utf-8"],
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "Authorization",
@@ -959,17 +916,11 @@
     "/forget-password": {
       "post": {
         "summary": "Forget Pass",
-        "tags": [
-          "User Forget Password"
-        ],
+        "tags": ["User Forget Password"],
         "operationId": "ForgetPass",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "Authorization",
@@ -1044,17 +995,11 @@
     "/reset-password/{key}": {
       "post": {
         "summary": "Reset Pass",
-        "tags": [
-          "User Forget Password"
-        ],
+        "tags": ["User Forget Password"],
         "operationId": "ResetPass",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "key",
@@ -1137,21 +1082,19 @@
       "get": {
         "description": "get all data transaksi by admin binair",
         "summary": "get all",
-        "tags": [
-          "Transaksi CRUD"
-        ],
+        "tags": ["Transaksi CRUD"],
         "operationId": "getall",
         "deprecated": false,
-        "produces": [
-          "application/json"
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          }
         ],
-        "parameters": [{
-          "name": "Authorization",
-          "in": "header",
-          "required": true,
-          "default": "Bearer {token}",
-          "type": "string"
-        }],
         "responses": {
           "200": {
             "description": "",
@@ -1163,14 +1106,10 @@
       "post": {
         "description": "post data transaksi oleh member binair",
         "summary": "post transaction data",
-        "tags": [
-          "Transaksi CRUD"
-        ],
+        "tags": ["Transaksi CRUD"],
         "operationId": "posttransactiondata",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "Authorization",
@@ -1202,21 +1141,19 @@
       "get": {
         "description": "get all data transaksi by admin binair",
         "summary": "get all",
-        "tags": [
-          "Transaksi Admin"
-        ],
+        "tags": ["Transaksi Admin"],
         "operationId": "getall",
         "deprecated": false,
-        "produces": [
-          "application/json"
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          }
         ],
-        "parameters": [{
-          "name": "Authorization",
-          "in": "header",
-          "required": true,
-          "default": "Bearer {token}",
-          "type": "string"
-        }],
         "responses": {
           "200": {
             "description": "",
@@ -1230,21 +1167,19 @@
       "get": {
         "description": "get data transaksi berdasarkan user id by member",
         "summary": "get transaction user",
-        "tags": [
-          "Transaksi CRUD"
-        ],
+        "tags": ["Transaksi CRUD"],
         "operationId": "gettransactionuser",
         "deprecated": false,
-        "produces": [
-          "application/json"
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          }
         ],
-        "parameters": [{
-          "name": "Authorization",
-          "in": "header",
-          "required": true,
-          "default": "Bearer {token}",
-          "type": "string"
-        }],
         "responses": {
           "200": {
             "description": "",
@@ -1258,28 +1193,27 @@
       "delete": {
         "description": "delete transaksi yang dapat dilakukan oleh admin",
         "summary": "delete trans",
-        "tags": [
-          "Transaksi Admin"
-        ],
+        "tags": ["Transaksi Admin"],
         "operationId": "deletetrans",
         "deprecated": false,
-        "produces": [
-          "application/json"
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id-d",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }
         ],
-        "parameters": [{
-          "name": "Authorization",
-          "in": "header",
-          "required": true,
-          "default": "Bearer {token}",
-          "type": "string"
-        },{
-          "name": "id-d",
-          "in": "path",
-          "required": true,
-          "type": "string",
-          "format": "uuid",
-          "description": ""
-        }],
         "responses": {
           "200": {
             "description": "",
@@ -1293,21 +1227,18 @@
       "get": {
         "description": "get transaksi dengan id by member",
         "summary": "get by transaction id",
-        "tags": [
-          "Transaksi CRUD"
-        ],
+        "tags": ["Transaksi CRUD"],
         "operationId": "getbytransactionid",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
-          "name": "Authorization",
-          "in": "header",
-          "required": true,
-          "default": "Bearer {token}",
-          "type": "string"
-        },
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
           {
             "name": "id",
             "in": "path",
@@ -1330,17 +1261,11 @@
       "put": {
         "description": "verifikasi bukti pembayaran oleh member dengan melampirkan gambar, status transaksi akan berubah",
         "summary": "update payment user",
-        "tags": [
-          "Transaksi CRUD"
-        ],
+        "tags": ["Transaksi CRUD"],
         "operationId": "updatepaymentuser",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "Authorization",
@@ -1384,14 +1309,10 @@
     "/tickets": {
       "get": {
         "summary": "Get All Tickets",
-        "tags": [
-          "Tickets"
-        ],
+        "tags": ["Tickets"],
         "operationId": "GetAllTickets",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "from",
@@ -1463,14 +1384,10 @@
       },
       "post": {
         "summary": "Create Ticket",
-        "tags": [
-          "Tickets"
-        ],
+        "tags": ["Tickets"],
         "operationId": "CreateTicket",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "Authorization",
@@ -1501,14 +1418,10 @@
     "/tickets/{id-p}": {
       "put": {
         "summary": "Update Ticket",
-        "tags": [
-          "Tickets"
-        ],
+        "tags": ["Tickets"],
         "operationId": "UpdateTicket",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "Authorization",
@@ -1547,14 +1460,10 @@
     "/tickets/{id-d}": {
       "delete": {
         "summary": "Delete Ticket",
-        "tags": [
-          "Tickets"
-        ],
+        "tags": ["Tickets"],
         "operationId": "DeleteTicket",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "Authorization",
@@ -1584,14 +1493,10 @@
     "/tickets/id/{id}": {
       "get": {
         "summary": "Get Tiket By id",
-        "tags": [
-          "Tickets"
-        ],
+        "tags": ["Tickets"],
         "operationId": "GetTiketByid",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -1614,21 +1519,31 @@
     "/wishlists": {
       "get": {
         "summary": "Get All Wishlist",
-        "tags": [
-          "Wishlists"
-        ],
+        "tags": ["Wishlists"],
         "operationId": "GetAllWishlist",
         "deprecated": false,
-        "produces": [
-          "application/json"
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string",
+            "description": "which page start by 0, example = 2"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "type": "string",
+            "description": "size page, example = 10"
+          }
         ],
-        "parameters": [{
-          "name": "Authorization",
-          "in": "header",
-          "required": true,
-          "default": "Bearer {token}",
-          "type": "string"
-        }],
         "responses": {
           "200": {
             "description": "",
@@ -1639,14 +1554,10 @@
       },
       "post": {
         "summary": "Create Wishlist",
-        "tags": [
-          "Wishlists"
-        ],
+        "tags": ["Wishlists"],
         "operationId": "CreateWishlist",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "Authorization",
@@ -1677,14 +1588,10 @@
     "/wishlists/user": {
       "get": {
         "summary": "Get Wishlist By UserId",
-        "tags": [
-          "Wishlists"
-        ],
+        "tags": ["Wishlists"],
         "operationId": "GetWishlistByUserId",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "Authorization",
@@ -1694,11 +1601,16 @@
             "type": "string"
           },
           {
-            "name": "usersId",
+            "name": "page",
             "in": "query",
-            "required": true,
             "type": "string",
-            "description": ""
+            "description": "which page start by 0, example = 2"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "type": "string",
+            "description": "size page, example = 10"
           }
         ],
         "responses": {
@@ -1713,14 +1625,10 @@
     "/wishlists/ticket": {
       "get": {
         "summary": "Get Wishlist By TicketsId",
-        "tags": [
-          "Wishlists"
-        ],
+        "tags": ["Wishlists"],
         "operationId": "GetWishlistByTicketsId",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "Authorization",
@@ -1735,6 +1643,18 @@
             "required": true,
             "type": "string",
             "description": ""
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string",
+            "description": "which page start by 0, example = 2"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "type": "string",
+            "description": "size page, example = 10"
           }
         ],
         "responses": {
@@ -1749,14 +1669,10 @@
     "/wishlists/{id-d}": {
       "delete": {
         "summary": "Delete Wishlist",
-        "tags": [
-          "Wishlists"
-        ],
+        "tags": ["Wishlists"],
         "operationId": "DeleteWishlist",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "Authorization",
@@ -1786,16 +1702,11 @@
       "get": {
         "description": "StartFragment\n\n- endpoint pencarian data kota yang terdapat bandara",
         "summary": "Searches",
-        "tags": [
-          "Searches"
-        ],
+        "tags": ["Searches"],
         "operationId": "Searches",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-        ],
+        "produces": ["application/json"],
+        "parameters": [],
         "responses": {
           "200": {
             "description": "",
@@ -1805,17 +1716,11 @@
       },
       "post": {
         "summary": "Add Data Searches",
-        "tags": [
-          "Searches"
-        ],
+        "tags": ["Searches"],
         "operationId": "AddDataSearches",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "Authorization",
@@ -1858,21 +1763,19 @@
       "get": {
         "description": "Get all promo by Admin  \ncan acces All data promo with accesToken admin",
         "summary": "Get Promo by Admin",
-        "tags": [
-          "CRUD Promo by Admin"
-        ],
+        "tags": ["CRUD Promo by Admin"],
         "operationId": "GetPromobyAdmin",
         "deprecated": false,
-        "produces": [
-          "application/json"
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          }
         ],
-        "parameters": [{
-          "name": "Authorization",
-          "in": "header",
-          "required": true,
-          "default": "Bearer {token}",
-          "type": "string"
-        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -1943,17 +1846,11 @@
       "post": {
         "description": "Create Promo by admin, can create data with accesToken admin  \ncan upload promo_image",
         "summary": "Create Promo by Admin",
-        "tags": [
-          "CRUD Promo by Admin"
-        ],
+        "tags": ["CRUD Promo by Admin"],
         "operationId": "CreatePromobyAdmin",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "Authorization",
@@ -2072,17 +1969,11 @@
       "put": {
         "description": "Update Promo by admin, can update data with accesToken admin  \ncan upload promo_image",
         "summary": "Update Promo by Admin",
-        "tags": [
-          "CRUD Promo by Admin"
-        ],
+        "tags": ["CRUD Promo by Admin"],
         "operationId": "UpdatePromobyAdmin",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "Authorization",
@@ -2211,29 +2102,27 @@
       "delete": {
         "description": "Delete Promo by admin, can delete data with accesToken admin",
         "summary": "Delete Promo by Admin",
-        "tags": [
-          "CRUD Promo by Admin"
-        ],
+        "tags": ["CRUD Promo by Admin"],
         "operationId": "DeletePromobyAdmin",
         "deprecated": false,
-        "produces": [
-          "application/json"
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }
         ],
-        "parameters": [{
-          "name": "Authorization",
-          "in": "header",
-          "required": true,
-          "default": "Bearer {token}",
-          "type": "string"
-        },
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string",
-          "format": "uuid",
-          "description": ""
-        }],
         "responses": {
           "200": {
             "description": "OK",
@@ -2289,14 +2178,10 @@
       "get": {
         "description": "Get promo, no need accesToken",
         "summary": "Get Promo",
-        "tags": [
-          "Get Promo"
-        ],
+        "tags": ["Get Promo"],
         "operationId": "GetPromo",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [],
         "responses": {
           "200": {
@@ -2380,14 +2265,10 @@
       "get": {
         "description": "Get Promo by id ( for detail ), no need accesToken",
         "summary": "Get Promo with id ( for detail )",
-        "tags": [
-          "Get Promo"
-        ],
+        "tags": ["Get Promo"],
         "operationId": "GetPromowithid(fordetail)",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -2462,21 +2343,19 @@
     "/notify": {
       "get": {
         "summary": "Get Notif By User Id",
-        "tags": [
-          "Notifications"
-        ],
+        "tags": ["Notifications"],
         "operationId": "GetNotifByUserId",
         "deprecated": false,
-        "produces": [
-          "application/json"
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          }
         ],
-        "parameters": [{
-          "name": "Authorization",
-          "in": "header",
-          "required": true,
-          "default": "Bearer {token}",
-          "type": "string"
-        }],
         "responses": {
           "200": {
             "description": "",
@@ -2487,14 +2366,10 @@
       },
       "put": {
         "summary": "Update Notification Status to Read",
-        "tags": [
-          "Notifications"
-        ],
+        "tags": ["Notifications"],
         "operationId": "UpdateNotificationStatustoRead",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "Authorization",
@@ -2524,29 +2399,27 @@
     "/notify/{id}": {
       "get": {
         "summary": "Get Notif By Id",
-        "tags": [
-          "Notifications"
-        ],
+        "tags": ["Notifications"],
         "operationId": "GetNotifById",
         "deprecated": false,
-        "produces": [
-          "application/json"
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
+            "description": ""
+          }
         ],
-        "parameters": [{
-          "name": "Authorization",
-          "in": "header",
-          "required": true,
-          "default": "Bearer {token}",
-          "type": "string"
-        },
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "type": "string",
-          "format": "uuid",
-          "description": ""
-        }],
         "responses": {
           "200": {
             "description": "",
@@ -2560,21 +2433,19 @@
       "get": {
         "description": "get semua notifikasi user",
         "summary": "Get All1",
-        "tags": [
-          "Notifications Admin"
-        ],
+        "tags": ["Notifications Admin"],
         "operationId": "GetAll1",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
+        "produces": ["application/json"],
+        "parameters": [
+          {
             "name": "Authorization",
             "in": "header",
             "required": true,
             "default": "Bearer {token}",
             "type": "string"
-          }],
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -2585,17 +2456,11 @@
       },
       "post": {
         "summary": "Post Data",
-        "tags": [
-          "Notifications Admin"
-        ],
+        "tags": ["Notifications Admin"],
         "operationId": "PostData",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
         "parameters": [
           {
             "name": "Authorization",
@@ -2633,28 +2498,27 @@
       "get": {
         "description": "get notifikasi user berdasarkan id",
         "summary": "Get By Id",
-        "tags": [
-          "Notifications Admin"
-        ],
+        "tags": ["Notifications Admin"],
         "operationId": "GetById",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
+        "produces": ["application/json"],
+        "parameters": [
+          {
             "name": "Authorization",
             "in": "header",
             "required": true,
             "default": "Bearer {token}",
             "type": "string"
-          },{
+          },
+          {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string",
             "format": "uuid",
             "description": ""
-          }],
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -2668,28 +2532,27 @@
       "delete": {
         "description": "delete user notif berdasarkan id",
         "summary": "Delete",
-        "tags": [
-          "Notifications Admin"
-        ],
+        "tags": ["Notifications Admin"],
         "operationId": "Delete",
         "deprecated": false,
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [{
+        "produces": ["application/json"],
+        "parameters": [
+          {
             "name": "Authorization",
             "in": "header",
             "required": true,
             "default": "Bearer {token}",
             "type": "string"
-          },{
+          },
+          {
             "name": "id-d",
             "in": "path",
             "required": true,
             "type": "string",
             "format": "uuid",
             "description": ""
-          }],
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -2729,11 +2592,7 @@
           "$ref": "#/definitions/Data"
         }
       },
-      "required": [
-        "status",
-        "message",
-        "data"
-      ]
+      "required": ["status", "message", "data"]
     },
     "Data": {
       "title": "Data",
@@ -2814,11 +2673,7 @@
           "$ref": "#/definitions/Data1"
         }
       },
-      "required": [
-        "status",
-        "message",
-        "data"
-      ]
+      "required": ["status", "message", "data"]
     },
     "Data1": {
       "title": "Data1",
@@ -2903,11 +2758,7 @@
           "$ref": "#/definitions/Data2"
         }
       },
-      "required": [
-        "status",
-        "message",
-        "data"
-      ]
+      "required": ["status", "message", "data"]
     },
     "Data2": {
       "title": "Data2",
@@ -2985,11 +2836,7 @@
           "$ref": "#/definitions/Data3"
         }
       },
-      "required": [
-        "status",
-        "message",
-        "data"
-      ]
+      "required": ["status", "message", "data"]
     },
     "Data3": {
       "title": "Data3",
@@ -3082,11 +2929,7 @@
           }
         }
       },
-      "required": [
-        "status",
-        "message",
-        "data"
-      ]
+      "required": ["status", "message", "data"]
     },
     "Data4": {
       "title": "Data4",
@@ -3190,11 +3033,7 @@
           "$ref": "#/definitions/Data5"
         }
       },
-      "required": [
-        "status",
-        "message",
-        "data"
-      ]
+      "required": ["status", "message", "data"]
     },
     "Data5": {
       "title": "Data5",
@@ -3270,9 +3109,7 @@
       "title": "PutUserDataMemberwithId",
       "example": {
         "message": "User data updated successfully",
-        "data": [
-          1
-        ],
+        "data": [1],
         "user": {
           "id": "2ed8bd90-c0c5-4fdf-b396-05aea4af104c",
           "firstname": "anjing",
@@ -3307,11 +3144,7 @@
           "$ref": "#/definitions/User"
         }
       },
-      "required": [
-        "message",
-        "data",
-        "user"
-      ]
+      "required": ["message", "data", "user"]
     },
     "User": {
       "title": "User",
@@ -3423,10 +3256,7 @@
           "format": "int32"
         }
       },
-      "required": [
-        "message",
-        "user"
-      ]
+      "required": ["message", "user"]
     },
     "ForgetPass": {
       "title": "ForgetPass",
@@ -3447,11 +3277,7 @@
           "type": "object"
         }
       },
-      "required": [
-        "status",
-        "message",
-        "data"
-      ]
+      "required": ["status", "message", "data"]
     },
     "ResetPass": {
       "title": "ResetPass",
@@ -3472,11 +3298,7 @@
           "type": "object"
         }
       },
-      "required": [
-        "status",
-        "message",
-        "data"
-      ]
+      "required": ["status", "message", "data"]
     },
     "posttransactiondatarequest": {
       "title": "posttransactiondatarequest",
@@ -3524,11 +3346,7 @@
           }
         }
       },
-      "required": [
-        "ticketsId",
-        "quantity",
-        "traveler"
-      ]
+      "required": ["ticketsId", "quantity", "traveler"]
     },
     "Quantity": {
       "title": "Quantity",
@@ -3547,10 +3365,7 @@
           "format": "int32"
         }
       },
-      "required": [
-        "adult",
-        "child"
-      ]
+      "required": ["adult", "child"]
     },
     "Updatenotif": {
       "title": "Updatenotif",
@@ -3561,9 +3376,7 @@
       "properties": {
         "id": ["035bc054-138e-4877-aebd-dd936142c124"]
       },
-      "required": [
-        "id"
-      ]
+      "required": ["id"]
     },
     "Traveler": {
       "title": "Traveler",
@@ -3707,9 +3520,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "type"
-      ]
+      "required": ["type"]
     },
     "CreateWishlistRequest": {
       "title": "CreateWishlistRequest",
@@ -3726,10 +3537,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "usersId",
-        "ticketsId"
-      ]
+      "required": ["usersId", "ticketsId"]
     },
     "GetPromobyAdmin": {
       "title": "GetPromobyAdmin",
@@ -3765,11 +3573,7 @@
           }
         }
       },
-      "required": [
-        "status",
-        "message",
-        "data"
-      ]
+      "required": ["status", "message", "data"]
     },
     "Data6": {
       "title": "Data6",
@@ -3856,11 +3660,7 @@
           "$ref": "#/definitions/Data6"
         }
       },
-      "required": [
-        "status",
-        "message",
-        "data"
-      ]
+      "required": ["status", "message", "data"]
     },
     "UpdatePromobyAdmin": {
       "title": "UpdatePromobyAdmin",
@@ -3891,11 +3691,7 @@
           "$ref": "#/definitions/Data6"
         }
       },
-      "required": [
-        "status",
-        "message",
-        "data"
-      ]
+      "required": ["status", "message", "data"]
     },
     "DeletePromobyAdmin": {
       "title": "DeletePromobyAdmin",
@@ -3912,10 +3708,7 @@
           "type": "string"
         }
       },
-      "required": [
-        "status",
-        "message"
-      ]
+      "required": ["status", "message"]
     },
     "GetPromo": {
       "title": "GetPromo",
@@ -3962,11 +3755,7 @@
           }
         }
       },
-      "required": [
-        "status",
-        "message",
-        "data"
-      ]
+      "required": ["status", "message", "data"]
     },
     "GetPromowithid(fordetail)": {
       "title": "GetPromowithid(fordetail)",
@@ -3997,11 +3786,7 @@
           "$ref": "#/definitions/Data6"
         }
       },
-      "required": [
-        "status",
-        "message",
-        "data"
-      ]
+      "required": ["status", "message", "data"]
     }
   },
   "security": [],
