@@ -87,9 +87,10 @@ module.exports = {
       await notifControllers.createNotif(req.user.id, {
         id: uuid(),
         usersId: req.user.id,
-        message: `Sukses Menambah promo dengan title: ${title} pada ${moment().format(
-          "MMMM Do YYYY, h:mm:ss a"
-        )}`,
+        message: `Sukses Menambah promo dengan title: ${title} pada ${moment()
+          .locale("id")
+          .tz("Asia/Jakarta")
+          .format("Do MMMM YYYY, h:mm:ss z")}`,
         isRead: false,
       });
       const newPromo = await promoService.createPromo({
@@ -132,9 +133,10 @@ module.exports = {
       await notifControllers.createNotif(req.user.id, {
         id: uuid(),
         usersId: req.user.id,
-        message: `Sukses update promo dengan title: ${title} pada ${moment().format(
-          "MMMM Do YYYY, h:mm:ss a"
-        )}`,
+        message: `Sukses update promo dengan title: ${title} pada ${moment()
+          .locale("id")
+          .tz("Asia/Jakarta")
+          .format("Do MMMM YYYY, h:mm:ss z")}`,
         isRead: false,
       });
       const updatedPromo = await promoService.getPromoById(id);
@@ -159,7 +161,10 @@ module.exports = {
         usersId: req.user.id,
         message: `Sukses delete promo dengan id: ${
           req.params.id
-        } pada ${moment().format("MMMM Do YYYY, h:mm:ss a")}`,
+        } pada ${moment()
+          .locale("id")
+          .tz("Asia/Jakarta")
+          .format("Do MMMM YYYY, h:mm:ss z")}`,
         isRead: false,
       });
       await promoService.deletePromo(req.params.id);

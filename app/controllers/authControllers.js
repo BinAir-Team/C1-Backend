@@ -12,7 +12,7 @@ const {
   getVerifiedStatus,
 } = require("../services/userService");
 const { v4: uuid } = require("uuid");
-const moment = require("moment");
+const moment = require("moment-timezone");
 const { users } = require("../models");
 const SALT = 10;
 const notifControllers = require("./notificationsControllers");
@@ -96,8 +96,8 @@ exports.registerMember = async (req, res) => {
     await notifService.createNotif({
       id: uuid(),
       usersId: data.id,
-      message: `User Sukses Registrasi pada ${moment().format(
-        "MMMM Do YYYY, h:mm:ss a"
+      message: `User Sukses Registrasi pada ${moment().locale("id").tz("Asia/Jakarta").format(
+        "Do MMMM YYYY, h:mm:ss z"
       )}`,
       isRead: false,
     });
@@ -181,8 +181,8 @@ exports.login = async (req, res) => {
     await notifControllers.createNotif(id, {
       id: uuid(),
       usersId: id,
-      message: `Sukses Login pada ${moment().format(
-        "MMMM Do YYYY, h:mm:ss a"
+      message: `Sukses Login pada ${moment().locale("id").tz("Asia/Jakarta").format(
+        "Do MMMM YYYY, h:mm:ss z"
       )}`,
       isRead: false,
     });
@@ -264,8 +264,8 @@ exports.putCurrentUserData = async (req, res) => {
   await notifControllers.createNotif(req.user.id, {
     id: uuid(),
     usersId: req.user.id,
-    message: `Sukses Update Profile Pada ${moment().format(
-      "MMMM Do YYYY, h:mm:ss a"
+    message: `Sukses Update Profile Pada ${moment().locale("id").tz("Asia/Jakarta").format(
+      "Do MMMM YYYY, h:mm:ss z"
     )}`,
     isRead: false,
   });
