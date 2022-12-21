@@ -11,6 +11,17 @@ exports.findAll = () => {
   });
 };
 
+// get all users role member with pagination
+exports.getAll = (limit, offset) => {
+  return users.findAndCountAll({
+    where: {
+      role: "member",
+    },
+    limit,
+    offset,
+  });
+};
+
 //  find  by refresh_token
 exports.findByRefreshToken = (refresh_token) => {
   return users.findOne({

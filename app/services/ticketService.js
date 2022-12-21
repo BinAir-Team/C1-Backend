@@ -1,14 +1,14 @@
 const ticketRepository = require('../repositories/ticketRepository');
 
 module.exports = {
-    async getAllTickets(from, to, dept, arr, date, type, willFly){
+    async getAllTickets(from, to, dept, arr, date_start, date_end, type, willFly, offset, limit){
         try{
             if(willFly == 'false'){
-                const tickets = await ticketRepository.getAllTickets(from, to, dept, arr, date, type);
+                const tickets = await ticketRepository.getAllTickets(from, to, dept, arr, date_start, date_end, type, offset, limit);
                 return tickets;
             }
             else if(willFly == 'true'){
-                const tickets = await ticketRepository.getFutureTicket(from, to, dept, arr, date, type);
+                const tickets = await ticketRepository.getFutureTicket(from, to, dept, arr, date_start, date_end, type, offset, limit);
                 return tickets;
             }
         }

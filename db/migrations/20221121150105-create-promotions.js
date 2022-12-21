@@ -25,6 +25,9 @@ module.exports = {
       terms: {
         type: Sequelize.TEXT,
       },
+      expire: {
+        type: Sequelize.DATE,
+      },
       promo_image: {
         type: Sequelize.STRING,
       },

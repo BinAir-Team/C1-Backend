@@ -25,4 +25,9 @@ module.exports = {
   deletePromo(id) {
     return promoRepository.deletePromo(id);
   },
+
+  // find by code
+  findCode(code) {
+    return promoRepository.findcode(code);
+  }
 };

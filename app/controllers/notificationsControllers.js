@@ -91,25 +91,34 @@ module.exports = {
     },
     async updateNotif(req,res) {
         const {id} = req.body
-        const notif = await notifService.findByPk(id);
-        if(!notif){
-            res.status(404).json({
-                msg: "notif not found",
-                status: 404,
-            });
-            return
-        }
         notifService.updateNotif(id,{isRead: true})
         .then(notif => {
             res.status(200).json({
                 msg: "success update notif",
                 status: 200,
-                data: notif
+                data: notif[1].sort((a, b) => a.createdAt - b.createdAt)
+            });
+        })
+        .catch(err => {
+            res.status(404).json({
+                msg: "notif not found to update",
+                status: 404,
+            });
+        });
+    },
+    async updateNotifAll(req,res) {
+        const {id} = req.user
+        notifService.updateNotifAll(id,{isRead: true})
+        .then(notif => {
+            res.status(200).json({
+                msg: "success update all notif",
+                status: 200,
+                data: notif[1].sort((a, b) => a.createdAt - b.createdAt)
             });
         })
         .catch(err => {
             res.status(500).json({
-                msg: "notif fails updated",
+                msg: "all notif fails updated",
                 status: 500,
                 err
             });

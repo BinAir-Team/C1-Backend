@@ -9,14 +9,15 @@ const {
   getUserByEmail,
   updateUser,
   createUser,
-  getVerifiedStatus
+  getVerifiedStatus,
 } = require("../services/userService");
 const { v4: uuid } = require("uuid");
+const moment = require("moment");
 const { users } = require("../models");
 const SALT = 10;
 const notifControllers = require("./notificationsControllers");
 const notifService = require("../services/notifService");
-const {sendEmailVerification} = require('./emailVerification');
+const { sendEmailVerification } = require("./emailVerification");
 
 // ecrypt password
 function encryptPassword(password) {
@@ -169,7 +170,7 @@ exports.login = async (req, res) => {
     );
     //check if email verified
     const isEmailVerified = await getVerifiedStatus(email);
-    if(!isEmailVerified.verified){
+    if (!isEmailVerified.verified) {
       await sendEmailVerification(req, res);
       return res.status(401).json({
         status: "error",
@@ -177,7 +178,14 @@ exports.login = async (req, res) => {
         data: {},
       });
     }
-    await notifControllers.createNotif(id,{id: uuid(),usersId: id,message: `Sukses Login pada ${moment().format('MMMM Do YYYY, h:mm:ss a')}`, isRead: false});
+    await notifControllers.createNotif(id, {
+      id: uuid(),
+      usersId: id,
+      message: `Sukses Login pada ${moment().format(
+        "MMMM Do YYYY, h:mm:ss a"
+      )}`,
+      isRead: false,
+    });
     res.status(200).json({
       status: "success",
       message: "Login success",
@@ -263,11 +271,25 @@ exports.putCurrentUserData = async (req, res) => {
   });
   try {
     // get data
-    const { firstname, lastname, gender, phone, profile_image, password } =
-      req.body;
+    let { firstname, lastname, gender, phone, profile_image } = req.body;
 
-    //  hash password
-    const encryptedPassword = await encryptPassword(password);
+    // check if data is emptys
+    if (!profile_image) {
+      profile_image = user.profile_image;
+    }
+
+    if (!firstname) {
+      firstname = user.firstname;
+    }
+
+    if (!lastname) {
+      lastname = user.lastname;
+    }
+
+    if (!phone) {
+      phone = user.phone;
+    }
+
     // update user
     const updatedUser = await updateUser(user.id, {
       firstname,
@@ -275,7 +297,6 @@ exports.putCurrentUserData = async (req, res) => {
       gender,
       phone,
       profile_image,
-      password: encryptedPassword,
     });
     // send response
     res.status(200).json({
@@ -288,8 +309,61 @@ exports.putCurrentUserData = async (req, res) => {
         gender,
         phone,
         profile_image,
-        password: encryptedPassword,
       },
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: "Update current user failed",
+      error: error.message,
+      data: {},
+    });
+  }
+};
+
+// put current user password
+exports.putCurrentUserPassword = async (req, res) => {
+  const user = await getUserById(req.user.id);
+  // user not found
+  if (!user) {
+    return res.status(400).json({
+      status: "error",
+      message: "User not found ",
+      data: {},
+    });
+  }
+  try {
+    // get data from body old new confirm
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+
+    // check if password match
+    const isPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
+    if (!isPasswordCorrect) {
+      return res.status(400).json({
+        status: "error",
+        message: "Old password is wrong",
+        data: {},
+      });
+    }
+    // check if new password match
+    if (newPassword !== confirmPassword) {
+      return res.status(400).json({
+        status: "error",
+        message: "New password and confirm password not match",
+        data: {},
+      });
+    }
+    //  hash password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    // update user
+    const updatedUser = await updateUser(user.id, {
+      password: hashedPassword,
+    });
+    // send response
+    res.status(200).json({
+      status: "success",
+      message: "User new password updated",
+      data: {},
     });
   } catch (error) {
     res.status(500).json({
