@@ -1,9 +1,9 @@
 const transRepository = require('../repositories/transRepository');
 
 module.exports = {
-    async findAll() {
+    async findAll(limit,offset) {
         try{
-            const trans = await transRepository.findAll();
+            const trans = await transRepository.findAll(limit,offset);
             return trans;
         }
         catch(err) {
@@ -31,9 +31,9 @@ module.exports = {
         }
     },
 
-    async findByUser(id){
+    async findByUser(id,limit,offset){
         try{
-            const trans = await transRepository.findByUserId(id);
+            const trans = await transRepository.findByUserId(id,limit,offset);
             return trans;
         }
         catch(err){
