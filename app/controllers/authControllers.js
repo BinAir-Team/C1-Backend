@@ -13,8 +13,11 @@ const {
 } = require("../services/userService");
 const { v4: uuid } = require("uuid");
 const moment = require("moment-timezone");
-const { users } = require("../models");
 const SALT = 10;
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(
+  "214017739948-b18qptodbi5i0sth8fgukauks2raoi61.apps.googleusercontent.com"
+);
 const notifControllers = require("./notificationsControllers");
 const notifService = require("../services/notifService");
 const { sendEmailVerification } = require("./emailVerification");
@@ -96,9 +99,10 @@ exports.registerMember = async (req, res) => {
     await notifService.createNotif({
       id: uuid(),
       usersId: data.id,
-      message: `User Sukses Registrasi pada ${moment().locale("id").tz("Asia/Jakarta").format(
-        "Do MMMM YYYY, h:mm:ss z"
-      )}`,
+      message: `User Sukses Registrasi pada ${moment()
+        .locale("id")
+        .tz("Asia/Jakarta")
+        .format("Do MMMM YYYY, h:mm:ss z")}`,
       isRead: false,
     });
     const newUser = await createUser(data);
@@ -181,9 +185,10 @@ exports.login = async (req, res) => {
     await notifControllers.createNotif(id, {
       id: uuid(),
       usersId: id,
-      message: `Sukses Login pada ${moment().locale("id").tz("Asia/Jakarta").format(
-        "Do MMMM YYYY, h:mm:ss z"
-      )}`,
+      message: `Sukses Login pada ${moment()
+        .locale("id")
+        .tz("Asia/Jakarta")
+        .format("Do MMMM YYYY, h:mm:ss z")}`,
       isRead: false,
     });
     res.status(200).json({
@@ -264,9 +269,10 @@ exports.putCurrentUserData = async (req, res) => {
   await notifControllers.createNotif(req.user.id, {
     id: uuid(),
     usersId: req.user.id,
-    message: `Sukses Update Profile Pada ${moment().locale("id").tz("Asia/Jakarta").format(
-      "Do MMMM YYYY, h:mm:ss z"
-    )}`,
+    message: `Sukses Update Profile Pada ${moment()
+      .locale("id")
+      .tz("Asia/Jakarta")
+      .format("Do MMMM YYYY, h:mm:ss z")}`,
     isRead: false,
   });
   try {
@@ -369,6 +375,63 @@ exports.putCurrentUserPassword = async (req, res) => {
     res.status(500).json({
       status: "error",
       message: "Update current user failed",
+      error: error.message,
+      data: {},
+    });
+  }
+};
+
+// Google Login
+exports.googleLogin = async (req, res) => {
+  try {
+    // jwt encoded token
+    const { token } = req.body;
+    if (!token) {
+      return res.status(400).json({
+        status: "error",
+        message: "Token is required",
+        data: {},
+      });
+    }
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience:
+        "214017739948-b18qptodbi5i0sth8fgukauks2raoi61.apps.googleusercontent.com",
+    });
+    const { given_name, family_name, email, picture } = ticket.getPayload();
+    let user = await getUserByEmail(email);
+    if (!user)
+      user = await createUser({
+        id: uuid(),
+        email,
+        firstname: given_name,
+        lastname: family_name,
+        profile_image: picture,
+        role: "member",
+        verified: true,
+      });
+    const accessToken = jwt.sign(
+      { id: user.id, email: user.email, role: user.role },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "1d" }
+    );
+    res.status(200).json({
+      status: "success",
+      message: "Login Success",
+      data: {
+        id: user.id,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        profile_image: user.profile_image,
+        email: user.email,
+        role: user.role,
+        accessToken,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: "Login Failed",
       error: error.message,
       data: {},
     });
