@@ -1,5 +1,5 @@
-const searchService = require('../services/searchService');
-const {v4: uuid} = require('uuid');
+const searchService = require("../services/searchService");
+const {v4: uuid} = require("uuid");
 
 module.exports = {
     getSearch(req, res) {

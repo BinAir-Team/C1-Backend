@@ -8,8 +8,8 @@ const {
   createUser,
   deleteUser,
 } = require("../services/userService");
-const notifControllers = require('./notificationsControllers');
-const moment = require('moment-timezone');
+const notifControllers = require("./notificationsControllers");
+const moment = require("moment-timezone");
 // user controller
 
 const { v4: uuid } = require("uuid");

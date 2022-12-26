@@ -1,6 +1,6 @@
-const wishlistService = require('../services/wishlistServices');
-const notifControllers = require('./notificationsControllers');
-const {v4: uuidv4} = require('uuid');
+const wishlistService = require("../services/wishlistServices");
+const notifControllers = require("./notificationsControllers");
+const {v4: uuidv4} = require("uuid");
 
 const getPagination = (page, size) => {
     const limit = size ? +size : 7;

@@ -12,6 +12,7 @@ const {
   getCurrentUserData,
   putCurrentUserData,
   putCurrentUserPassword,
+  googleLogin,
 } = require("../app/controllers/authControllers");
 // import promo controller
 
@@ -88,6 +89,7 @@ router.get("/", (req, res) => {
 // auth routes
 router.post(prefix + "/register", registerMember);
 router.post(prefix + "/login", login);
+router.post(prefix + "/googleLogin", googleLogin);
 
 // forget password
 router.post(prefix + "/forget-password", forgetPass);

@@ -1,10 +1,10 @@
-'use strict';
-const { v4: uuidv4 } = require('uuid');
+"use strict";
+const { v4: uuidv4 } = require("uuid");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('wishlists', [{
+    await queryInterface.bulkInsert("wishlists", [{
       id: uuidv4(),
       usersId: uuidv4(),
       ticketsId:  uuidv4(),
@@ -22,6 +22,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('wishlists', null, {});
+    await queryInterface.bulkDelete("wishlists", null, {});
   }
 };
