@@ -1,7 +1,7 @@
-const ticketService = require('../services/ticketService');
-const notifControllers = require('./notificationsControllers');
-const {v4:uuid} = require('uuid');
-const moment = require('moment-timezone');
+const ticketService = require("../services/ticketService");
+const notifControllers = require("./notificationsControllers");
+const {v4:uuid} = require("uuid");
+const moment = require("moment-timezone");
 
 const getPagination = (page, size) => {
     const limit = size ? +size : 7;
@@ -20,14 +20,14 @@ const getPagingData = (data, page, limit) => {
 
 module.exports = {
     async getAllTickets(req, res){
-        const from = req.query.from ? req.query.from : '';
-        const airport_from = req.query.airport_from ? req.query.airport_from : '';
-        const to = req.query.to ? req.query.to : '';
-        const airport_to = req.query.airport_to ? req.query.airport_to : '';
+        const from = req.query.from ? req.query.from : "";
+        const airport_from = req.query.airport_from ? req.query.airport_from : "";
+        const to = req.query.to ? req.query.to : "";
+        const airport_to = req.query.airport_to ? req.query.airport_to : "";
         const date_start = req.query.date_start;
         const date_end = req.query.date_end ? req.query.date_end : null;
-        const type = req.query.type ? req.query.type : '';
-        const willFly = req.query.willFly ? req.query.willFly : 'false';
+        const type = req.query.type ? req.query.type : "";
+        const willFly = req.query.willFly ? req.query.willFly : "false";
         const page = req.query.page;
         const size = req.query.size;
         const { limit, offset } = getPagination(page, size);

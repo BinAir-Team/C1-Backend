@@ -1,4 +1,4 @@
-const wishlistRepository = require('../repositories/wishlistRepository');
+const wishlistRepository = require("../repositories/wishlistRepository");
 
 module.exports = {
     async getAllWishlists(limit, offset){

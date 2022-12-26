@@ -1,4 +1,4 @@
-const transRepository = require('../repositories/transRepository');
+const transRepository = require("../repositories/transRepository");
 
 module.exports = {
     async findAll(limit,offset) {

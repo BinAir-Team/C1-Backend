@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 const {
   Model,
   Op
-} = require('sequelize');
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class notifications extends Model {
     /**
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.users, {foreignKey: 'usersId'})
+      this.belongsTo(models.users, {foreignKey: "usersId"})
     }
   }
   notifications.init({
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   },
     sequelize,
-    modelName: 'notifications',
+    modelName: "notifications",
   });
   return notifications;
 };

@@ -4,7 +4,7 @@
   "description": "",
   "main": "bin/www",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx eslint \"**/*.js\"",
     "start": "nodemon dotenv/config bin/www -V",
     "create": "sequelize-cli db:create",
     "migrate": "sequelize-cli db:migrate",
@@ -38,5 +38,8 @@
     "swagger-ui-express": "^4.6.0",
     "uuid": "^9.0.0",
     "uuidv4": "^6.2.13"
+  },
+  "devDependencies": {
+    "eslint": "^8.30.0"
   }
 }

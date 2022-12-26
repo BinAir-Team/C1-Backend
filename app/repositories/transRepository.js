@@ -1,9 +1,9 @@
-const { transactions } = require('../models');
+const { transactions } = require("../models");
 
 module.exports = {
     findAll(limit,offset) {
         return transactions.findAndCountAll({
-            include: {all:true, attributes: {exclude: ['password','createdAt','updatedAt','role','phone','email','available','init_stock','curr_stock']}},
+            include: {all:true, attributes: {exclude: ["password","createdAt","updatedAt","role","phone","email","available","init_stock","curr_stock"]}},
             limit,
             offset,
         });
@@ -11,7 +11,7 @@ module.exports = {
     
     findByPk(id) {
         return transactions.findByPk(id,{
-            include: {all: true, attributes: {exclude: ['password','createdAt','updatedAt','role','phone','email','available','init_stock','curr_stock']}}
+            include: {all: true, attributes: {exclude: ["password","createdAt","updatedAt","role","phone","email","available","init_stock","curr_stock"]}}
         });
     },
 
@@ -24,7 +24,7 @@ module.exports = {
     findByUserId(id,limit,offset) {
         return transactions.findAndCountAll({
             where: {usersId: id},
-            include: {all: true, attributes: {exclude: ['password','createdAt','updatedAt','role','phone','email','available','init_stock','curr_stock']}},
+            include: {all: true, attributes: {exclude: ["password","createdAt","updatedAt","role","phone","email","available","init_stock","curr_stock"]}},
             limit,
             offset,
         })

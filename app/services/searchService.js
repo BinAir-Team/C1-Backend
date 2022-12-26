@@ -1,4 +1,4 @@
-const searchRepository = require('../repositories/searchRepository');
+const searchRepository = require("../repositories/searchRepository");
 
 module.exports = {
     async findSearch() {
