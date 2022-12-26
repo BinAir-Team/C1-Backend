@@ -33,12 +33,13 @@ module.exports = {
         const { limit, offset } = getPagination(page, size);
         const tickets = await ticketService.getAllTickets(from, to, airport_from, airport_to, date_start, date_end, type, willFly, offset, limit)
         .then(tickets => {
-            if(!tickets){
+            if(tickets.rows.length == 0){
+                const response = getPagingData(tickets, page, limit);
                 res.status(404).json(
                     {
                         status: "error",
                         message: "ticket not found",
-                        data: {}
+                        data: response
                     }
                 );
             }
@@ -54,7 +55,11 @@ module.exports = {
             }
         })
         .catch(err => {
-            res.status(500).json(err);
+            res.status(500).json({
+                status: "error",
+                message: "Internal Server Error",
+                data : {}
+            });
         });
     },
 
