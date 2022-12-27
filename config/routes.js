@@ -143,7 +143,7 @@ router.delete(
 );
 
 // promo routes for user
-router.get(prefix + "/promos", getAllPromos);
+router.get(prefix + "/promos", getAllPromosWithPagination);
 router.get(prefix + "/promo/:id", getPromoById);
 
 // admin CRUD promo routes
