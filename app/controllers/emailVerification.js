@@ -81,8 +81,9 @@ module.exports = {
                     message: "Email not sent",
                     data: {},
                 });
+                return;
             } else {
-                res.status(200).json({
+                return res.status(200).json({
                     status: "success",
                     message: "Email sent",
                     data: {},
