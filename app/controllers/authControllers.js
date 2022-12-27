@@ -64,6 +64,15 @@ exports.registerMember = async (req, res) => {
       confirmPassword,
       phone,
     } = req.body;
+
+    // check email and password is not empty'
+    if (!email || !password) {
+      return res.status(400).json({
+        status: "error",
+        message: "Email and password is required",
+        data: {},
+      });
+    }
     // check if email already exist
     const user = await getUserByEmail(email);
     if (user) {
@@ -375,63 +384,6 @@ exports.putCurrentUserPassword = async (req, res) => {
     res.status(500).json({
       status: "error",
       message: "Update current user failed",
-      error: error.message,
-      data: {},
-    });
-  }
-};
-
-// Google Login
-exports.googleLogin = async (req, res) => {
-  try {
-    // jwt encoded token
-    const { token, first_name, last_name, profile_picture } = req.body;
-    if (!token) {
-      return res.status(400).json({
-        status: "error",
-        message: "Token is required",
-        data: {},
-      });
-    }
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience:
-        "214017739948-b18qptodbi5i0sth8fgukauks2raoi61.apps.googleusercontent.com",
-    });
-    const { given_name, family_name, email, picture } = ticket.getPayload();
-    let user = await getUserByEmail(email);
-    if (!user)
-      user = await createUser({
-        id: uuid(),
-        email,
-        firstname: given_name ? given_name : first_name,
-        lastname: family_name ? family_name : last_name,
-        profile_image: picture ? picture : profile_picture,
-        role: "member",
-        verified: true,
-      });
-    const accessToken = jwt.sign(
-      { id: user.id, email: user.email, role: user.role },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1d" }
-    );
-    res.status(200).json({
-      status: "success",
-      message: "Login Success",
-      data: {
-        id: user.id,
-        firstname: user.firstname,
-        lastname: user.lastname,
-        profile_image: user.profile_image,
-        email: user.email,
-        role: user.role,
-        accessToken,
-      },
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "error",
-      message: "Login Failed",
       error: error.message,
       data: {},
     });
