@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('wishlists', {
+    await queryInterface.createTable("wishlists", {
       id: {
         defaultValue: Sequelize.UUIDV4,
         allowNull: false,
@@ -29,6 +29,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('wishlists');
+    await queryInterface.dropTable("wishlists");
   }
 };

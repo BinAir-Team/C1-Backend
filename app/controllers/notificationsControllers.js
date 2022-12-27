@@ -1,5 +1,5 @@
-const notifService = require('../services/notifService');
-const {v4: uuid} = require('uuid');
+const notifService = require("../services/notifService");
+const {v4: uuid} = require("uuid");
 
 // get pagination
 const getPagination = (page, size) => {
@@ -148,7 +148,7 @@ module.exports = {
         try{
             const insert = await notifService.createNotif(datas);
             const find = await notifService.findByUser(id);
-            global.io.sockets.in(id).emit('notify-update', find);
+            global.io.sockets.in(id).emit("notify-update", find);
             return insert
         } catch(err){
             return err
@@ -165,7 +165,7 @@ module.exports = {
         const create = await notifService.createNotif(datas)
         if(create){
             const find = await notifService.findByUser(usersId)
-            global.io.sockets.in(usersId).emit('notify-update', find);
+            global.io.sockets.in(usersId).emit("notify-update", find);
             res.status(200).json({
                 msg: "success create notif",
                 status: 200,

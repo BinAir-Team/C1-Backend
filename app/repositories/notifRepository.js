@@ -1,12 +1,12 @@
-const {notifications} = require('../models');
+const {notifications} = require("../models");
 
 module.exports = {
     getAllNotif(limit,offset){
         return notifications.findAndCountAll({
             include: {
-                all: true, attributes: {exclude: ['createdAt','updatedAt','email','password','profile_image','phone','refresh_token','gender','lastname','role']}
+                all: true, attributes: {exclude: ["createdAt","updatedAt","email","password","profile_image","phone","refresh_token","gender","lastname","role"]}
             },
-            order: [['createdAt', 'ASC']],
+            order: [["createdAt", "ASC"]],
             limit,
             offset
         });
@@ -15,17 +15,17 @@ module.exports = {
     getNotifByUserId(id){
         return notifications.findAll({
             include: {
-                all: true , attributes: {exclude: ['createdAt','updatedAt','email','password','profile_image','phone','refresh_token','gender','lastname','role']}
+                all: true , attributes: {exclude: ["createdAt","updatedAt","email","password","profile_image","phone","refresh_token","gender","lastname","role"]}
             },
             where: {usersId: id},
-            order: [['createdAt', 'ASC']]
+            order: [["createdAt", "ASC"]]
         });
     },
 
     getNotifById(id){
         return notifications.findByPk(id,{
             include: {
-                all: true , attributes: {exclude: ['createdAt','updatedAt','email','password','profile_image','phone','refresh_token','gender','lastname','role']}
+                all: true , attributes: {exclude: ["createdAt","updatedAt","email","password","profile_image","phone","refresh_token","gender","lastname","role"]}
             },
         });
     },

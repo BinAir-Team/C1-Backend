@@ -32,13 +32,13 @@ module.exports = {
                     include: {
                         model: wishlists,
                         attributes: {
-                            exclude: ['id', 'ticketsId','createdAt', 'updatedAt']
+                            exclude: ["id", "ticketsId","createdAt", "updatedAt"]
                         }
                     },
                     order: [
-                        ['date_start', 'ASC'],
-                        ['departure_time', 'ASC'],
-                        ['date_end', 'ASC'],
+                        ["date_start", "ASC"],
+                        ["departure_time", "ASC"],
+                        ["date_end", "ASC"],
                     ]
                 });
             }
@@ -69,13 +69,13 @@ module.exports = {
                     include: {
                         model: wishlists,
                         attributes: {
-                            exclude: ['id', 'ticketsId','createdAt', 'updatedAt']
+                            exclude: ["id", "ticketsId","createdAt", "updatedAt"]
                         }
                     },
                     order: [
-                        ['date_start', 'ASC'],
-                        ['departure_time', 'ASC'],
-                        ['date_end', 'ASC'],
+                        ["date_start", "ASC"],
+                        ["departure_time", "ASC"],
+                        ["date_end", "ASC"],
                     ]
                 });
             }
@@ -105,13 +105,13 @@ module.exports = {
                 include: {
                     model: wishlists,
                     attributes: {
-                        exclude: ['id', 'ticketsId','createdAt', 'updatedAt']
+                        exclude: ["id", "ticketsId","createdAt", "updatedAt"]
                     }
                 },
                 order: [
-                    ['date_start', 'ASC'],
-                    ['departure_time', 'ASC'],
-                    ['date_end', 'ASC'],
+                    ["date_start", "ASC"],
+                    ["departure_time", "ASC"],
+                    ["date_end", "ASC"],
                 ]
             });
         }
@@ -153,15 +153,15 @@ module.exports = {
                     include: {
                         model: wishlists,
                         attributes: {
-                            exclude: ['id', 'ticketsId','createdAt', 'updatedAt']
+                            exclude: ["id", "ticketsId","createdAt", "updatedAt"]
                         }
                     },
                     limit,
                     offset,
                     order: [
-                        ['date_start', 'ASC'],
-                        ['departure_time', 'ASC'],
-                        ['date_end', 'ASC'],
+                        ["date_start", "ASC"],
+                        ["departure_time", "ASC"],
+                        ["date_end", "ASC"],
                     ]
                 });
             }
@@ -197,15 +197,15 @@ module.exports = {
                     include: {
                         model: wishlists,
                         attributes: {
-                            exclude: ['id', 'ticketsId','createdAt', 'updatedAt']
+                            exclude: ["id", "ticketsId","createdAt", "updatedAt"]
                         }
                     },
                     limit,
                     offset,
                     order: [
-                        ['date_start', 'ASC'],
-                        ['departure_time', 'ASC'],
-                        ['date_end', 'ASC'],
+                        ["date_start", "ASC"],
+                        ["departure_time", "ASC"],
+                        ["date_end", "ASC"],
                     ],
                     offset
                 });
@@ -239,15 +239,15 @@ module.exports = {
                 include: {
                     model: wishlists,
                     attributes: {
-                        exclude: ['id', 'ticketsId','createdAt', 'updatedAt']
+                        exclude: ["id", "ticketsId","createdAt", "updatedAt"]
                     }
                 },
                 limit,
                 offset,
                 order: [
-                    ['date_start', 'ASC'],
-                    ['departure_time', 'ASC'],
-                    ['date_end', 'ASC'],
+                    ["date_start", "ASC"],
+                    ["departure_time", "ASC"],
+                    ["date_end", "ASC"],
                 ]
             });
         }

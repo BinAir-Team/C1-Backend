@@ -1,4 +1,4 @@
-const notifRepository = require('../repositories/notifRepository');
+const notifRepository = require("../repositories/notifRepository");
 
 module.exports = {
     async findAll(limit,offset) {

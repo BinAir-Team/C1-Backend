@@ -42,7 +42,7 @@ module.exports = {
                   data: {},
                 });
                 return
-            };
+            }
             
             const result = getPagingData(finds, page, limit);
             res.status(200).json({
@@ -157,8 +157,7 @@ module.exports = {
                 });
                 return;
             }else{
-                console.log(today)
-                if(promodata.dataValues.expire >= today){
+                if(moment(promodata.dataValues.expire).format("YYYY-MM-DD") >= today){
                     const discount = promodata.dataValues.discount;
                     amounts = amounts - (amounts * (discount/100));
                 }else{
@@ -186,7 +185,7 @@ module.exports = {
             status: status,
             date: new Date()
         }
-        await notifControllers.createNotif(id,{id: uuid(),usersId: id,message: `Transaksi nomor ${transdata.length+1}, dengan tujuan ${ticketdata.dataValues.from}-${ticketdata.dataValues.to} sukses diproses pada ${moment().locale("id").tz("Asia/Jakarta").format(
+        await notifControllers.createNotif(id,{id: uuid(),usersId: id,message: `Transaksi nomor ${transdata.count+1}, dengan tujuan ${ticketdata.dataValues.from}-${ticketdata.dataValues.to} sukses diproses pada ${moment().locale("id").tz("Asia/Jakarta").format(
             "Do MMMM YYYY, h:mm:ss z"
           )}`,isRead: false})
         transService.createTrans(newData)
