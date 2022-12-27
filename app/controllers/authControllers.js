@@ -442,7 +442,7 @@ exports.googleLogin = async (req, res) => {
 exports.googleLogin = async (req, res) => {
   try {
     // jwt encoded token
-    const { token } = req.body;
+    const { token, first_name, last_name, profile_picture } = req.body;
     if (!token) {
       return res.status(400).json({
         status: "error",
@@ -461,9 +461,9 @@ exports.googleLogin = async (req, res) => {
       user = await createUser({
         id: uuid(),
         email,
-        firstname: given_name,
-        lastname: family_name,
-        profile_image: picture,
+        firstname: given_name ? given_name : first_name,
+        lastname: family_name ? family_name : last_name,
+        profile_image: picture ? picture : profile_picture,
         role: "member",
         verified: true,
       });
