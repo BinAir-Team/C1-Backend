@@ -28,11 +28,11 @@ const {
 // import user controller
 const {
   postUserData,
-  getUserDataMember,
+  getAllUserData,
   updateUserData,
   deleteUserData,
 } = require("../app/controllers/userControllers");
-
+getAllUserData;
 const {
   forgetPass,
   resetPassView,
@@ -120,12 +120,7 @@ router.put(
 router.put(prefix + "/user/password", verifyToken, putCurrentUserPassword);
 
 // admin CRUD user routes
-router.get(
-  prefix + "/admin/users",
-  verifyToken,
-  verifyAdmin,
-  getUserDataMember
-);
+router.get(prefix + "/admin/users", verifyToken, verifyAdmin, getAllUserData);
 router.post(prefix + "/admin/users", verifyToken, verifyAdmin, postUserData);
 router.put(
   prefix + "/admin/user/:id",
