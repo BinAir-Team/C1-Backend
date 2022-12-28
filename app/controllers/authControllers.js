@@ -73,6 +73,16 @@ exports.registerMember = async (req, res) => {
         data: {},
       });
     }
+    // validator email format using regex
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        status: "error",
+        message: "Email format is invalid",
+        data: {},
+      });
+    }
+
     // check if email already exist
     const user = await getUserByEmail(email);
     if (user) {
