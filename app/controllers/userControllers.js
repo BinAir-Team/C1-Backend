@@ -172,10 +172,12 @@ exports.updateUserData = async (req, res) => {
         .format("Do MMMM YYYY, h:mm:ss z")}`,
       isRead: false,
     });
+    // get user after update
+    const userAfterUpdate = await getUserById(id);
     res.status(200).json({
       status: "success",
       message: "User data updated successfully",
-      data: id,
+      data: userAfterUpdate.id,
     });
   } catch (error) {
     res.status(400).json({
