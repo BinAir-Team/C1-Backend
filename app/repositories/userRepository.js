@@ -11,12 +11,9 @@ exports.findAll = () => {
   });
 };
 
-// get all users role member with pagination
+// get all users with pagination
 exports.getAll = (limit, offset) => {
   return users.findAndCountAll({
-    where: {
-      role: "member",
-    },
     limit,
     offset,
   });

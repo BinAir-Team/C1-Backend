@@ -8,7 +8,7 @@ exports.getUserByRoleMember = () => {
 };
 
 // get all users role member with pagination
-exports.getAllUserByRoleMember = (limit, offset) => {
+exports.getAllUser = (limit, offset) => {
   return userRepository.getAll(limit, offset);
 };
 
