@@ -156,7 +156,7 @@ exports.getUserDataById = async (req, res) => {
 exports.updateUserData = async (req, res) => {
   try {
     const id = req.params.id;
-    const {
+    let {
       firstname,
       lastname,
       gender,
@@ -173,6 +173,40 @@ exports.updateUserData = async (req, res) => {
         message: "User not found",
         data: {},
       });
+    }
+    if (!email) {
+      email = user.email;
+    }
+    if (email !== user.email) {
+      const checkEmail = await getUserByEmail(email);
+      if (checkEmail) {
+        return res.status(400).json({
+          status: "error",
+          message: "Email already exist",
+          data: {},
+        });
+      }
+    }
+    if (!phone) {
+      phone = user.phone;
+    }
+    if (!role) {
+      role = user.role;
+    }
+    if (!firstname) {
+      firstname = user.firstname;
+    }
+    if (!lastname) {
+      lastname = user.lastname;
+    }
+    if (!gender) {
+      gender = user.gender;
+    }
+    if (!password) {
+      password = user.password;
+    }
+    if (!profile_image) {
+      profile_image = user.profile_image;
     }
     // encrypt password
     const encryptedPassword = await encryptPassword(password);
@@ -203,7 +237,7 @@ exports.updateUserData = async (req, res) => {
     res.status(200).json({
       status: "success",
       message: "User data updated successfully",
-      data: userAfterUpdate.id,
+      data: userAfterUpdate,
     });
   } catch (error) {
     res.status(400).json({
