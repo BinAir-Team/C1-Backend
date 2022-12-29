@@ -177,6 +177,7 @@ exports.updateUserData = async (req, res) => {
     if (!email) {
       email = user.email;
     }
+    // check email
     if (email !== user.email) {
       const checkEmail = await getUserByEmail(email);
       if (checkEmail) {
