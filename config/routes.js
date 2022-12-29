@@ -29,6 +29,7 @@ const {
 const {
   postUserData,
   getAllUserData,
+  getUserDataById,
   updateUserData,
   deleteUserData,
 } = require("../app/controllers/userControllers");
@@ -121,6 +122,12 @@ router.put(prefix + "/user/password", verifyToken, putCurrentUserPassword);
 
 // admin CRUD user routes
 router.get(prefix + "/admin/users", verifyToken, verifyAdmin, getAllUserData);
+router.get(
+  prefix + "/admin/user/:id",
+  verifyToken,
+  verifyAdmin,
+  getUserDataById
+);
 router.post(prefix + "/admin/users", verifyToken, verifyAdmin, postUserData);
 router.put(
   prefix + "/admin/user/:id",
