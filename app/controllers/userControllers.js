@@ -177,6 +177,7 @@ exports.updateUserData = async (req, res) => {
     if (!email) {
       email = user.email;
     }
+    // check email
     if (email !== user.email) {
       const checkEmail = await getUserByEmail(email);
       if (checkEmail) {
@@ -202,20 +203,22 @@ exports.updateUserData = async (req, res) => {
     if (!gender) {
       gender = user.gender;
     }
-    if (!password) {
-      password = user.password;
-    }
     if (!profile_image) {
       profile_image = user.profile_image;
     }
-    // encrypt password
-    const encryptedPassword = await encryptPassword(password);
+    // if password empty use old password else use new password
+    if (!password) {
+      password = user.password;
+    } else {
+      password = await encryptPassword(password);
+    }
+    // update user
     const data = await updateUser(id, {
       firstname,
       lastname,
       gender,
       email,
-      password: encryptedPassword,
+      password,
       phone,
       role,
       profile_image,
