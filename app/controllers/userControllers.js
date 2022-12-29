@@ -126,6 +126,32 @@ exports.getAllUserData = async (req, res) => {
   }
 };
 
+// GET user data by id
+exports.getUserDataById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const user = await getUserById(id);
+    if (!user) {
+      res.status(404).json({
+        status: "error",
+        message: "User not found",
+        data: {},
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      message: "User data retrieved successfully",
+      data: user,
+    });
+  } catch (error) {
+    res.status(500).send({
+      status: "false",
+      message: error.message,
+      data: {},
+    });
+  }
+};
+
 // PUT user data
 exports.updateUserData = async (req, res) => {
   try {
