@@ -212,7 +212,7 @@ exports.updateUserData = async (req, res) => {
     } else {
       password = await encryptPassword(password);
     }
-
+    // update user
     const data = await updateUser(id, {
       firstname,
       lastname,
