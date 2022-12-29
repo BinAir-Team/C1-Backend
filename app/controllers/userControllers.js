@@ -177,7 +177,10 @@ exports.updateUserData = async (req, res) => {
     if (!email) {
       email = user.email;
     }
+<<<<<<< HEAD
     // check email
+=======
+>>>>>>> ea657fe43d55e25c7025d409f8eafbe38f4327cd
     if (email !== user.email) {
       const checkEmail = await getUserByEmail(email);
       if (checkEmail) {
@@ -203,6 +206,7 @@ exports.updateUserData = async (req, res) => {
     if (!gender) {
       gender = user.gender;
     }
+<<<<<<< HEAD
     if (!profile_image) {
       profile_image = user.profile_image;
     }
@@ -213,6 +217,16 @@ exports.updateUserData = async (req, res) => {
       password = await encryptPassword(password);
     }
 
+=======
+    if (!password) {
+      password = user.password;
+    }
+    if (!profile_image) {
+      profile_image = user.profile_image;
+    }
+    // encrypt password
+    const encryptedPassword = await encryptPassword(password);
+>>>>>>> ea657fe43d55e25c7025d409f8eafbe38f4327cd
     const data = await updateUser(id, {
       firstname,
       lastname,
