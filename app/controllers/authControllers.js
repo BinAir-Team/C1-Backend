@@ -307,6 +307,10 @@ exports.putCurrentUserData = async (req, res) => {
       firstname = user.firstname;
     }
 
+    if (!gender) {
+      gender = user.gender;
+    }
+
     if (!lastname) {
       lastname = user.lastname;
     }
