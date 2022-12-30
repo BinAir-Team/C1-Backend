@@ -9,8 +9,9 @@ const {
   getUserById,
   getUserByEmail,
   updateUser,
-  getUserByToken,
 } = require("../services/userService");
+
+const notifControllers = require("./notificationsControllers");
 
 function encryptPassword(password) {
   return new Promise((resolve, reject) => {
@@ -98,9 +99,10 @@ exports.forgetPass = async (req, res) => {
     await notifControllers.createNotif(user.dataValues.id, {
       id: uuid(),
       usersId: user.dataValues.id,
-      message: `Sukses send email Pada ${moment().locale("id").tz("Asia/Jakarta").format(
-        "Do MMMM YYYY, h:mm:ss z"
-      )}`,
+      message: `Sukses send email Pada ${moment()
+        .locale("id")
+        .tz("Asia/Jakarta")
+        .format("Do MMMM YYYY, h:mm:ss z")}`,
       isRead: false,
     });
     await transporter.sendMail(mailOptions);
@@ -113,7 +115,7 @@ exports.forgetPass = async (req, res) => {
   } catch (error) {
     res.status(500).send({
       status: "error",
-      message: "Internal server error",
+      message: error.message,
       data: {},
     });
   }
@@ -148,8 +150,8 @@ exports.resetPassView = async (req, res) => {
     });
   } catch (error) {
     res.status(500).send({
-      status: "invalid",
-      message: "Invalid token reset password",
+      status: "error",
+      message: error.message,
       data: {},
     });
   }
@@ -203,7 +205,7 @@ exports.resetPass = async (req, res) => {
   } catch (error) {
     res.status(500).send({
       status: "error",
-      message: "Internal server error",
+      message: error.message,
       data: {},
     });
   }
