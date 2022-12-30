@@ -111,7 +111,7 @@ module.exports = {
         const init_stock = req.body.init_stock;
         const curr_stock = req.body.curr_stock;
         await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses Menambah tiket rute ${from}-${to} pada ${moment().locale("id").tz("Asia/Jakarta").format(
-            "Do MMMM YYYY, h:mm:ss z"
+            "Do MMMM YYYY, HH:mm:ss z"
           )}`, isRead: false});
         const newTicket = await ticketService.createTicket({
             id: id,
@@ -162,7 +162,7 @@ module.exports = {
             );
         }
         await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses update tiket dengan id:${id} pada ${moment().locale("id").tz("Asia/Jakarta").format(
-            "Do MMMM YYYY, h:mm:ss z"
+            "Do MMMM YYYY, HH:mm:ss z"
           )}`, isRead: false});
         const updatedTicket = await ticketService.updateTicket(id, ticket)
         .then(ticket => {
@@ -196,7 +196,7 @@ module.exports = {
             );
         }
         await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Sukses menghapus tiket rute ${find.dataValues.from}-${find.dataValues.to} pada ${moment().locale("id").tz("Asia/Jakarta").format(
-            "Do MMMM YYYY, h:mm:ss z"
+            "Do MMMM YYYY, HH:mm:ss z"
           )}`, isRead: false});
         const deletedTicket = await ticketService.deleteTicket(id)
         .then(ticket => {

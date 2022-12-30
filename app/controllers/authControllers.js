@@ -121,7 +121,7 @@ exports.registerMember = async (req, res) => {
       message: `User Sukses Registrasi pada ${moment()
         .locale("id")
         .tz("Asia/Jakarta")
-        .format("Do MMMM YYYY, h:mm:ss z")}`,
+        .format("Do MMMM YYYY, HH:mm:ss z")}`,
       isRead: false,
     });
     const newUser = await createUser(data);
@@ -207,7 +207,7 @@ exports.login = async (req, res) => {
       message: `Sukses Login pada ${moment()
         .locale("id")
         .tz("Asia/Jakarta")
-        .format("Do MMMM YYYY, h:mm:ss z")}`,
+        .format("Do MMMM YYYY, HH:mm:ss z")}`,
       isRead: false,
     });
     res.status(200).json({
@@ -291,7 +291,7 @@ exports.putCurrentUserData = async (req, res) => {
     message: `Sukses Update Profile Pada ${moment()
       .locale("id")
       .tz("Asia/Jakarta")
-      .format("Do MMMM YYYY, h:mm:ss z")}`,
+      .format("Do MMMM YYYY, HH:mm:ss z")}`,
     isRead: false,
   });
   try {

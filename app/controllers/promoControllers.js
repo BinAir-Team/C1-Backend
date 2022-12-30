@@ -90,7 +90,7 @@ module.exports = {
         message: `Sukses Menambah promo dengan title: ${title} pada ${moment()
           .locale("id")
           .tz("Asia/Jakarta")
-          .format("Do MMMM YYYY, h:mm:ss z")}`,
+          .format("Do MMMM YYYY, HH:mm:ss z")}`,
         isRead: false,
       });
       const newPromo = await promoService.createPromo({
@@ -136,7 +136,7 @@ module.exports = {
         message: `Sukses update promo dengan title: ${title} pada ${moment()
           .locale("id")
           .tz("Asia/Jakarta")
-          .format("Do MMMM YYYY, h:mm:ss z")}`,
+          .format("Do MMMM YYYY, HH:mm:ss z")}`,
         isRead: false,
       });
       const updatedPromo = await promoService.getPromoById(id);
@@ -164,7 +164,7 @@ module.exports = {
         } pada ${moment()
           .locale("id")
           .tz("Asia/Jakarta")
-          .format("Do MMMM YYYY, h:mm:ss z")}`,
+          .format("Do MMMM YYYY, HH:mm:ss z")}`,
         isRead: false,
       });
       await promoService.deletePromo(req.params.id);

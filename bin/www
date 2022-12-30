@@ -1,29 +1,30 @@
 #!/usr/bin/env node
 
-require('dotenv').config();
-const http = require('http');
-const socketIO = require('socket.io');
+require("dotenv").config();
+const http = require("http");
+const socketIO = require("socket.io");
 const app = require("../app/index")
 const port = process.env.PORT || 8000;
 
 const server = http.createServer(app)
 const io = socketIO(server, {
-  transports:['polling'],
+  transports:["polling"],
   cors: {
-    origin: '*',
+    origin: "*",
     methods: ["GET", "POST"]
   }
 })
 
-io.on('connection', (socket) => {
-  console.log("user connected")
+io.on("connection", (socket) => {
+  console.log(`id ${socket.id} connected`)
 
-  socket.on('create', function(room) {
+  socket.on("create", function(room) {
+    console.log(`id ${socket.id} joined room ${room}`)
     socket.join(room);
   });
 
-  socket.on('disconnect', () => {
-    console.log("user disconnected")
+  socket.on("disconnect", () => {
+    console.log(`id ${socket.id} disconnected`)
   })
 })
 

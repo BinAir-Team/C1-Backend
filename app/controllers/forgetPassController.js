@@ -102,7 +102,7 @@ exports.forgetPass = async (req, res) => {
       message: `Sukses send email Pada ${moment()
         .locale("id")
         .tz("Asia/Jakarta")
-        .format("Do MMMM YYYY, h:mm:ss z")}`,
+        .format("Do MMMM YYYY, HH:mm:ss z")}`,
       isRead: false,
     });
     await transporter.sendMail(mailOptions);
