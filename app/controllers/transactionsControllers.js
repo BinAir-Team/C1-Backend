@@ -33,8 +33,9 @@ module.exports = {
     async getAllTrans(req, res) {
         try{
             const { page, size } = req.query;
+            const status = req.query.status ? req.query.status : "";
             const { limit, offset } = getPagination(page, size);
-            const finds = await transService.findAll(limit,offset);
+            const finds = await transService.findAll(limit,offset,status);
             if (finds.length == 0) {
                 res.status(404).json({
                   status: "error",
@@ -62,8 +63,9 @@ module.exports = {
         const {id} = req.user
         const { page, size } = req.query;
         const { limit, offset } = getPagination(page, size);
+        const status = req.query.status ? req.query.status : "";
 
-        transService.findByUser(id, limit, offset)
+        transService.findByUser(id, limit, offset,status)
         .then(trans => {
             if(trans.length == 0){
                 res.status(404).json({
@@ -169,7 +171,7 @@ module.exports = {
                 }
             }
         }
-        const transdata = await transService.findByUser(id);
+        const transdata = await transService.findByUser(id,undefined,undefined,"");
         
         const json_trav = JSON.stringify(traveler);
         const json_quan = JSON.stringify(quantity);
@@ -224,7 +226,7 @@ module.exports = {
         transService.updateTrans(id,{status: "PAYMENT SUCCESS",payment_method})
         .then(trans => {
             fs.unlinkSync(req.file.path);
-            if(trans.length == 0){
+            if(trans == 0){
                 res.status(404).json({
                     msg: "transactions not found",
                     status: 404,
@@ -272,6 +274,32 @@ module.exports = {
         .catch(err => {
             res.status(500).json({
                 msg: "error find by id",
+                status: 500,
+                err
+            });
+        });
+    },
+    cancelTransByid(req,res) {
+        const {id} = req.params
+        transService.updateTrans(id,{status: "CANCELED"})
+        .then(trans => {
+            if(trans == 0){
+                res.status(404).json({
+                    msg: "trans not found",
+                    status: 404,
+                });
+                return
+            }else{
+                res.status(200).json({
+                    msg: "trans canceled success",
+                    status: 200,
+                    data: trans
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                msg: "error update trans",
                 status: 500,
                 err
             });
