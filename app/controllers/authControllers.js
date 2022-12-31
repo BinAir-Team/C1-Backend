@@ -185,11 +185,11 @@ exports.login = async (req, res) => {
       role,
       profile_image,
     } = user;
-    // create token
+    // create token expired 1 day
     const accessToken = jwt.sign(
       { id, firstname, lastname, gender, email, phone, role, profile_image },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "1d" }
     );
     //check if email verified
     const isEmailVerified = await getVerifiedStatus(email);
