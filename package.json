@@ -4,7 +4,8 @@
   "description": "",
   "main": "bin/www",
   "scripts": {
-    "test": "npx eslint \"**/*.js\"",
+    "test": "jest --coverage",
+    "eslint": "npx eslint \"**/*.js\"",
     "start": "nodemon dotenv/config bin/www -V",
     "create": "sequelize-cli db:create",
     "migrate": "sequelize-cli db:migrate",

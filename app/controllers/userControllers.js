@@ -69,7 +69,7 @@ exports.postUserData = async (req, res) => {
       } pada ${moment()
         .locale("id")
         .tz("Asia/Jakarta")
-        .format("Do MMMM YYYY, h:mm:ss z")}`,
+        .format("Do MMMM YYYY, HH:mm:ss z")}`,
       isRead: false,
     });
     const data = await createUser({
@@ -232,7 +232,7 @@ exports.updateUserData = async (req, res) => {
       } pada ${moment()
         .locale("id")
         .tz("Asia/Jakarta")
-        .format("Do MMMM YYYY, h:mm:ss z")}`,
+        .format("Do MMMM YYYY, HH:mm:ss z")}`,
       isRead: false,
     });
     // get user after update
@@ -264,7 +264,7 @@ exports.deleteUserData = async (req, res) => {
       } pada ${moment()
         .locale("id")
         .tz("Asia/Jakarta")
-        .format("Do MMMM YYYY, h:mm:ss z")}`,
+        .format("Do MMMM YYYY, HH:mm:ss z")}`,
       isRead: false,
     });
     const user = await deleteUser(id);

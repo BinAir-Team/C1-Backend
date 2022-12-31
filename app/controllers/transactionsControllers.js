@@ -100,7 +100,7 @@ module.exports = {
             return
         }
         await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message: `Transaksi dengan id: ${id} dihapus oleh ${req.user.email} pada ${moment().locale("id").tz("Asia/Jakarta").format(
-            "Do MMMM YYYY, h:mm:ss z"
+            "Do MMMM YYYY, HH:mm:ss z"
           )}`,isRead: false})      
         transService.deleteByPk(id)
         .then(trans => {
@@ -186,7 +186,7 @@ module.exports = {
             date: new Date()
         }
         await notifControllers.createNotif(id,{id: uuid(),usersId: id,message: `Transaksi nomor ${transdata.count+1}, dengan tujuan ${ticketdata.dataValues.from}-${ticketdata.dataValues.to} sukses diproses pada ${moment().locale("id").tz("Asia/Jakarta").format(
-            "Do MMMM YYYY, h:mm:ss z"
+            "Do MMMM YYYY, HH:mm:ss z"
           )}`,isRead: false})
         transService.createTrans(newData)
         .then(trans => {
@@ -219,7 +219,7 @@ module.exports = {
             return
         }
         await notifControllers.createNotif(req.user.id,{id: uuid(),usersId: req.user.id,message:`Pembayaran Anda sudah diverifikasi pada ${moment().locale("id").tz("Asia/Jakarta").format(
-            "Do MMMM YYYY, h:mm:ss z"
+            "Do MMMM YYYY, HH:mm:ss z"
           )}, silahkan cek status transaksi anda`,isRead: false})
         transService.updateTrans(id,{status: "PAYMENT SUCCESS",payment_method})
         .then(trans => {
