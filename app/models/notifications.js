@@ -1,7 +1,8 @@
-'use strict';
+"use strict";
 const {
-  Model
-} = require('sequelize');
+  Model,
+  Op
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class notifications extends Model {
     /**
@@ -11,15 +12,32 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.users, {foreignKey: 'usersId'})
+      this.belongsTo(models.users, {foreignKey: "usersId"})
     }
   }
   notifications.init({
     usersId: DataTypes.UUID,
-    message: DataTypes.STRING
+    message: DataTypes.STRING,
+    isRead: DataTypes.BOOLEAN
   }, {
+    hooks: {
+    afterCreate: async (Notifications, options) => {
+      const date = new Date();
+      date.setDate(date.getDate() - 1 );
+
+      await notifications.destroy({
+        where: {
+          isRead: true,
+          createdAt: {
+            [Op.lt]: date
+          }
+        }
+      })
+
+    }
+  },
     sequelize,
-    modelName: 'notifications',
+    modelName: "notifications",
   });
   return notifications;
 };

@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('tickets', {
+    await queryInterface.createTable("tickets", {
       id: {
         defaultValue: Sequelize.UUIDV4,
         allowNull: false,
@@ -18,13 +18,29 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      hours: {
+      airport_from: {
         allowNull: false,
-        type: Sequelize.DOUBLE
+        type: Sequelize.STRING
       },
-      date: {
+      airport_to: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.STRING
+      },
+      departure_time: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      arrival_time: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      date_start: {
+        allowNull: false,
+        type: Sequelize.DATEONLY
+      },
+      date_end: {
+        allowNull: true,
+        type: Sequelize.DATEONLY
       },
       type: {
         allowNull: false,
@@ -61,6 +77,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('tickets');
+    await queryInterface.dropTable("tickets");
   }
 };

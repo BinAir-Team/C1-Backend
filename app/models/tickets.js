@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 const {
   Model
-} = require('sequelize');
+} = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class tickets extends Model {
     /**
@@ -11,15 +11,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.hasMany(models.transactions, { foreignKey: 'ticketsId' })
-      this.hasMany(models.wishlists, { foreignKey: 'ticketsId' })
+      this.hasMany(models.transactions, { foreignKey: "ticketsId" })
+      this.hasMany(models.wishlists, { foreignKey: "ticketsId" })
     }
   }
   tickets.init({
     from: DataTypes.STRING,
     to: DataTypes.STRING,
-    hours: DataTypes.DOUBLE,
-    date: DataTypes.DATE,
+    airport_from: DataTypes.STRING,
+    airport_to: DataTypes.STRING,
+    departure_time: DataTypes.STRING,
+    arrival_time: DataTypes.STRING,
+    date_start: DataTypes.DATEONLY,
+    date_end: DataTypes.DATEONLY,
     type: DataTypes.STRING,
     adult_price: DataTypes.INTEGER,
     child_price: DataTypes.INTEGER,
@@ -28,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     curr_stock: DataTypes.INTEGER,
   }, {
     sequelize,
-    modelName: 'tickets',
+    modelName: "tickets",
   });
   return tickets;
 };
