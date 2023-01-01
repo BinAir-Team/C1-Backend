@@ -6,6 +6,7 @@ module.exports = {
         if(status == ""){
             return transactions.findAndCountAll({
                 include: {all:true, attributes: {exclude: ["password","createdAt","updatedAt","role","phone","email","available","init_stock","curr_stock"]}},
+                order: [["updatedAt", "DESC"]],
                 limit,
                 offset,
             });
@@ -15,6 +16,7 @@ module.exports = {
                 status: {[Op.iLike]: `%${status}%`}
             },
             include: {all:true, attributes: {exclude: ["password","createdAt","updatedAt","role","phone","email","available","init_stock","curr_stock"]}},
+            order: [["updatedAt", "DESC"]],
             limit,
             offset,
         });
@@ -38,6 +40,7 @@ module.exports = {
             return transactions.findAndCountAll({
                 where: {usersId: id},
                 include: {all: true, attributes: {exclude: ["password","createdAt","updatedAt","role","phone","email","available","init_stock","curr_stock"]}},
+                order: [["updatedAt", "DESC"]],
                 limit,
                 offset,
             })
@@ -45,6 +48,7 @@ module.exports = {
             return transactions.findAndCountAll({
                 where: {usersId: id,status: {[Op.iLike]: `%${status}%`}},
                 include: {all: true, attributes: {exclude: ["password","createdAt","updatedAt","role","phone","email","available","init_stock","curr_stock"]}},
+                order: [["updatedAt", "DESC"]],
                 limit,
                 offset,
             })
