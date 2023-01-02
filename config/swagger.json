@@ -179,7 +179,7 @@
                   "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
                   "firstname": "capcai",
                   "lastname": "yuhuu",
-                  "gender": "bencong",
+                  "gender": "Laki-laki",
                   "email": "first@gmail.com",
                   "phone": "08111111",
                   "role": "member",
@@ -380,7 +380,7 @@
                 "data": {
                   "firstname": "capcai",
                   "lastname": "yuhuu",
-                  "gender": "bencong",
+                  "gender": "Laki-laki",
                   "phone": "08111111",
                   "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1670604047/NaN/onhgofthkqjccagujiix.jpg"
                 }
@@ -772,9 +772,9 @@
                 "data": [1],
                 "user": {
                   "id": "2ed8bd90-c0c5-4fdf-b396-05aea4af104c",
-                  "firstname": "anjing",
+                  "firstname": "cobacoba",
                   "lastname": "asrofww",
-                  "gender": "laki",
+                  "gender": "Laki-laki",
                   "email": "afif@gmail.com",
                   "password": "$2b$10$XD3Yq3yCRlpXbKUqkZbGUOv.LUl/oCUtp8.rgndUXEZfqTn0y10UG",
                   "refresh_token": null,
@@ -2758,7 +2758,7 @@
           "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
           "firstname": "capcai",
           "lastname": "yuhuu",
-          "gender": "bencong",
+          "gender": "Laki-laki",
           "email": "first@gmail.com",
           "phone": "08111111",
           "role": "member",
@@ -2786,7 +2786,7 @@
         "id": "3049dba9-04b8-461c-9424-afaaff64cf67",
         "firstname": "capcai",
         "lastname": "yuhuu",
-        "gender": "bencong",
+        "gender": "Laki-laki",
         "email": "first@gmail.com",
         "phone": "08111111",
         "role": "member",
@@ -2923,7 +2923,7 @@
         "data": {
           "firstname": "capcai",
           "lastname": "yuhuu",
-          "gender": "bencong",
+          "gender": "Laki-laki",
           "phone": "08111111",
           "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1670604047/NaN/onhgofthkqjccagujiix.jpg",
           "password": "$2b$10$xfxIy8.5aQQ5zyv.wr4/quSICsA5FjKSr2KVSoDo.BdtW6z4T.r9a"
@@ -2948,7 +2948,7 @@
       "example": {
         "firstname": "capcai",
         "lastname": "yuhuu",
-        "gender": "bencong",
+        "gender": "Laki-laki",
         "phone": "08111111",
         "profile_image": "https://res.cloudinary.com/dynggbc0a/image/upload/v1670604047/NaN/onhgofthkqjccagujiix.jpg",
         "password": "$2b$10$xfxIy8.5aQQ5zyv.wr4/quSICsA5FjKSr2KVSoDo.BdtW6z4T.r9a"
@@ -3115,7 +3115,7 @@
           "id": "2ed8bd90-c0c5-4fdf-b396-05aea4af104c",
           "firstname": "asrof",
           "lastname": "asrofww",
-          "gender": "laki",
+          "gender": "Laki-laki",
           "email": "afif@gmail.com",
           "role": "member",
           "password": "$2b$10$qcRkgqbq7D47DxkdeuSPAO9fPaOnaxYfc2JQoipr8Fdd2oKOGUx9S",
@@ -3146,7 +3146,7 @@
         "id": "2ed8bd90-c0c5-4fdf-b396-05aea4af104c",
         "firstname": "asrof",
         "lastname": "asrofww",
-        "gender": "laki",
+        "gender": "Laki-laki",
         "email": "afif@gmail.com",
         "role": "member",
         "password": "$2b$10$qcRkgqbq7D47DxkdeuSPAO9fPaOnaxYfc2JQoipr8Fdd2oKOGUx9S",
@@ -3217,9 +3217,9 @@
         "data": [1],
         "user": {
           "id": "2ed8bd90-c0c5-4fdf-b396-05aea4af104c",
-          "firstname": "anjing",
+          "firstname": "cobacoba",
           "lastname": "asrofww",
-          "gender": "laki",
+          "gender": "Laki-laki",
           "email": "afif@gmail.com",
           "password": "$2b$10$XD3Yq3yCRlpXbKUqkZbGUOv.LUl/oCUtp8.rgndUXEZfqTn0y10UG",
           "refresh_token": null,
@@ -3255,9 +3255,9 @@
       "title": "User",
       "example": {
         "id": "2ed8bd90-c0c5-4fdf-b396-05aea4af104c",
-        "firstname": "anjing",
+        "firstname": "cobacoba",
         "lastname": "asrofww",
-        "gender": "laki",
+        "gender": "Laki-laki",
         "email": "afif@gmail.com",
         "password": "$2b$10$XD3Yq3yCRlpXbKUqkZbGUOv.LUl/oCUtp8.rgndUXEZfqTn0y10UG",
         "refresh_token": null,
