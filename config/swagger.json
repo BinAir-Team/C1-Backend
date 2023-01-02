@@ -1081,7 +1081,7 @@
     "/trans": {
       "post": {
         "description": "post data transaksi oleh member binair",
-        "summary": "post transaction data",
+        "summary": "Post transaction data",
         "tags": ["Transaksi CRUD"],
         "operationId": "posttransactiondata",
         "deprecated": false,
@@ -1116,7 +1116,7 @@
     "/admin/trans": {
       "get": {
         "description": "get all data transaksi by admin binair",
-        "summary": "get all",
+        "summary": "Get all trans",
         "tags": ["Transaksi Admin"],
         "operationId": "getall",
         "deprecated": false,
@@ -1142,6 +1142,13 @@
             "required": false,
             "type": "string",
             "description": "size page, example = 10"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "filter by status transaction, example=pending ,canceled ,success ,selesai "
           }
         ],
         "responses": {
@@ -1156,7 +1163,7 @@
     "/trans/user": {
       "get": {
         "description": "get data transaksi berdasarkan user id by member",
-        "summary": "get all user transaction",
+        "summary": "Get all user transaction",
         "tags": ["Transaksi CRUD"],
         "operationId": "gettransactionuser",
         "deprecated": false,
@@ -1182,6 +1189,13 @@
             "required": false,
             "type": "string",
             "description": "size page, example = 10"
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "description": "filter by status transaction, example=pending ,canceled ,success ,selesai "
           }
         ],
         "responses": {
@@ -1196,7 +1210,7 @@
     "/admin/trans/{id-d}": {
       "delete": {
         "description": "delete transaksi yang dapat dilakukan oleh admin",
-        "summary": "delete trans",
+        "summary": "Delete trans by admin",
         "tags": ["Transaksi Admin"],
         "operationId": "deletetrans",
         "deprecated": false,
@@ -1230,7 +1244,7 @@
     "/trans/{id}": {
       "get": {
         "description": "get transaksi dengan id by member",
-        "summary": "get by transaction id",
+        "summary": "Get by transaction id",
         "tags": ["Transaksi CRUD"],
         "operationId": "getbytransactionid",
         "deprecated": false,
@@ -1264,7 +1278,7 @@
     "/trans/{id-p}": {
       "put": {
         "description": "verifikasi bukti pembayaran oleh member dengan melampirkan gambar, status transaksi akan berubah",
-        "summary": "update payment user",
+        "summary": "Update status payment user",
         "tags": ["Transaksi CRUD"],
         "operationId": "updatepaymentuser",
         "deprecated": false,
@@ -1298,6 +1312,41 @@
             "in": "formData",
             "required": true,
             "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/trans/cancel/{id-c}": {
+      "put": {
+        "description": "cancel transaksi yg berjalan, status transaksi akan berubah",
+        "summary": "Cancel trans user",
+        "tags": ["Transaksi CRUD"],
+        "operationId": "cancelpaymentuser",
+        "deprecated": false,
+        "produces": ["application/json"],
+        "consumes": ["application/x-www-form-urlencoded"],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "required": true,
+            "default": "Bearer {token}",
+            "type": "string"
+          },
+          {
+            "name": "id-c",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid",
             "description": ""
           }
         ],
@@ -1705,7 +1754,7 @@
     "/search": {
       "get": {
         "description": "StartFragment\n\n- endpoint pencarian data kota yang terdapat bandara",
-        "summary": "Searches",
+        "summary": "Get Data Searches",
         "tags": ["Searches"],
         "operationId": "Searches",
         "deprecated": false,
@@ -2474,7 +2523,7 @@
     "/admin/notify": {
       "get": {
         "description": "get semua notifikasi user",
-        "summary": "Get All1",
+        "summary": "Get All admin",
         "tags": ["Notifications Admin"],
         "operationId": "GetAll1",
         "deprecated": false,
@@ -2511,7 +2560,7 @@
         "security": []
       },
       "post": {
-        "summary": "Post Data",
+        "summary": "Post Data notif admin",
         "tags": ["Notifications Admin"],
         "operationId": "PostData",
         "deprecated": false,
@@ -2553,7 +2602,7 @@
     "/admin/notify/{id}": {
       "get": {
         "description": "get notifikasi user berdasarkan id",
-        "summary": "Get By Id",
+        "summary": "Get Notif By Id",
         "tags": ["Notifications Admin"],
         "operationId": "GetById",
         "deprecated": false,
@@ -2587,7 +2636,7 @@
     "/admin/notify/{id-d}": {
       "delete": {
         "description": "delete user notif berdasarkan id",
-        "summary": "Delete",
+        "summary": "Delete Notif By Admin",
         "tags": ["Notifications Admin"],
         "operationId": "Delete",
         "deprecated": false,
@@ -3849,46 +3898,55 @@
   "tags": [
     {
       "name": "Authentication",
-      "description": "Untuk Autentikasi"
+      "description": "Untuk Autentikasi oleh member binair"
     },
     {
-      "name": "User by member"
+      "name": "User by member",
+      "description": "Untuk get current user by member dan update profile member binair"
     },
     {
       "name": "CRUD Users By Admin",
       "description": "CRUD untuk user yang hanya bisa di lakukan oleh admin yang sedang login dan menggunakan accesToken admin"
     },
     {
-      "name": "User Forget Password"
+      "name": "User Forget Password",
+      "description": "Untuk fitur lupa password member binair"
     },
     {
-      "name": "Transaksi CRUD"
+      "name": "Transaksi CRUD",
+      "description": "Untuk CRUD transaksi oleh member binair"
     },
     {
-      "name": "Transaksi Admin"
+      "name": "Transaksi Admin",
+      "description": "Untuk CRUD transaksi oleh admin binair"
     },
     {
-      "name": "Tickets"
+      "name": "Tickets",
+      "description": "Untuk mengambil list tiket yang tersedia pada binair"
     },
     {
-      "name": "Wishlists"
+      "name": "Wishlists",
+      "description": "Untuk wishlist tiket yang dipilih member"
     },
     {
-      "name": "Searches"
+      "name": "Searches",
+      "description": "Untuk data auto complete search tiket dan data pembuatan tiket baru oleh admin"
     },
     {
       "name": "CRUD Promo by Admin",
-      "description": "CRUD Promo by Admin"
+      "description": "Untuk CRUD Promo by Admin"
     },
     {
       "name": "Get Promo",
-      "description": "Get Promo"
+      "description": "Untuk Get list Promo oleh member binair"
     },
     {
-      "name": "Notifications"
+      "name": "Notifications",
+      "description": "Untuk get list notifications dan update status oleh member binair"
     },
     {
-      "name": "Notifications Admin"
+      "name": "Notifications Admin",
+      "description": "Untuk mengelola notifikasi member oleh admin binair"
     }
   ]
 }

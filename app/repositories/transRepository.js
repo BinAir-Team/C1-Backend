@@ -1,12 +1,26 @@
 const { transactions } = require("../models");
+const {Sequelize, Op} = require("sequelize");
 
 module.exports = {
-    findAll(limit,offset) {
+    findAll(limit,offset,status) {
+        if(status == ""){
+            return transactions.findAndCountAll({
+                include: {all:true, attributes: {exclude: ["password","createdAt","updatedAt","role","phone","email","available","init_stock","curr_stock"]}},
+                order: [["updatedAt", "DESC"]],
+                limit,
+                offset,
+            });
+        }else{
         return transactions.findAndCountAll({
+            where: {
+                status: {[Op.iLike]: `%${status}%`}
+            },
             include: {all:true, attributes: {exclude: ["password","createdAt","updatedAt","role","phone","email","available","init_stock","curr_stock"]}},
+            order: [["updatedAt", "DESC"]],
             limit,
             offset,
         });
+        }
     },
     
     findByPk(id) {
@@ -21,13 +35,24 @@ module.exports = {
         });
     },
 
-    findByUserId(id,limit,offset) {
-        return transactions.findAndCountAll({
-            where: {usersId: id},
-            include: {all: true, attributes: {exclude: ["password","createdAt","updatedAt","role","phone","email","available","init_stock","curr_stock"]}},
-            limit,
-            offset,
-        })
+    findByUserId(id,limit,offset,status) {
+        if(status == ""){
+            return transactions.findAndCountAll({
+                where: {usersId: id},
+                include: {all: true, attributes: {exclude: ["password","createdAt","updatedAt","role","phone","email","available","init_stock","curr_stock"]}},
+                order: [["updatedAt", "DESC"]],
+                limit,
+                offset,
+            })
+        }else{
+            return transactions.findAndCountAll({
+                where: {usersId: id,status: {[Op.iLike]: `%${status}%`}},
+                include: {all: true, attributes: {exclude: ["password","createdAt","updatedAt","role","phone","email","available","init_stock","curr_stock"]}},
+                order: [["updatedAt", "DESC"]],
+                limit,
+                offset,
+            })
+        }
     },
 
     updateTransactions(id,datas){

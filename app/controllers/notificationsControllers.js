@@ -1,5 +1,7 @@
 const notifService = require("../services/notifService");
+const transService  = require("../services/transServices")
 const {v4: uuid} = require("uuid");
+const moment = require("moment-timezone");
 
 // get pagination
 const getPagination = (page, size) => {
@@ -146,7 +148,14 @@ module.exports = {
     },
     async createNotif(id,datas) {
         try{
+            let today = moment().tz("Asia/Jakarta").format("YYYY-MM-DDTHH:mm");
             const insert = await notifService.createNotif(datas);
+            const transSelesai = await transService.findAll(undefined,undefined,"SUCCESS");
+            const transPending = await transService.findAll(undefined,undefined,"PENDING");
+            const selesai = transSelesai.rows.filter((a)=>{return `${a.ticket.date_start}T${a.ticket.arrival_time}` < today}).map((a)=>{return a.id});
+            const pending = transPending.rows.filter((a)=>{return `${a.ticket.date_start}T${a.ticket.departure_time}` < today}).map((a)=>{return a.id});
+            await transService.updateTrans(selesai,{status:"SELESAI"});
+            await transService.updateTrans(pending,{status:"CANCELED"});
             const find = await notifService.findByUser(id);
             global.io.sockets.in(id).emit("notify-update", find);
             return insert

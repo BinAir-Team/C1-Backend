@@ -236,6 +236,11 @@ router.put(
   uploadMiddleware,
   controllers.transControllers.updateTrans
 );
+router.put(
+  prefix + "/trans/cancel/:id",
+  verifyToken,
+  controllers.transControllers.cancelTransByid
+);
 
 //search API
 router.get(prefix + "/search", controllers.searchControllers.getSearch);
