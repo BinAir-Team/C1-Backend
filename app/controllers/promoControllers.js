@@ -128,6 +128,7 @@ module.exports = {
         promo_code,
         discount,
         terms,
+        expire,
         promo_image,
       });
       await notifControllers.createNotif(req.user.id, {
