@@ -120,7 +120,7 @@ module.exports = {
   updatePromo: async (req, res) => {
     try {
       const id = req.params.id;
-      const { title, desc, promo_code, discount, terms, promo_image } =
+      const { title, desc, promo_code, discount, terms, expire, promo_image } =
         req.body;
       const promo = await promoService.updatePromo(id, {
         title,
@@ -128,6 +128,7 @@ module.exports = {
         promo_code,
         discount,
         terms,
+        expire,
         promo_image,
       });
       await notifControllers.createNotif(req.user.id, {
